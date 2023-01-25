@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     private static GameManager gameManagerInstance;
-
+    
     void Awake()
     {
         DontDestroyOnLoad(this);
@@ -19,7 +19,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
+    public int characterNum;
+    public int[] skillSet;
+
     void Start()
     {
         

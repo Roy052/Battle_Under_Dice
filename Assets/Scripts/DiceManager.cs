@@ -6,13 +6,12 @@ public class DiceManager : MonoBehaviour
 {
     public int[] diceArray = new int[6];
 
-    GameInfo gameInfo = new GameInfo();
     public void DiceReset()
     {
         diceArray = new int[6];
 
         for (int i = 0; i < 6; i++)
-            diceArray[i] = gameInfo.diceResetArray[i];
+            diceArray[i] = GameInfo.diceResetArray[i];
     }
 
     public void UseDice(int diceNum)
