@@ -16,13 +16,20 @@ public class DiceManager : MonoBehaviour
 
     public void UseDice(int diceNum)
     {
-        if(diceArray[diceNum] <= 0)
+        if(diceNum == 0 || diceArray[diceNum - 1] <= 0)
         {
             Debug.LogError("UseDice() Error");
             return;
         }
-        diceArray[diceNum]--;
+        diceArray[diceNum - 1]--;
     }
 
+    public int TotalDiceValue()
+    {
+        int sum = 0;
+        for (int i = 0; i < diceArray.Length; i++)
+            sum += diceArray[i] * (i + 1);
 
+        return sum;
+    }
 }

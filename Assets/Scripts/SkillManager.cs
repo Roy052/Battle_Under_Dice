@@ -7,7 +7,7 @@ public class Skill
     public int type;
     public int value;
     public int speed;
-    public int stiff;
+    public int endurance;
     public int effect;
 }
 public class SkillManager : MonoBehaviour
@@ -18,20 +18,20 @@ public class SkillManager : MonoBehaviour
     {
         this.upgrade = upgrade;
     }
-    public Skill UseSkill(int characterNum, int skillNum)
+    public Skill UseSkill(int characterNum, int skillNum, int diceNum)
     {
         Skill temp = new Skill();
         temp.type = SkillInfo.types[characterNum, skillNum];
-        temp.value = SkillInfo.values[characterNum, skillNum];
-        temp.speed = SkillInfo.speeds[characterNum, skillNum];
-        temp.stiff = SkillInfo.stiffs[characterNum, skillNum];
-        temp.effect = SkillInfo.effects[characterNum, skillNum];
+        temp.value = SkillInfo.values[characterNum, skillNum, diceNum];
+        temp.speed = SkillInfo.speeds[characterNum, skillNum, diceNum];
+        temp.endurance = SkillInfo.endurances[characterNum, skillNum, diceNum];
+        temp.effect = SkillInfo.effects[characterNum, skillNum, diceNum];
 
         if(upgrade != null)
         {
             temp.value += upgrade[characterNum, skillNum].value;
             temp.speed += upgrade[characterNum, skillNum].speed;
-            temp.stiff += upgrade[characterNum, skillNum].stiff;
+            temp.endurance += upgrade[characterNum, skillNum].endurance;
             temp.effect += upgrade[characterNum, skillNum].effect;
         }
 

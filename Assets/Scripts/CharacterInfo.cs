@@ -29,7 +29,7 @@ public class CharacterInfo
         5
     };
 
-    public static int[] indurances =
+    public static int[] endurances =
     {
         5
     };

@@ -5,9 +5,9 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] BattleManager bm;
-    [SerializeField] CharacterManager characterManager;
-    [SerializeField] SkillManager skillManager;
-    [SerializeField] DiceManager diceManager;
+    [SerializeField] public CharacterManager characterManager;
+    [SerializeField] public SkillManager skillManager;
+    [SerializeField] public DiceManager diceManager;
 
     int characterNum;
     int[] skillSet;
@@ -18,8 +18,11 @@ public class Player : MonoBehaviour
         this.skillSet = skillSet;
     }
 
-    public void UseSkill(int num)
+    public Skill UseSkill(int skillNum, int diceNum)
     {
-        skillManager.UseSkill(characterNum, skillSet[num]);
+        Skill retSkill = skillManager.UseSkill(characterNum, skillSet[skillNum], diceNum);
+        diceManager.UseDice(diceNum);
+
+        return retSkill;
     }
 }

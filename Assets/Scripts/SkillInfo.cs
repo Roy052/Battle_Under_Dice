@@ -17,10 +17,20 @@ public class SkillInfo
     };
 
     public static string[] skillTypeText = { "Attack", "Defence", "Evade", "Buff", "Debuff" };
-    public static string[,] skillDescriptionText =
+    //[Character, Skill, Dice]
+    public static string[,,] skillDescriptionText =
     {
         {
-            "Attack0 Desc", "Attack1 Desc", "Defence0 Desc", "Defence1 Desc", "Evade0 Desc", "Evade1 Desc", "Buff0 Desc", "Buff1 Desc","Debuff0 Desc", "Debuff1 Desc"
+            { "Attack0 Desc", "Attack0 Desc", "Attack0 Desc", "Attack0 Desc", "Attack0 Desc", "Attack0 Desc"},
+            { "Attack1 Desc", "Attack1 Desc", "Attack1 Desc", "Attack1 Desc", "Attack1 Desc", "Attack1 Desc"},
+            { "Defence0 Desc", "Defence0 Desc", "Defence0 Desc", "Defence0 Desc", "Defence0 Desc", "Defence0 Desc"},
+            { "Defence1 Desc", "Defence1 Desc", "Defence1 Desc", "Defence1 Desc", "Defence1 Desc", "Defence1 Desc"},
+            { "Evade0 Desc", "Evade0 Desc", "Evade0 Desc", "Evade0 Desc", "Evade0 Desc", "Evade0 Desc"},
+            { "Evade1 Desc", "Evade1 Desc", "Evade1 Desc", "Evade1 Desc", "Evade1 Desc", "Evade1 Desc"},
+            { "Buff0 Desc", "Buff0 Desc", "Buff0 Desc", "Buff0 Desc", "Buff0 Desc", "Buff0 Desc"},
+            { "Buff1 Desc", "Buff1 Desc", "Buff1 Desc", "Buff1 Desc", "Buff1 Desc", "Buff1 Desc"},
+            { "Debuff0 Desc", "Debuff0 Desc", "Debuff0 Desc", "Debuff0 Desc", "Debuff0 Desc", "Debuff0 Desc"},
+            { "Debuff1 Desc", "Debuff1 Desc", "Debuff1 Desc", "Debuff1 Desc", "Debuff1 Desc", "Debuff1 Desc"}
         }
     };
 
@@ -32,27 +42,63 @@ public class SkillInfo
         }
     };
 
-    public static int[,] values = { 
-        { 
-            1, 2, 1, 2, 1, 2, 1, 2, 1, 2
+    public static int[,,] values = { 
+        {
+            { 1, 1, 1, 1, 1, 1 },
+            { 2, 2, 2, 2, 2, 2 },
+            { 1, 1, 1, 1, 1, 1 },
+            { 2, 2, 2, 2, 2, 2 },
+            { 1, 1, 1, 1, 1, 1 },
+            { 2, 2, 2, 2, 2, 2 },
+            { 1, 1, 1, 1, 1, 1 },
+            { 2, 2, 2, 2, 2, 2 },
+            { 1, 1, 1, 1, 1, 1 },
+            { 2, 2, 2, 2, 2, 2 }
         } 
     };
 
-    public static int[,] speeds = {
+    public static int[,,] speeds = {
         {
-            4, 4, -1, -1, -1, -1,3, 3, 5, 5
+            { 1, 1, 1, 1, 1, 1 },
+            { 2, 2, 2, 2, 2, 2 },
+            { -1, -1, -1, -1, -1, -1 },
+            { -1, -1, -1, -1, -1, -1 },
+            { -1, -1, -1, -1, -1, -1 },
+            { -1, -1, -1, -1, -1, -1 },
+            { 1, 1, 1, 1, 1, 1 },
+            { 2, 2, 2, 2, 2, 2 },
+            { 1, 1, 1, 1, 1, 1 },
+            { 2, 2, 2, 2, 2, 2 }
         }
     };
 
-    public static int[,] stiffs = {
+    public static int[,,] endurances = {
         {
-            5, 5, 0, 0, 0, 0, 0, 0, 0, 0
+            { 5, 5, 5, 5, 5, 5 },
+            { 5, 5, 5, 5, 5, 5 },
+            { 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0 }
         }
     };
 
-    public static int[,] effects = {
+    public static int[,,] effects = {
         {
-            -1, 0, -1, -1, -1, -1, -1, -1, -1, -1
+            { -1, -1, -1, -1, -1, -1 },
+            { 0, 0, 0, 0, 0, 0 },
+            { -1, -1, -1, -1, -1, -1 },
+            { -1, -1, -1, -1, -1, -1 },
+            { -1, -1, -1, -1, -1, -1 },
+            { -1, -1, -1, -1, -1, -1 },
+            { -1, -1, -1, -1, -1, -1 },
+            { -1, -1, -1, -1, -1, -1 },
+            { -1, -1, -1, -1, -1, -1 },
+            { -1, -1, -1, -1, -1, -1 }
         }
     };
 }

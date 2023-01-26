@@ -9,7 +9,7 @@ public class Character
     public int speed;
     public int defense;
     public int evade;
-    public int indurance;
+    public int endurance;
 }
 public class CharacterManager : MonoBehaviour
 {
@@ -32,7 +32,7 @@ public class CharacterManager : MonoBehaviour
         character.speed = CharacterInfo.speeds[num];
         character.defense = CharacterInfo.defenses[num];
         character.evade = CharacterInfo.evades[num];
-        character.indurance = CharacterInfo.indurances[num];
+        character.endurance = CharacterInfo.endurances[num];
 
         if (upgrade != null)
         {
@@ -41,7 +41,12 @@ public class CharacterManager : MonoBehaviour
             character.speed += upgrade[characterNum].speed;
             character.defense += upgrade[characterNum].defense;
             character.evade += upgrade[characterNum].evade;
-            character.indurance += upgrade[characterNum].indurance;
+            character.endurance += upgrade[characterNum].endurance;
         }
+    }
+
+    public void ChangeHp(int changeValue)
+    {
+        character.hp += changeValue;
     }
 }

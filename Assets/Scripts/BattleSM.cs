@@ -14,7 +14,8 @@ public class BattleSM : MonoBehaviour
     [SerializeField] DiceManager diceManager;
 
     //UI Components
-    [SerializeField] Text characterNameText, hpText, skillText;
+    [SerializeField] Text characterNameText, hpText, skillText, turnText;
+    [SerializeField] Canvas skillCanvas, diceCanvas, checkCanvas;
 
     int characterNum;
     int[] skillSet;
@@ -33,5 +34,42 @@ public class BattleSM : MonoBehaviour
         characterNameText.text = CharacterInfo.characterName[characterNum];
         hpText.text = playerCharacterManager.character.hp.ToString();
         skillText.text = SkillInfo.skillNameText[characterNum, skillSet[0]];
+    }
+
+    public void BeforeStart()
+    {
+        turnText.text = "Turn " + bm.turnNum;
+    }
+
+    public void TurnStart()
+    {
+
+    }
+
+    public void InTurn()
+    {
+        skillCanvas.gameObject.SetActive(true);
+    }
+
+    public void Check()
+    {
+        skillCanvas.gameObject.SetActive(false);
+        diceCanvas.gameObject.SetActive(false);
+        checkCanvas.gameObject.SetActive(false);
+    }
+
+    public void EndTurn()
+    {
+
+    }
+
+    public void DiceCanvasOn()
+    {
+        diceCanvas.gameObject.SetActive(true);
+    }
+
+    public void CheckCanvasOn()
+    {
+        checkCanvas.gameObject.SetActive(true);
     }
 }
