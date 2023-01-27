@@ -13,24 +13,48 @@ public class BattleManager : MonoBehaviour
     int gameStatus = 0; //0 : before start(Clean up), 1 : turn start(Effect), 2 : In turn, 3 : Check, 4 : End turn(Effect)
 
     public int turnNum = 0;
+    Dictionary<int, string> stepMethod = new Dictionary<int, string>{
+        { 0, "TurnStart" },
+        { 1, "InTurn" },
+        { 2, "Check" },
+        { 3, "EndTurn" },
+        { 4, "BeforeStart" }
+    };
+
+    bool timeFlow = false;
+    float time = 0;
+    private void FixedUpdate()
+    {
+        if (time > 1f && battleSM.uiEnd)
+        {
+            time = 0;
+            RunNextStep();
+            Debug.Log(battleSM.uiEnd);
+        }
+        if (timeFlow)
+            time += Time.fixedDeltaTime;
+    }
     public void SetBattle()
     {
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         player.SetPlayer(gm.characterNum, gm.skillSet);
         enemy.SetPlayer(0, new int[4]{ 0,0,0,0});
+
+        Invoke("BeforeStart", 1);
     }
 
     public void BeforeStart()
     {
         gameStatus = 0;
         turnNum++;
-        battleSM.BeforeStart();
+        StartCoroutine(battleSM.BeforeStart());
+        timeFlow = true;
     }
 
     public void TurnStart()
     {
         gameStatus = 1;
-        battleSM.TurnStart();
+        StartCoroutine(battleSM.TurnStart());
 
         //Game End Check
     }
@@ -38,34 +62,67 @@ public class BattleManager : MonoBehaviour
     public void InTurn()
     {
         gameStatus = 2;
-        battleSM.InTurn();
+        StartCoroutine( battleSM.InTurn());
+        timeFlow = false;
     }
 
     public void Check()
     {
         gameStatus = 3;
-        battleSM.Check();
+        StartCoroutine(battleSM.Check());
+        timeFlow = false;
+        BattleProgress();
+        timeFlow = true;
     }
 
     public void EndTurn()
     {
         gameStatus = 4;
-        battleSM.EndTurn();
+        StartCoroutine(battleSM.EndTurn());
     }
 
-    int playerSkillNum, playerDiceNum;
-    int enemySkillNum, enemyDiceNum;
+    public void RunNextStep()
+    {
+        Invoke(stepMethod[gameStatus], 0);
+    }
+
+    int playerSkillNum = -1, playerDiceNum = -1;
+    int enemySkillNum = -1, enemyDiceNum = -1;
     public void SelectSkillNum(int num)
     {
+        //Skill Cancel
+        if(playerSkillNum == num)
+        {
+            playerSkillNum = -1;
+            battleSM.DiceCanvasOff();
+            battleSM.CheckCanvasOff();
+            return;
+        }
+
         playerSkillNum = num;
+        battleSM.DiceCanvasOn();
     }
 
     public void SelectDiceNum(int num)
     {
+        if(playerDiceNum == num)
+        {
+            playerDiceNum = -1;
+            battleSM.CheckCanvasOff();
+            return;
+        }
+
         playerDiceNum = num;
+        battleSM.CheckCanvasOn();
     }
 
     public void CheckSkillAndDice()
+    {
+        timeFlow = true;
+        StartCoroutine(battleSM.InTurnEnd());
+    }
+
+    public void BattleProgress()
     {
         Skill playerSkill = player.UseSkill(playerSkillNum, playerDiceNum);
 

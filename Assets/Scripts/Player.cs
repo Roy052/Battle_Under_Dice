@@ -13,9 +13,13 @@ public class Player : MonoBehaviour
     int[] skillSet;
     public void SetPlayer(int characterNum, int[] skillSet)
     {
-        this.characterNum = characterNum;
         characterManager.SetCharacter(characterNum);
+        diceManager.DiceReset();
+
+        this.characterNum = characterNum;
         this.skillSet = skillSet;
+
+
     }
 
     public Skill UseSkill(int skillNum, int diceNum)

@@ -16,12 +16,12 @@ public class DiceManager : MonoBehaviour
 
     public void UseDice(int diceNum)
     {
-        if(diceNum == 0 || diceArray[diceNum - 1] <= 0)
+        if(diceNum > 5 || diceNum < 0 || diceArray[diceNum] <= 0)
         {
             Debug.LogError("UseDice() Error");
             return;
         }
-        diceArray[diceNum - 1]--;
+        diceArray[diceNum]--;
     }
 
     public int TotalDiceValue()

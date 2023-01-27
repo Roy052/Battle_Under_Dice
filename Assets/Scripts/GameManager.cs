@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     }
 
     public int characterNum;
-    public int[] skillSet;
+    public int[] skillSet = new int[6] { 0, 0, 0, 0, 0, 0 };
 
     void Start()
     {
