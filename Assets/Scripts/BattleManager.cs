@@ -37,8 +37,8 @@ public class BattleManager : MonoBehaviour
     public void SetBattle()
     {
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
-        player.SetPlayer(gm.characterNum, gm.skillSet);
-        enemy.SetPlayer(0, new int[4]{ 0,0,0,0});
+        player.SetPlayer(gm.characterNum_player, gm.skillSet_player);
+        enemy.SetPlayer(gm.characterNum_enemy, gm.skillSet_enemy);
 
         Invoke("BeforeStart", 1);
     }
@@ -162,11 +162,27 @@ public class BattleManager : MonoBehaviour
         int defense = 0, evade = 0;
         if (playerFirst)
         {
-            if (playerSkill.type == 0) enemy.characterManager.ChangeHp(playerSkill.value);
+            if (playerSkill.type == 0)
+            {
+                //Damage Calculate
+                int damage = playerSkill.value;
+                enemy.characterManager.ChangeHp(-damage);
+            }
             if (playerSkill.type == 1) defense = playerSkill.value;
             if (playerSkill.type == 2) evade = playerSkill.value;
 
             //Check Game End
+        }
+        else
+        {
+            if (playerSkill.type == 0)
+            {
+                //Damage Calculate
+                int damage = playerSkill.value;
+                enemy.characterManager.ChangeHp(-damage);
+            }
+            if (playerSkill.type == 1) defense = playerSkill.value;
+            if (playerSkill.type == 2) evade = playerSkill.value;
         }
     }
 }

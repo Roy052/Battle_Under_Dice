@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DiceManager : MonoBehaviour
 {
-    public int[] diceArray = new int[6];
+    int[] diceArray = new int[6];
 
     public void DiceReset()
     {
@@ -24,6 +24,11 @@ public class DiceManager : MonoBehaviour
         diceArray[diceNum]--;
     }
 
+    public int[] GetDiceArray()
+    {
+        return diceArray;
+    }
+
     public int TotalDiceValue()
     {
         int sum = 0;
@@ -32,4 +37,6 @@ public class DiceManager : MonoBehaviour
 
         return sum;
     }
+
+    
 }

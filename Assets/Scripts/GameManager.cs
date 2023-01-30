@@ -19,8 +19,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public int characterNum;
-    public int[] skillSet = new int[6] { 0, 0, 0, 0, 0, 0 };
+    public int characterNum_player;
+    public int[] skillSet_player;
+
+    public int characterNum_enemy;
+    public int[] skillSet_enemy;
 
     void Start()
     {
@@ -31,5 +34,11 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void SetEnemyInfo(int characterNum, int[] skillSet)
+    {
+        characterNum_enemy = characterNum;
+        skillSet_enemy = skillSet;
     }
 }
