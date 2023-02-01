@@ -19,10 +19,15 @@ public class BattleSM : MonoBehaviour
     [SerializeField] Image turnImage;
     [SerializeField] Canvas skillCanvas, diceCanvas, checkCanvas;
     [SerializeField] Text[] skillTexts, diceAmountTexts;
+    [SerializeField] Button[] skillButtons, diceButtons;
     //PlyaerUI
     [SerializeField] Text characterNameText_player, hpText_player, skillText_player;
     //EnemyUI
     [SerializeField] Text characterNameText_enemy, hpText_enemy, skillText_enemy;
+    //GameEndUI
+    [SerializeField] Sprite[] endImages;
+    [SerializeField] Text endText;
+    string[] endString = { "Victory", "Draw", "Defeat" };
 
     int characterNum_player;
     int[] skillSet_player;
@@ -30,8 +35,6 @@ public class BattleSM : MonoBehaviour
 
     int characterNum_enemy;
     int[] skillSet_enemy;
-
-
 
     public bool uiEnd = false;
     private void Start()
@@ -79,7 +82,10 @@ public class BattleSM : MonoBehaviour
     {
         uiEnd = false;
         phaseText.text = "BeforeStart";
-        turnText.text = "Turn " + bm.turnNum;
+        if (bm.turnNum != 12)
+            turnText.text = "Turn " + bm.turnNum;
+        else
+            turnText.text = "Last Turn";
         RefreshUI();
         StartCoroutine(FadeManager.FadeIn(turnText, 1));
         StartCoroutine(FadeManager.FadeIn(turnImage, 1));
@@ -138,6 +144,11 @@ public class BattleSM : MonoBehaviour
 
     }
 
+    public void GameEnd(int whoWin)
+    {
+        endText.text = endString[whoWin];
+    }
+
     void RefreshUI()
     {
         //hp
@@ -147,7 +158,11 @@ public class BattleSM : MonoBehaviour
         //diceNum
         diceArray = diceManager_player.GetDiceArray();
         for (int i = 0; i < 6; i++)
+        {
+            if (diceArray[i] == 0) diceButtons[i].enabled = false;
             diceAmountTexts[i].text = diceArray[i].ToString();
+        }
+            
     }
 
     public void SkillCanvasOn()

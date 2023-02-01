@@ -48,5 +48,6 @@ public class CharacterManager : MonoBehaviour
     public void ChangeHp(int changeValue)
     {
         character.hp += changeValue;
+        if (character.hp < 0) character.hp = 0;
     }
 }

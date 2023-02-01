@@ -7,7 +7,7 @@
     public int effect;
 }*/
 
-public class SkillInfo
+public static class SkillInfo
 {
     public static string[,] skillNameText =
     {
