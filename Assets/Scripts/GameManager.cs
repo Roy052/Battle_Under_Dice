@@ -25,9 +25,18 @@ public class GameManager : MonoBehaviour
     public int characterNum_enemy;
     public int[] skillSet_enemy;
 
+    //Infos
+    public SkillInfo skillInfo;
+    public GameInfo gameInfo;
+    public CharacterInfo characterInfo;
+
+    //EnemyStatus
+    public int isAI = 1;
     void Start()
     {
-        
+        skillInfo = new SkillInfo();
+        gameInfo = new GameInfo();
+        characterInfo = new CharacterInfo();
     }
 
     // Update is called once per frame

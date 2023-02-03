@@ -24,10 +24,16 @@ public class BattleManager : MonoBehaviour
 
     bool timeFlow = false;
     float time = 0;
-    
+    //Skill & Dice
+    int playerSkillNum = -1, playerDiceNum = -1;
+    int enemySkillNum = -1, enemyDiceNum = -1;
+
     //Battle
     int playerDefense = 0, playerEvade = 0;
     int enemyDefense = 0, enemyEvade = 0;
+
+    //EnemyStatus
+    int isAI = 1;
 
     //GameEnd Message
     private void FixedUpdate()
@@ -45,7 +51,9 @@ public class BattleManager : MonoBehaviour
     {
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         player.SetPlayer(gm.characterNum_player, gm.skillSet_player);
+        if (enemy == null) Debug.Log("a");
         enemy.SetPlayer(gm.characterNum_enemy, gm.skillSet_enemy);
+        isAI = gm.isAI;
 
         Invoke("BeforeStart", 1);
     }
@@ -59,6 +67,7 @@ public class BattleManager : MonoBehaviour
         if (CheckGameEnd())
         {
             battleSM.GameEnd(WhoWin());
+            GameEnd();
         }
 
         StartCoroutine(battleSM.BeforeStart());
@@ -71,6 +80,12 @@ public class BattleManager : MonoBehaviour
         StartCoroutine(battleSM.TurnStart());
 
         //Game End Check
+        //Check Game End
+        if (CheckGameEnd())
+        {
+            battleSM.GameEnd(WhoWin());
+            GameEnd();
+        }
     }
 
     public void InTurn()
@@ -95,6 +110,13 @@ public class BattleManager : MonoBehaviour
     {
         gameStatus = 4;
         StartCoroutine(battleSM.EndTurn());
+
+        //Check Game End
+        if (CheckGameEnd())
+        {
+            battleSM.GameEnd(WhoWin());
+            GameEnd();
+        }
     }
 
     public void RunNextStep()
@@ -102,8 +124,7 @@ public class BattleManager : MonoBehaviour
         Invoke(stepMethod[gameStatus], 0);
     }
 
-    int playerSkillNum = -1, playerDiceNum = -1;
-    int enemySkillNum = -1, enemyDiceNum = -1;
+    
     public void SelectSkillNum(int num)
     {
         //Skill Cancel
@@ -136,7 +157,7 @@ public class BattleManager : MonoBehaviour
     {
         timeFlow = true;
         StartCoroutine(battleSM.InTurnEnd());
-        Debug.Log("(" + gm.characterNum_player + ", " + playerSkillNum + ", " + playerDiceNum);
+        Debug.Log("(" + gm.characterNum_player + ", " + playerSkillNum + ", " + playerDiceNum + ")");
     }
 
     public void BattleProgress()
@@ -145,9 +166,10 @@ public class BattleManager : MonoBehaviour
 
         //Random Mehod -> AI Method -> Network Method
         enemySkillNum = Random.Range(0, 4);
-        enemyDiceNum = Random.Range(1, 7);
-        Skill enemySkill = enemy.UseSkill(enemySkillNum, enemyDiceNum);
 
+        //Have To Fix
+        enemyDiceNum = isAI;
+        Skill enemySkill = enemy.UseSkill(enemySkillNum, enemyDiceNum);
 
         //Calculate Battle Result
         bool playerFirst;
@@ -173,6 +195,7 @@ public class BattleManager : MonoBehaviour
 
         int playerEndurance = player.characterManager.character.endurance + playerSkill.endurance;
         int enemyEndurance = enemy.characterManager.character.endurance + enemySkill.endurance;
+        
 
         //Skill Type = 0 : Attack, 1 : Defense, 2 : Evade, 3 : Buff, 4 : Debuff
         if (playerFirst)
@@ -181,13 +204,22 @@ public class BattleManager : MonoBehaviour
             {
                 //Damage Calculate
                 int damage = CalculateDamage(playerSkill.value, true);
+                Debug.Log("Damage : " + damage);
                 enemy.characterManager.ChangeHp(-damage);
             }
             if (playerSkill.type == 1) playerDefense = playerSkill.value;
             if (playerSkill.type == 2) playerEvade = playerSkill.value;
 
+            //Damage UI
+            battleSM.RefreshUI();
+
             //Check Game End
-            
+            if (CheckGameEnd())
+            {
+                battleSM.GameEnd(WhoWin());
+                GameEnd();
+            }
+
 
             if (enemySkill.type == 0)
             {
@@ -195,8 +227,18 @@ public class BattleManager : MonoBehaviour
                 int damage = CalculateDamage(enemySkill.value, false);
                 player.characterManager.ChangeHp(-damage);
             }
-            if (playerSkill.type == 1) playerDefense = playerSkill.value;
-            if (playerSkill.type == 2) playerEvade = playerSkill.value;
+            if (enemySkill.type == 1) enemyDefense = enemySkill.value;
+            if (enemySkill.type == 2) enemyEvade = enemySkill.value;
+
+            //Damage UI
+            battleSM.RefreshUI();
+
+            //Check Game End
+            if (CheckGameEnd())
+            {
+                battleSM.GameEnd(WhoWin());
+                GameEnd();
+            }
         }
         else
         {
@@ -209,6 +251,16 @@ public class BattleManager : MonoBehaviour
             if (enemySkill.type == 1) enemyDefense = enemySkill.value;
             if (enemySkill.type == 2) enemyEvade = enemySkill.value;
 
+            //Damage UI
+            battleSM.RefreshUI();
+
+            //Check Game End
+            if (CheckGameEnd())
+            {
+                battleSM.GameEnd(WhoWin());
+                GameEnd();
+            }
+
             if (playerSkill.type == 0)
             {
                 //Damage Calculate
@@ -217,6 +269,16 @@ public class BattleManager : MonoBehaviour
             }
             if (playerSkill.type == 1) playerDefense = playerSkill.value;
             if (playerSkill.type == 2) playerEvade = playerSkill.value;
+
+            //Damage UI
+            battleSM.RefreshUI();
+
+            //Check Game End
+            if (CheckGameEnd())
+            {
+                battleSM.GameEnd(WhoWin());
+                GameEnd();
+            }
         }
     }
 
@@ -242,12 +304,20 @@ public class BattleManager : MonoBehaviour
         else return 2;
     }
 
+    void GameEnd()
+    {
+        time = 0;
+        timeFlow = false;
+    }
+
     int CalculateDamage(int attack, bool isPlayer)
     {
         int damage = 0;
 
+        //Attacker is Player
         if (isPlayer)
         {
+            //Shield Exist
             if (enemyDefense != 0)
             {
                 if (enemyDefense > attack)
@@ -261,10 +331,19 @@ public class BattleManager : MonoBehaviour
                     enemyDefense = 0;
                 }
             }
-            else if (enemyEvade >= attack) damage = 0;
+            //No Shield
+            else
+            {
+                damage = attack;
+            }
+            
+            //Eavade Success
+            if (enemyEvade >= attack) damage = 0;
         }
+        //Attacker is Enemy
         else
         {
+            //Shield Exist
             if (playerDefense != 0)
             {
                 if (playerDefense > attack)
@@ -278,7 +357,14 @@ public class BattleManager : MonoBehaviour
                     playerDefense = 0;
                 }
             }
-            else if (playerEvade >= attack) damage = 0;
+            //No Shield
+            else
+            {
+                damage = attack;
+            }
+            
+            //Evade Success
+            if (playerEvade >= attack) damage = 0;
         }
 
         return damage;
@@ -286,6 +372,13 @@ public class BattleManager : MonoBehaviour
 
     void RefreshData()
     {
+        //Skill & Dice
+        playerSkillNum = -1;
+        playerDiceNum = -1;
+        enemySkillNum = -1; 
+        enemyDiceNum = -1;
+
+        //Defense & Evade
         playerDefense = 0;
         playerEvade = 0;
         enemyDefense = 0;

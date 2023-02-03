@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
 
     int characterNum;
     int[] skillSet;
-    public void SetPlayer(int characterNum, int[] skillSet)
+    public virtual void SetPlayer(int characterNum, int[] skillSet)
     {
         characterManager.SetCharacter(characterNum);
         diceManager.DiceReset();
@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
 
     }
 
-    public Skill UseSkill(int skillNum, int diceNum)
+    public virtual Skill UseSkill(int skillNum, int diceNum)
     {
         Skill retSkill = skillManager.UseSkill(characterNum, skillSet[skillNum], diceNum);
         diceManager.UseDice(diceNum);

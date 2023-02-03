@@ -11,6 +11,8 @@ public class Character
     public int evade;
     public int endurance;
 }
+
+
 public class CharacterManager : MonoBehaviour
 {
     int characterNum;

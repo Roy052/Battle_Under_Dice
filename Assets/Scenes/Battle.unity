@@ -449,7 +449,7 @@ GameObject:
   m_Component:
   - component: {fileID: 193982338}
   - component: {fileID: 193982337}
-  - component: {fileID: 193982336}
+  - component: {fileID: 193982339}
   - component: {fileID: 193982335}
   - component: {fileID: 193982334}
   - component: {fileID: 193982333}
@@ -472,6 +472,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaccefd7b0ec5254fab733623b8d1372, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  diceArray: 000000000000000000000000000000000000000000000000
 --- !u!114 &193982334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -496,22 +497,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a602094cc4a924742ae80867421681a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &193982336
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 193982332}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd4fd3215ed84614fa2bb1c49ec9111e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bm: {fileID: 1075938380}
-  characterManager: {fileID: 193982335}
-  skillManager: {fileID: 193982334}
-  diceManager: {fileID: 193982333}
 --- !u!212 &193982337
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -579,6 +564,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+--- !u!114 &193982339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 193982332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 519fdde748f576e44b42f4c927874169, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bm: {fileID: 1075938380}
+  characterManager: {fileID: 193982335}
+  skillManager: {fileID: 193982334}
+  diceManager: {fileID: 193982333}
+  skillNum: 0
+  diceNum: 0
 --- !u!1 &199372114
 GameObject:
   m_ObjectHideFlags: 0
@@ -1620,7 +1623,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bm: {fileID: 1075938380}
   player: {fileID: 2071528498}
-  enemy: {fileID: 193982336}
+  enemy: {fileID: 193982339}
   characterManager_player: {fileID: 2071528497}
   characterManager_enemy: {fileID: 193982335}
   diceManager_player: {fileID: 2071528495}
@@ -3044,7 +3047,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   battleSM: {fileID: 469284385}
   player: {fileID: 2071528498}
-  enemy: {fileID: 193982336}
+  enemy: {fileID: 193982339}
   diceManager: {fileID: 0}
   turnNum: 0
 --- !u!4 &1075938381
@@ -5328,6 +5331,7 @@ MonoBehaviour:
   skillSet_player: 000000000100000002000000030000000400000005000000
   characterNum_enemy: 0
   skillSet_enemy: 000000000100000002000000030000000400000005000000
+  isAI: 1
 --- !u!4 &1995980177
 Transform:
   m_ObjectHideFlags: 0
@@ -5478,6 +5482,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaccefd7b0ec5254fab733623b8d1372, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  diceArray: 000000000000000000000000000000000000000000000000
 --- !u!114 &2071528496
 MonoBehaviour:
   m_ObjectHideFlags: 0

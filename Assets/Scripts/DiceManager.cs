@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DiceManager : MonoBehaviour
 {
-    int[] diceArray = new int[6];
+    [SerializeField] int[] diceArray = new int[6];
 
     public void DiceReset()
     {
@@ -18,7 +18,7 @@ public class DiceManager : MonoBehaviour
     {
         if(diceNum > 5 || diceNum < 0 || diceArray[diceNum] <= 0)
         {
-            Debug.LogError("UseDice() Error");
+            Debug.LogError("UseDice() Error, current is " + diceNum);
             return;
         }
         diceArray[diceNum]--;

@@ -37,16 +37,18 @@ public class BattleSM : MonoBehaviour
     int[] skillSet_enemy;
 
     public bool uiEnd = false;
+
     private void Start()
     {
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+
         //Preset -> Network
         gm.SetEnemyInfo(0, new int[6] { 0, 1, 2, 3, 4, 5 });
+
         characterNum_player = gm.characterNum_player;
         skillSet_player = gm.skillSet_player;
         characterNum_enemy = gm.characterNum_enemy;
         skillSet_enemy = gm.skillSet_enemy;
-        Debug.Log(skillSet_player[1]);
 
         SetUp();
     }
@@ -149,7 +151,7 @@ public class BattleSM : MonoBehaviour
         endText.text = endString[whoWin];
     }
 
-    void RefreshUI()
+    public void RefreshUI()
     {
         //hp
         hpText_player.text = characterManager_player.character.hp.ToString();
