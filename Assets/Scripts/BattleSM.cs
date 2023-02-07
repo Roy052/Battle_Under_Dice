@@ -21,9 +21,9 @@ public class BattleSM : MonoBehaviour
     [SerializeField] Text[] skillTexts, diceAmountTexts;
     [SerializeField] Button[] skillButtons, diceButtons;
     //PlyaerUI
-    [SerializeField] Text characterNameText_player, hpText_player, skillText_player;
+    [SerializeField] PlayerCM playerCM;
     //EnemyUI
-    [SerializeField] Text characterNameText_enemy, hpText_enemy, skillText_enemy;
+    [SerializeField] PlayerCM enemyCM;
     //GameEndUI
     [SerializeField] Sprite[] endImages;
     [SerializeField] Text endText;
@@ -60,8 +60,8 @@ public class BattleSM : MonoBehaviour
         phaseText.text = "SetUp";
 
         //Name
-        characterNameText_player.text = CharacterInfo.characterName[characterNum_player];
-        characterNameText_enemy.text = CharacterInfo.characterName[characterNum_enemy];
+        playerCM.SetNameText(CharacterInfo.characterName[characterNum_player]);
+        enemyCM.SetNameText(CharacterInfo.characterName[characterNum_enemy]);
 
         //DiceArray
         for (int i = 0; i < 6; i++)
@@ -154,8 +154,8 @@ public class BattleSM : MonoBehaviour
     public void RefreshUI()
     {
         //hp
-        hpText_player.text = characterManager_player.character.hp.ToString();
-        hpText_enemy.text = characterManager_enemy.character.hp.ToString();
+        playerCM.SetHpText(characterManager_player.character.hp);
+        enemyCM.SetHpText(characterManager_enemy.character.hp);
 
         //diceNum
         diceArray = diceManager_player.GetDiceArray();
@@ -163,8 +163,19 @@ public class BattleSM : MonoBehaviour
         {
             if (diceArray[i] == 0) diceButtons[i].enabled = false;
             diceAmountTexts[i].text = diceArray[i].ToString();
+        }  
+    }
+
+    public void TakeDamage(bool isPlayer, bool shieldBroke, int shieldDamage, int damage)
+    {
+        if (isPlayer) 
+        {
+            playerCM.TakeDamage(shieldBroke, shieldDamage, damage);
         }
-            
+        else
+        {
+            enemyCM.TakeDamage(shieldBroke, shieldDamage, damage);
+        }    
     }
 
     public void SkillCanvasOn()
