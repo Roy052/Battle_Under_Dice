@@ -17,6 +17,17 @@ public class PlayerCM : MonoBehaviour
     [SerializeField] Text shieldText;
     [SerializeField] Sprite shieldSprite, shieldBrokeSprite;
 
+    //defense beside hp
+    [SerializeField] Image defenseEvadeBox;
+    [SerializeField] Text defenseEvadeText;
+    [SerializeField] Sprite[] defenseEvadeSprites;
+    int defenseEvade = -1;
+    private void Start()
+    {
+        BoxOff();
+        Defense_EvadeOff();
+    }
+
     public void SetNameText(string name)
     {
         nameText.text = name;
@@ -30,39 +41,75 @@ public class PlayerCM : MonoBehaviour
     public IEnumerator TakeDamage(bool shieldBroke, int shieldDamage,int damage)
     {
         //Shield Damage
-        shieldBox.gameObject.SetActive(true);
-        shieldText.text = shieldDamage.ToString();
-
-        StartCoroutine(FadeManager.FadeIn(shieldBox, 0.5f));
-        StartCoroutine(FadeManager.FadeIn(shieldText, 0.5f));
-        yield return new WaitForSeconds(0.5f);
-        yield return new WaitForSeconds(1);
-        StartCoroutine(FadeManager.FadeOut(shieldText, 1));
-        if (shieldBroke)
+        if (shieldDamage > 0)
         {
-            shieldBox.sprite = shieldBrokeSprite;
-            StartCoroutine(FadeManager.FadeIn(shieldBox, 0.5f));
-            yield return new WaitForSeconds(0.5f);
-        }
-        StartCoroutine(FadeManager.FadeOut(shieldBox, 1));
-        yield return new WaitForSeconds(1);
+            shieldBox.gameObject.SetActive(true);
+            shieldText.text = "- " + shieldDamage.ToString();
 
-        shieldBox.sprite = shieldSprite;
-        shieldBox.gameObject.SetActive(false);
+            StartCoroutine(FadeManager.FadeIn(shieldBox, 0.5f));
+            StartCoroutine(FadeManager.FadeIn(shieldText, 0.5f));
+            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(1);
+            StartCoroutine(FadeManager.FadeOut(shieldText, 1));
+            if (shieldBroke)
+            {
+                defenseEvadeBox.sprite = shieldBrokeSprite;
+                defenseEvadeText.text = "";
+                StartCoroutine(FadeManager.FadeIn(defenseEvadeBox, 0.5f));
+                yield return new WaitForSeconds(0.5f);
+
+                Defense_EvadeOff();
+            }
+            StartCoroutine(FadeManager.FadeOut(shieldBox, 1));
+            yield return new WaitForSeconds(1);
+
+            shieldBox.sprite = shieldSprite;
+            shieldBox.gameObject.SetActive(false);
+        }
         
         //Damage
-        damageBox.gameObject.SetActive(true);
-        damageText.text = damage.ToString();
+        if(damage > 0)
+        {
+            damageBox.gameObject.SetActive(true);
+            damageText.text = "- " + damage.ToString();
 
-        StartCoroutine(FadeManager.FadeIn(damageBox, 0.5f));
-        StartCoroutine(FadeManager.FadeIn(damageText, 0.5f));
-        yield return new WaitForSeconds(0.5f);
-        yield return new WaitForSeconds(1);
+            StartCoroutine(FadeManager.FadeIn(damageBox, 0.5f));
+            StartCoroutine(FadeManager.FadeIn(damageText, 0.5f));
+            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(1);
 
-        StartCoroutine(FadeManager.FadeOut(damageBox, 1));
-        StartCoroutine(FadeManager.FadeOut(damageText, 1));
-        yield return new WaitForSeconds(1);
+            StartCoroutine(FadeManager.FadeOut(damageBox, 1));
+            StartCoroutine(FadeManager.FadeOut(damageText, 1));
+            yield return new WaitForSeconds(1);
 
+            damageBox.gameObject.SetActive(false);
+        }
+    }
+
+    public void Defense_EvadeOn(int defenseEvade, int value)
+    {
+        if (value == 0) Defense_EvadeOff();
+
+        defenseEvadeBox.gameObject.SetActive(true);
+        defenseEvadeBox.sprite = defenseEvadeSprites[defenseEvade];
+        defenseEvadeText.text = value.ToString();
+        this.defenseEvade = defenseEvade;
+    }
+
+    public void Defense_EvadeOff()
+    {
+        defenseEvadeBox.gameObject.SetActive(false);
+    }
+
+    public void BoxOff()
+    {
+        shieldBox.gameObject.SetActive(false);
         damageBox.gameObject.SetActive(false);
+    }
+
+    public void BoxOn()
+    {
+        shieldBox.gameObject.SetActive(true);
+        damageBox.gameObject.SetActive(true);
     }
 }

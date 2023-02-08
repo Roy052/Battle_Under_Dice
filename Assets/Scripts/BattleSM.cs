@@ -163,19 +163,47 @@ public class BattleSM : MonoBehaviour
         {
             if (diceArray[i] == 0) diceButtons[i].enabled = false;
             diceAmountTexts[i].text = diceArray[i].ToString();
-        }  
+        }
+
+        //playerCM
+        if (bm.playerDefense > 0)
+            DefenseEvadeOn(true, 0, bm.playerDefense);
+        else if (bm.playerEvade > 0)
+            DefenseEvadeOn(true, 1, bm.playerEvade);
+        else
+            DefenseEvadeOff(true);
+
+        //enemyCM
+        if (bm.enemyDefense > 0)
+            DefenseEvadeOn(false, 0, bm.enemyDefense);
+        else if (bm.enemyEvade > 0)
+            DefenseEvadeOn(false, 1, bm.enemyEvade);
+        else
+            DefenseEvadeOff(false);
+    }
+
+    public void DefenseEvadeOn(bool isPlayer ,int defenseEvade, int value)
+    {
+        if (isPlayer)
+            playerCM.Defense_EvadeOn(defenseEvade, value);
+        else
+            enemyCM.Defense_EvadeOn(defenseEvade, value);
+    }
+
+    public void DefenseEvadeOff(bool isPlayer)
+    {
+        if (isPlayer)
+            playerCM.Defense_EvadeOff();
+        else
+            enemyCM.Defense_EvadeOff();
     }
 
     public void TakeDamage(bool isPlayer, bool shieldBroke, int shieldDamage, int damage)
     {
         if (isPlayer) 
-        {
-            playerCM.TakeDamage(shieldBroke, shieldDamage, damage);
-        }
+            StartCoroutine(playerCM.TakeDamage(shieldBroke, shieldDamage, damage));
         else
-        {
-            enemyCM.TakeDamage(shieldBroke, shieldDamage, damage);
-        }    
+            StartCoroutine(enemyCM.TakeDamage(shieldBroke, shieldDamage, damage));
     }
 
     public void SkillCanvasOn()

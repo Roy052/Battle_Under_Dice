@@ -29,8 +29,8 @@ public class BattleManager : MonoBehaviour
     int enemySkillNum = -1, enemyDiceNum = -1;
 
     //Battle
-    int playerDefense = 0, playerEvade = 0;
-    int enemyDefense = 0, enemyEvade = 0;
+    public int playerDefense = 0, playerEvade = 0;
+    public int enemyDefense = 0, enemyEvade = 0;
     bool playerStunned = false, enemyStunned = false;
 
     //EnemyStatus
@@ -64,14 +64,11 @@ public class BattleManager : MonoBehaviour
         gameStatus = 0;
         turnNum++;
         RefreshData();
-        //Check Game End
-        if (CheckGameEnd())
-        {
-            battleSM.GameEnd(WhoWin());
-            GameEnd();
-        }
-
         StartCoroutine(battleSM.BeforeStart());
+
+        //Defense Evade Off
+        battleSM.DefenseEvadeOff(false);
+        battleSM.DefenseEvadeOff(true);
         timeFlow = true;
     }
 
@@ -211,12 +208,46 @@ public class BattleManager : MonoBehaviour
                     int damage = CalculateDamage(playerSkill.value, true);
                     Debug.Log("Damage : " + damage);
                     enemy.characterManager.ChangeHp(-damage);
-                }
-                if (playerSkill.type == 1) playerDefense = playerSkill.value;
-                if (playerSkill.type == 2) playerEvade = playerSkill.value;
 
-                //Damage UI
+                    //TakeDamage(isPlayer, shieldBroke, shieldDamage, damage);
+                    if (enemyDefense > 0)
+                    {
+                        //Shield = Damage
+                        if (damage == 0 && enemyDefense == playerSkill.value) 
+                        {
+                            battleSM.TakeDamage(false, true, playerSkill.value, 0);
+                            enemyDefense -= playerSkill.value;
+                        }
+                        //Shield > Damage
+                        else  if (damage == 0)
+                        {
+                            battleSM.TakeDamage(false, false, playerSkill.value, 0);
+                            enemyDefense -= playerSkill.value;
+                        }
+                        //Damage > Shield
+                        else
+                        {
+                            battleSM.TakeDamage(false, true, enemyDefense, damage);
+                            enemyDefense = 0;
+                        }  
+                    }  
+                    else
+                        battleSM.TakeDamage(false, false, 0, damage);
+                }
+                if (playerSkill.type == 1)
+                {
+                    playerDefense = playerSkill.value;
+                    battleSM.DefenseEvadeOn(true, 0, playerDefense);
+                }
+                if (playerSkill.type == 2)
+                {
+                    playerEvade = playerSkill.value;
+                    battleSM.DefenseEvadeOn(true, 1, playerEvade);
+                }
+
+                //Refresh UI
                 battleSM.RefreshUI();
+                
 
                 //Check Game End
                 if (CheckGameEnd())
@@ -239,9 +270,40 @@ public class BattleManager : MonoBehaviour
                     //Damage Calculate
                     int damage = CalculateDamage(enemySkill.value, false);
                     player.characterManager.ChangeHp(-damage);
+
+                    //TakeDamage(isPlayer, shieldBroke, shieldDamage, damage);
+                    if (playerDefense > 0)
+                    {
+                        //Shield = Damage
+                        if (damage == 0 && playerDefense == enemySkill.value)
+                        {
+                            battleSM.TakeDamage(true, false, enemySkill.value, 0);
+                            playerDefense -= enemySkill.value;
+                        }
+                        //Shield > Damage
+                        else if (damage == 0)
+                        {
+                            battleSM.TakeDamage(true, false, enemySkill.value, 0);
+                            playerDefense -= enemySkill.value;
+                        }
+                        //Damage > Shield
+                        else
+                        {
+                            battleSM.TakeDamage(true, true, playerDefense, damage);
+                            playerDefense = 0;
+                        }
+                    }
+                    else
+                        battleSM.TakeDamage(true, false, 0, damage);
                 }
-                if (enemySkill.type == 1) enemyDefense = enemySkill.value;
-                if (enemySkill.type == 2) enemyEvade = enemySkill.value;
+                if (enemySkill.type == 1)
+                {
+                    enemyDefense = enemySkill.value;
+                }
+                if (enemySkill.type == 2)
+                {
+                    enemyEvade = enemySkill.value;
+                }
 
                 //Damage UI
                 battleSM.RefreshUI();
@@ -265,6 +327,19 @@ public class BattleManager : MonoBehaviour
                     //Damage Calculate
                     int damage = CalculateDamage(enemySkill.value, false);
                     player.characterManager.ChangeHp(-damage);
+
+                    //TakeDamage(isPlayer, shieldBroke, shieldDamage, damage);
+                    if (playerDefense > 0)
+                    {
+                        //Shield > Damage
+                        if (damage == 0)
+                            battleSM.TakeDamage(true, false, enemySkill.value, 0);
+                        //Damage > Shield
+                        else
+                            battleSM.TakeDamage(true, true, playerDefense, damage);
+                    }
+                    else
+                        battleSM.TakeDamage(true, false, 0, damage);
                 }
                 if (enemySkill.type == 1) enemyDefense = enemySkill.value;
                 if (enemySkill.type == 2) enemyEvade = enemySkill.value;
@@ -291,6 +366,19 @@ public class BattleManager : MonoBehaviour
                     //Damage Calculate
                     int damage = CalculateDamage(playerSkill.value, true);
                     enemy.characterManager.ChangeHp(-damage);
+
+                    //TakeDamage(isPlayer, shieldBroke, shieldDamage, damage);
+                    if (enemyDefense > 0)
+                    {
+                        //Shield > Damage
+                        if (damage == 0)
+                            battleSM.TakeDamage(false, false, playerSkill.value, 0);
+                        //Damage > Shield
+                        else
+                            battleSM.TakeDamage(false, true, enemyDefense, damage);
+                    }
+                    else
+                        battleSM.TakeDamage(false, false, 0, damage);
                 }
                 if (playerSkill.type == 1) playerDefense = playerSkill.value;
                 if (playerSkill.type == 2) playerEvade = playerSkill.value;
