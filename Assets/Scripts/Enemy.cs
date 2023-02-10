@@ -32,4 +32,9 @@ public class Enemy : Player
         Debug.Log("[" + skillNum + ", " + diceNum + "]");
         return base.UseSkill(skillNum, diceNum);
     }
+
+    public int CurrentDice()
+    {
+        return diceQueue.Peek();
+    }
 }

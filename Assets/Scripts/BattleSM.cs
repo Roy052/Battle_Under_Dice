@@ -182,6 +182,14 @@ public class BattleSM : MonoBehaviour
             DefenseEvadeOff(false);
     }
 
+    //Reveal
+    public void RevealSkillAndDice(int playerSkillNum, int playerDiceNum, int enemySkillNum, int enemyDiceNum)
+    {
+        playerCM.RevealSkillAndDice(SkillInfo.skillNameText[characterNum_player, skillSet_player[playerSkillNum]], playerDiceNum);
+        enemyCM.RevealSkillAndDice(SkillInfo.skillNameText[characterNum_enemy, skillSet_enemy[enemySkillNum]], enemyDiceNum);
+    }
+
+    //Battle
     public void DefenseEvadeOn(bool isPlayer ,int defenseEvade, int value)
     {
         if (isPlayer)
@@ -206,6 +214,7 @@ public class BattleSM : MonoBehaviour
             StartCoroutine(enemyCM.TakeDamage(shieldBroke, shieldDamage, damage));
     }
 
+    //Canvas ON/OFF
     public void SkillCanvasOn()
     {
         skillCanvas.gameObject.SetActive(true);

@@ -31,6 +31,6 @@ public class CharacterInfo
 
     public static int[] endurances =
     {
-        5
+        2
     };
 }

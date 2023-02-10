@@ -7,7 +7,8 @@ public class BattleManager : MonoBehaviour
     GameManager gm;
 
     [SerializeField] BattleSM battleSM;
-    [SerializeField] Player player, enemy;
+    [SerializeField] Player player;
+    [SerializeField] Enemy enemy;
     [SerializeField] DiceManager diceManager;
 
     int gameStatus = 0; //0 : before start(Clean up), 1 : turn start(Effect), 2 : In turn, 3 : Check, 4 : End turn(Effect)
@@ -99,6 +100,9 @@ public class BattleManager : MonoBehaviour
         StartCoroutine(battleSM.Check());
         timeFlow = false;
 
+        //Reveal
+        RevealSkillAndDice();
+
         //Battle
         BattleProgress();
         timeFlow = true;
@@ -158,15 +162,22 @@ public class BattleManager : MonoBehaviour
         Debug.Log("(" + gm.characterNum_player + ", " + playerSkillNum + ", " + playerDiceNum + ")");
     }
 
-    public void BattleProgress()
+    public void RevealSkillAndDice()
     {
-        Skill playerSkill = player.UseSkill(playerSkillNum, playerDiceNum);
-
         //Random Mehod -> AI Method -> Network Method
         enemySkillNum = Random.Range(0, 4);
 
         //Have To Fix
         enemyDiceNum = isAI;
+
+        int enemyCurrentDice = enemy.CurrentDice();
+
+        battleSM.RevealSkillAndDice(playerSkillNum, playerDiceNum, enemySkillNum, enemyCurrentDice);
+    }
+
+    public void BattleProgress()
+    {
+        Skill playerSkill = player.UseSkill(playerSkillNum, playerDiceNum);
         Skill enemySkill = enemy.UseSkill(enemySkillNum, enemyDiceNum);
 
         //Calculate Battle Result
@@ -261,7 +272,11 @@ public class BattleManager : MonoBehaviour
 
             //Check Endurance
             if (beforeHp - afterHp > enemyEndurance)
+            {
                 enemyStunned = true;
+                Debug.Log("Enemy Stunned");
+            }
+                
 
             if (!enemyStunned)
             {

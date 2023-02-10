@@ -8,6 +8,12 @@ public class PlayerCM : MonoBehaviour
     [SerializeField] Text nameText;
     [SerializeField] Text hpText;
 
+    //Skill and Dice
+    [SerializeField] Image skillImage;
+    [SerializeField] Text skillText;
+    [SerializeField] Image diceImage;
+    [SerializeField] Sprite[] diceSprites;
+
     //DamageBox
     [SerializeField] Image damageBox;
     [SerializeField] Text damageText;
@@ -26,6 +32,7 @@ public class PlayerCM : MonoBehaviour
     {
         BoxOff();
         Defense_EvadeOff();
+        SKillDiceOff();
     }
 
     public void SetNameText(string name)
@@ -37,7 +44,24 @@ public class PlayerCM : MonoBehaviour
     {
         hpText.text = hp.ToString();
     }
+    
+    //Reveal
+    public void RevealSkillAndDice(string skillText, int diceNum)
+    {
+        skillImage.gameObject.SetActive(true);
+        this.skillText.text = skillText;
 
+        diceImage.gameObject.SetActive(true);
+        diceImage.sprite = diceSprites[diceNum];
+    }
+
+    public void SKillDiceOff()
+    {
+        skillImage.gameObject.SetActive(false);
+        diceImage.gameObject.SetActive(false);
+    }
+
+    //Battle
     public IEnumerator TakeDamage(bool shieldBroke, int shieldDamage,int damage)
     {
         //Shield Damage
