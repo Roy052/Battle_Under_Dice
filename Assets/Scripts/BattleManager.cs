@@ -175,6 +175,120 @@ public class BattleManager : MonoBehaviour
         battleSM.RevealSkillAndDice(playerSkillNum, playerDiceNum, enemySkillNum, enemyCurrentDice);
     }
 
+    public void Battle_PlayerTurn(Skill playerSkill, int enemyEndurance)
+    {
+        int beforeHp = enemy.characterManager.character.hp;
+
+        if (playerSkill.type == 0)
+        {
+            //Damage Calculate
+            int damage = CalculateDamage(playerSkill.value, true);
+            Debug.Log("Damage : " + damage);
+            enemy.characterManager.ChangeHp(-damage);
+
+            //TakeDamage(isPlayer, shieldBroke, shieldDamage, damage);
+            if (enemyDefense > 0)
+            {
+                //Shield = Damage
+                if (damage == 0 && enemyDefense == playerSkill.value)
+                {
+                    battleSM.TakeDamage(false, true, playerSkill.value, 0);
+                    enemyDefense -= playerSkill.value;
+                }
+                //Shield > Damage
+                else if (damage == 0)
+                {
+                    battleSM.TakeDamage(false, false, playerSkill.value, 0);
+                    enemyDefense -= playerSkill.value;
+                }
+                //Damage > Shield
+                else
+                {
+                    battleSM.TakeDamage(false, true, enemyDefense, damage);
+                    enemyDefense = 0;
+                }
+            }
+            else
+                battleSM.TakeDamage(false, false, 0, damage);
+        }
+        if (playerSkill.type == 1)
+        {
+            playerDefense = playerSkill.value;
+            battleSM.DefenseEvadeOn(true, 0, playerDefense);
+        }
+        if (playerSkill.type == 2)
+        {
+            playerEvade = playerSkill.value;
+            battleSM.DefenseEvadeOn(true, 1, playerEvade);
+        }
+
+        //Refresh UI
+        battleSM.RefreshUI();
+
+
+        //Check Game End
+        if (CheckGameEnd())
+        {
+            battleSM.GameEnd(WhoWin());
+            GameEnd();
+        }
+
+        int afterHp = enemy.characterManager.character.hp;
+
+        //Check Endurance
+        if (beforeHp - afterHp > enemyEndurance)
+        {
+            enemyStunned = true;
+            Debug.Log("Enemy Stunned");
+        }
+    }
+
+    public void Battle_EnemyTurn(Skill enemySkill, int playerEndurance)
+    {
+        int beforeHp = player.characterManager.character.hp;
+
+        if (!enemyStunned)
+        {
+            if (enemySkill.type == 0)
+            {
+                //Damage Calculate
+                int damage = CalculateDamage(enemySkill.value, false);
+                player.characterManager.ChangeHp(-damage);
+
+                //TakeDamage(isPlayer, shieldBroke, shieldDamage, damage);
+                if (playerDefense > 0)
+                {
+                    //Shield > Damage
+                    if (damage == 0)
+                        battleSM.TakeDamage(true, false, enemySkill.value, 0);
+                    //Damage > Shield
+                    else
+                        battleSM.TakeDamage(true, true, playerDefense, damage);
+                }
+                else
+                    battleSM.TakeDamage(true, false, 0, damage);
+            }
+            if (enemySkill.type == 1) enemyDefense = enemySkill.value;
+            if (enemySkill.type == 2) enemyEvade = enemySkill.value;
+
+            //Damage UI
+            battleSM.RefreshUI();
+
+            //Check Game End
+            if (CheckGameEnd())
+            {
+                battleSM.GameEnd(WhoWin());
+                GameEnd();
+            }
+        }
+
+        int afterHp = player.characterManager.character.hp;
+
+        if (beforeHp - afterHp > playerEndurance)
+            playerStunned = true;
+
+    }
+
     public void BattleProgress()
     {
         Skill playerSkill = player.UseSkill(playerSkillNum, playerDiceNum);
@@ -209,204 +323,27 @@ public class BattleManager : MonoBehaviour
         //Skill Type = 0 : Attack, 1 : Defense, 2 : Evade, 3 : Buff, 4 : Debuff
         if (playerFirst)
         {
-            int beforeHp = enemy.characterManager.character.hp;
-
             if (!playerStunned)
             {
-                if (playerSkill.type == 0)
-                {
-                    //Damage Calculate
-                    int damage = CalculateDamage(playerSkill.value, true);
-                    Debug.Log("Damage : " + damage);
-                    enemy.characterManager.ChangeHp(-damage);
-
-                    //TakeDamage(isPlayer, shieldBroke, shieldDamage, damage);
-                    if (enemyDefense > 0)
-                    {
-                        //Shield = Damage
-                        if (damage == 0 && enemyDefense == playerSkill.value) 
-                        {
-                            battleSM.TakeDamage(false, true, playerSkill.value, 0);
-                            enemyDefense -= playerSkill.value;
-                        }
-                        //Shield > Damage
-                        else  if (damage == 0)
-                        {
-                            battleSM.TakeDamage(false, false, playerSkill.value, 0);
-                            enemyDefense -= playerSkill.value;
-                        }
-                        //Damage > Shield
-                        else
-                        {
-                            battleSM.TakeDamage(false, true, enemyDefense, damage);
-                            enemyDefense = 0;
-                        }  
-                    }  
-                    else
-                        battleSM.TakeDamage(false, false, 0, damage);
-                }
-                if (playerSkill.type == 1)
-                {
-                    playerDefense = playerSkill.value;
-                    battleSM.DefenseEvadeOn(true, 0, playerDefense);
-                }
-                if (playerSkill.type == 2)
-                {
-                    playerEvade = playerSkill.value;
-                    battleSM.DefenseEvadeOn(true, 1, playerEvade);
-                }
-
-                //Refresh UI
-                battleSM.RefreshUI();
-                
-
-                //Check Game End
-                if (CheckGameEnd())
-                {
-                    battleSM.GameEnd(WhoWin());
-                    GameEnd();
-                }
-            }
-
-            int afterHp = enemy.characterManager.character.hp;
-
-            //Check Endurance
-            if (beforeHp - afterHp > enemyEndurance)
-            {
-                enemyStunned = true;
-                Debug.Log("Enemy Stunned");
+                Battle_PlayerTurn(playerSkill, enemyEndurance);
             }
                 
 
             if (!enemyStunned)
             {
-                if (enemySkill.type == 0)
-                {
-                    //Damage Calculate
-                    int damage = CalculateDamage(enemySkill.value, false);
-                    player.characterManager.ChangeHp(-damage);
-
-                    //TakeDamage(isPlayer, shieldBroke, shieldDamage, damage);
-                    if (playerDefense > 0)
-                    {
-                        //Shield = Damage
-                        if (damage == 0 && playerDefense == enemySkill.value)
-                        {
-                            battleSM.TakeDamage(true, false, enemySkill.value, 0);
-                            playerDefense -= enemySkill.value;
-                        }
-                        //Shield > Damage
-                        else if (damage == 0)
-                        {
-                            battleSM.TakeDamage(true, false, enemySkill.value, 0);
-                            playerDefense -= enemySkill.value;
-                        }
-                        //Damage > Shield
-                        else
-                        {
-                            battleSM.TakeDamage(true, true, playerDefense, damage);
-                            playerDefense = 0;
-                        }
-                    }
-                    else
-                        battleSM.TakeDamage(true, false, 0, damage);
-                }
-                if (enemySkill.type == 1)
-                {
-                    enemyDefense = enemySkill.value;
-                }
-                if (enemySkill.type == 2)
-                {
-                    enemyEvade = enemySkill.value;
-                }
-
-                //Damage UI
-                battleSM.RefreshUI();
-
-                //Check Game End
-                if (CheckGameEnd())
-                {
-                    battleSM.GameEnd(WhoWin());
-                    GameEnd();
-                }
+                Battle_EnemyTurn(enemySkill, playerEndurance);   
             }
         }
         else
         {
-            int beforeHp = player.characterManager.character.hp;
-
             if (!enemyStunned)
             {
-                if (enemySkill.type == 0)
-                {
-                    //Damage Calculate
-                    int damage = CalculateDamage(enemySkill.value, false);
-                    player.characterManager.ChangeHp(-damage);
-
-                    //TakeDamage(isPlayer, shieldBroke, shieldDamage, damage);
-                    if (playerDefense > 0)
-                    {
-                        //Shield > Damage
-                        if (damage == 0)
-                            battleSM.TakeDamage(true, false, enemySkill.value, 0);
-                        //Damage > Shield
-                        else
-                            battleSM.TakeDamage(true, true, playerDefense, damage);
-                    }
-                    else
-                        battleSM.TakeDamage(true, false, 0, damage);
-                }
-                if (enemySkill.type == 1) enemyDefense = enemySkill.value;
-                if (enemySkill.type == 2) enemyEvade = enemySkill.value;
-
-                //Damage UI
-                battleSM.RefreshUI();
-
-                //Check Game End
-                if (CheckGameEnd())
-                {
-                    battleSM.GameEnd(WhoWin());
-                    GameEnd();
-                }
+                Battle_EnemyTurn(enemySkill, playerEndurance);
             }
-
-            int afterHp = player.characterManager.character.hp;
-            if (beforeHp - afterHp > playerEndurance)
-                playerStunned = true;
 
             if (!playerStunned)
             {
-                if (playerSkill.type == 0)
-                {
-                    //Damage Calculate
-                    int damage = CalculateDamage(playerSkill.value, true);
-                    enemy.characterManager.ChangeHp(-damage);
-
-                    //TakeDamage(isPlayer, shieldBroke, shieldDamage, damage);
-                    if (enemyDefense > 0)
-                    {
-                        //Shield > Damage
-                        if (damage == 0)
-                            battleSM.TakeDamage(false, false, playerSkill.value, 0);
-                        //Damage > Shield
-                        else
-                            battleSM.TakeDamage(false, true, enemyDefense, damage);
-                    }
-                    else
-                        battleSM.TakeDamage(false, false, 0, damage);
-                }
-                if (playerSkill.type == 1) playerDefense = playerSkill.value;
-                if (playerSkill.type == 2) playerEvade = playerSkill.value;
-
-                //Damage UI
-                battleSM.RefreshUI();
-
-                //Check Game End
-                if (CheckGameEnd())
-                {
-                    battleSM.GameEnd(WhoWin());
-                    GameEnd();
-                }
+                Battle_PlayerTurn(playerSkill, enemyEndurance);
             }
         }
     }
