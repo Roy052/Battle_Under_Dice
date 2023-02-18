@@ -28,6 +28,8 @@ public class PlayerCM : MonoBehaviour
     [SerializeField] Text defenseEvadeText;
     [SerializeField] Sprite[] defenseEvadeSprites;
     int defenseEvade = -1;
+
+    public bool coroutineEnd = false;
     private void Start()
     {
         BoxOff();
@@ -46,14 +48,22 @@ public class PlayerCM : MonoBehaviour
     }
     
     //Reveal
-    public void RevealSkillAndDice(string skillText, int diceNum)
+    public IEnumerator RevealSkillAndDice(string skillText, int diceNum)
     {
         skillImage.gameObject.SetActive(true);
         this.skillText.text = skillText;
+        StartCoroutine(FadeManager.FadeIn(this.skillText, 1));
+        yield return new WaitForSeconds(1);
 
         diceImage.gameObject.SetActive(true);
         diceImage.sprite = diceSprites[diceNum];
+        StartCoroutine(FadeManager.FadeIn(diceImage, 1));
+        yield return new WaitForSeconds(1);
+
+        //Ended
+        coroutineEnd = true;
     }
+
 
     public void SKillDiceOff()
     {
@@ -108,9 +118,12 @@ public class PlayerCM : MonoBehaviour
 
             damageBox.gameObject.SetActive(false);
         }
+
+        //Ended
+        coroutineEnd = true;
     }
 
-    public void Defense_EvadeOn(int defenseEvade, int value)
+    public IEnumerator Defense_EvadeOn(int defenseEvade, int value)
     {
         if (value == 0) Defense_EvadeOff();
 
@@ -118,6 +131,11 @@ public class PlayerCM : MonoBehaviour
         defenseEvadeBox.sprite = defenseEvadeSprites[defenseEvade];
         defenseEvadeText.text = value.ToString();
         this.defenseEvade = defenseEvade;
+
+        yield return new WaitForSeconds(1);
+
+        //Ended
+        coroutineEnd = true;
     }
 
     public void Defense_EvadeOff()

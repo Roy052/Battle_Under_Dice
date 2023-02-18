@@ -37,6 +37,7 @@ public class BattleSM : MonoBehaviour
     int[] skillSet_enemy;
 
     public bool uiEnd = false;
+    bool coroutineStart = false;
 
     private void Start()
     {
@@ -52,6 +53,20 @@ public class BattleSM : MonoBehaviour
 
         SetUp();
     }
+
+    private void Update()
+    {
+        if (coroutineStart)
+        {
+            if(playerCM.coroutineEnd && enemyCM.coroutineEnd)
+            {
+                coroutineStart = false;
+                uiEnd = true;
+            }  
+                
+        }
+    }
+
     public void SetUp()
     {
         bm.SetBattle();
@@ -88,7 +103,13 @@ public class BattleSM : MonoBehaviour
             turnText.text = "Turn " + bm.turnNum;
         else
             turnText.text = "Last Turn";
+
         RefreshUI();
+
+        //Refresh Skill and Dice
+        playerCM.SKillDiceOff();
+        enemyCM.SKillDiceOff();
+
         StartCoroutine(FadeManager.FadeIn(turnText, 1));
         StartCoroutine(FadeManager.FadeIn(turnImage, 1));
         yield return new WaitForSeconds(2);
@@ -132,8 +153,23 @@ public class BattleSM : MonoBehaviour
         diceCanvas.gameObject.SetActive(false);
         checkCanvas.gameObject.SetActive(false);
         RefreshUI();
+
+        playerCM.coroutineEnd = false;
+        enemyCM.coroutineEnd = false;
+        coroutineStart = true;
+        yield return new WaitForSeconds(5);
+    }
+
+    public IEnumerator Battle()
+    {
+        uiEnd = false;
+        phaseText.text = "Battle";
+        RefreshUI();
+
+        playerCM.coroutineEnd = false;
+        enemyCM.coroutineEnd = false;
+        coroutineStart = true;
         yield return new WaitForSeconds(3);
-        uiEnd = true;
     }
 
     public IEnumerator EndTurn()
@@ -185,17 +221,20 @@ public class BattleSM : MonoBehaviour
     //Reveal
     public void RevealSkillAndDice(int playerSkillNum, int playerDiceNum, int enemySkillNum, int enemyDiceNum)
     {
-        playerCM.RevealSkillAndDice(SkillInfo.skillNameText[characterNum_player, skillSet_player[playerSkillNum]], playerDiceNum);
-        enemyCM.RevealSkillAndDice(SkillInfo.skillNameText[characterNum_enemy, skillSet_enemy[enemySkillNum]], enemyDiceNum);
+        StartCoroutine(playerCM.RevealSkillAndDice
+            (SkillInfo.skillNameText[characterNum_player, skillSet_player[playerSkillNum]], playerDiceNum));
+
+        StartCoroutine(enemyCM.RevealSkillAndDice
+            (SkillInfo.skillNameText[characterNum_enemy, skillSet_enemy[enemySkillNum]], enemyDiceNum));
     }
 
     //Battle
     public void DefenseEvadeOn(bool isPlayer ,int defenseEvade, int value)
     {
         if (isPlayer)
-            playerCM.Defense_EvadeOn(defenseEvade, value);
+            StartCoroutine(playerCM.Defense_EvadeOn(defenseEvade, value));
         else
-            enemyCM.Defense_EvadeOn(defenseEvade, value);
+            StartCoroutine(enemyCM.Defense_EvadeOn(defenseEvade, value));
     }
 
     public void DefenseEvadeOff(bool isPlayer)

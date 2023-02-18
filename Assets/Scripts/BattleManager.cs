@@ -11,7 +11,7 @@ public class BattleManager : MonoBehaviour
     [SerializeField] Enemy enemy;
     [SerializeField] DiceManager diceManager;
 
-    int gameStatus = 0; //0 : before start(Clean up), 1 : turn start(Effect), 2 : In turn, 3 : Check, 4 : End turn(Effect)
+    public int gameStatus = 0; //0 : before start(Clean up), 1 : turn start(Effect), 2 : In turn, 3 : Check, 4 : Battle, 5 : End turn(Effect)
 
     //Turn
     public int turnNum = 0;
@@ -19,8 +19,9 @@ public class BattleManager : MonoBehaviour
         { 0, "TurnStart" },
         { 1, "InTurn" },
         { 2, "Check" },
-        { 3, "EndTurn" },
-        { 4, "BeforeStart" }
+        { 3, "Battle" },
+        { 4, "EndTurn" },
+        { 5, "BeforeStart" }
     };
 
     bool timeFlow = false;
@@ -87,6 +88,7 @@ public class BattleManager : MonoBehaviour
         }
     }
 
+    //InTurn -> battleSM.InTurn -> Waiting -> CheckSkillAndDice -> BattleSM.InTurnEnd
     public void InTurn()
     {
         gameStatus = 2;
@@ -98,19 +100,25 @@ public class BattleManager : MonoBehaviour
     {
         gameStatus = 3;
         StartCoroutine(battleSM.Check());
-        timeFlow = false;
 
         //Reveal
         RevealSkillAndDice();
+    }
+
+    public void Battle()
+    {
+        gameStatus = 4;
+        StartCoroutine(battleSM.Battle());
+        timeFlow = false;
 
         //Battle
-        BattleProgress();
+        StartCoroutine(BattleProgress());
         timeFlow = true;
     }
 
     public void EndTurn()
     {
-        gameStatus = 4;
+        gameStatus = 5;
         StartCoroutine(battleSM.EndTurn());
 
         //Check Game End
@@ -286,10 +294,9 @@ public class BattleManager : MonoBehaviour
 
         if (beforeHp - afterHp > playerEndurance)
             playerStunned = true;
-
     }
 
-    public void BattleProgress()
+    public IEnumerator BattleProgress()
     {
         Skill playerSkill = player.UseSkill(playerSkillNum, playerDiceNum);
         Skill enemySkill = enemy.UseSkill(enemySkillNum, enemyDiceNum);
@@ -327,7 +334,8 @@ public class BattleManager : MonoBehaviour
             {
                 Battle_PlayerTurn(playerSkill, enemyEndurance);
             }
-                
+
+            yield return new WaitForSeconds(3);
 
             if (!enemyStunned)
             {
@@ -341,11 +349,15 @@ public class BattleManager : MonoBehaviour
                 Battle_EnemyTurn(enemySkill, playerEndurance);
             }
 
+            yield return new WaitForSeconds(3);
+
             if (!playerStunned)
             {
                 Battle_PlayerTurn(playerSkill, enemyEndurance);
             }
         }
+
+        timeFlow = true;
     }
 
     bool CheckGameEnd()
