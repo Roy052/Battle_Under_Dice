@@ -11,6 +11,9 @@ public class Player : MonoBehaviour
 
     int characterNum;
     int[] skillSet;
+
+    //Animation
+    [SerializeField] Animator characterAnimator;
     public virtual void SetPlayer(int characterNum, int[] skillSet)
     {
         characterManager.SetCharacter(characterNum);
@@ -28,5 +31,12 @@ public class Player : MonoBehaviour
         diceManager.UseDice(diceNum);
 
         return retSkill;
+    }
+
+    public IEnumerator AnimationON(string kind)
+    {
+        characterAnimator.SetBool(kind, true);
+        yield return new WaitForSeconds(1);
+        characterAnimator.SetBool(kind, false);
     }
 }

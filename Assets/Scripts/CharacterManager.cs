@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Character
 {
+    public int maxHp;
     public int hp;
     public int damage;
     public int speed;
@@ -28,7 +29,7 @@ public class CharacterManager : MonoBehaviour
         characterNum = num;
         character = new Character();
 
-        
+        character.maxHp = CharacterInfo.hps[num];
         character.hp = CharacterInfo.hps[num];
         character.damage = CharacterInfo.damages[num];
         character.speed = CharacterInfo.speeds[num];
@@ -51,5 +52,6 @@ public class CharacterManager : MonoBehaviour
     {
         character.hp += changeValue;
         if (character.hp < 0) character.hp = 0;
+        if (character.hp > character.maxHp) character.hp = character.maxHp;
     }
 }

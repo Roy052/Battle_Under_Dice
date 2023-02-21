@@ -6,7 +6,10 @@ using UnityEngine.UI;
 public class PlayerCM : MonoBehaviour
 {
     [SerializeField] Text nameText;
+
+    //Hp
     [SerializeField] Text hpText;
+    [SerializeField] Image hpBar;
 
     //Skill and Dice
     [SerializeField] Image skillImage;
@@ -29,6 +32,7 @@ public class PlayerCM : MonoBehaviour
     [SerializeField] Sprite[] defenseEvadeSprites;
     int defenseEvade = -1;
 
+    [SerializeField] PlayerCM otherPlayerCM;
     public bool coroutineEnd = false;
     private void Start()
     {
@@ -42,9 +46,10 @@ public class PlayerCM : MonoBehaviour
         nameText.text = name;
     }
 
-    public void SetHpText(int hp)
+    public void SetHpBar(int hp, int maxHp)
     {
-        hpText.text = hp.ToString();
+        hpText.text = hp + "/" + maxHp;
+        hpBar.fillAmount = hp / (float) maxHp;
     }
     
     //Reveal
@@ -120,7 +125,7 @@ public class PlayerCM : MonoBehaviour
         }
 
         //Ended
-        coroutineEnd = true;
+        otherPlayerCM.coroutineEnd = true;
     }
 
     public IEnumerator Defense_EvadeOn(int defenseEvade, int value)

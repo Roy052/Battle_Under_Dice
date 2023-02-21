@@ -189,31 +189,30 @@ public class BattleManager : MonoBehaviour
 
         if (playerSkill.type == 0)
         {
+            int tempEnemyDefense = enemyDefense;
+
             //Damage Calculate
             int damage = CalculateDamage(playerSkill.value, true);
             Debug.Log("Damage : " + damage);
             enemy.characterManager.ChangeHp(-damage);
 
             //TakeDamage(isPlayer, shieldBroke, shieldDamage, damage);
-            if (enemyDefense > 0)
+            if (tempEnemyDefense > 0)
             {
                 //Shield = Damage
-                if (damage == 0 && enemyDefense == playerSkill.value)
+                if (damage == 0 && tempEnemyDefense == playerSkill.value)
                 {
                     battleSM.TakeDamage(false, true, playerSkill.value, 0);
-                    enemyDefense -= playerSkill.value;
                 }
                 //Shield > Damage
                 else if (damage == 0)
                 {
                     battleSM.TakeDamage(false, false, playerSkill.value, 0);
-                    enemyDefense -= playerSkill.value;
                 }
                 //Damage > Shield
                 else
                 {
                     battleSM.TakeDamage(false, true, enemyDefense, damage);
-                    enemyDefense = 0;
                 }
             }
             else
@@ -259,16 +258,21 @@ public class BattleManager : MonoBehaviour
         {
             if (enemySkill.type == 0)
             {
+                int tempPlayerDefense = playerDefense;
+
                 //Damage Calculate
                 int damage = CalculateDamage(enemySkill.value, false);
                 player.characterManager.ChangeHp(-damage);
 
                 //TakeDamage(isPlayer, shieldBroke, shieldDamage, damage);
-                if (playerDefense > 0)
+                if (tempPlayerDefense > 0)
                 {
+                    //Shield = Damage
+                    if (damage == 0 && tempPlayerDefense == enemySkill.value)
+                        battleSM.TakeDamage(true, true, enemySkill.value, damage);
                     //Shield > Damage
-                    if (damage == 0)
-                        battleSM.TakeDamage(true, false, enemySkill.value, 0);
+                    else if (damage == 0)
+                        battleSM.TakeDamage(true, false, enemySkill.value, damage);
                     //Damage > Shield
                     else
                         battleSM.TakeDamage(true, true, playerDefense, damage);
@@ -356,6 +360,9 @@ public class BattleManager : MonoBehaviour
                 Battle_PlayerTurn(playerSkill, enemyEndurance);
             }
         }
+
+        if (playerStunned) battleSM.EndCharacterCM(true);
+        if (enemyStunned) battleSM.EndCharacterCM(false);
 
         timeFlow = true;
     }

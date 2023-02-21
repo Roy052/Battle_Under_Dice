@@ -190,8 +190,8 @@ public class BattleSM : MonoBehaviour
     public void RefreshUI()
     {
         //hp
-        playerCM.SetHpText(characterManager_player.character.hp);
-        enemyCM.SetHpText(characterManager_enemy.character.hp);
+        playerCM.SetHpBar(characterManager_player.character.hp, characterManager_player.character.maxHp);
+        enemyCM.SetHpBar(characterManager_enemy.character.hp, characterManager_enemy.character.maxHp);
 
         //diceNum
         diceArray = diceManager_player.GetDiceArray();
@@ -232,9 +232,16 @@ public class BattleSM : MonoBehaviour
     public void DefenseEvadeOn(bool isPlayer ,int defenseEvade, int value)
     {
         if (isPlayer)
+        {
             StartCoroutine(playerCM.Defense_EvadeOn(defenseEvade, value));
+            StartCoroutine(player.AnimationON("Defensing"));
+        }
         else
+        {
             StartCoroutine(enemyCM.Defense_EvadeOn(defenseEvade, value));
+            StartCoroutine(enemy.AnimationON("Defensing"));
+        }
+            
     }
 
     public void DefenseEvadeOff(bool isPlayer)
@@ -247,10 +254,23 @@ public class BattleSM : MonoBehaviour
 
     public void TakeDamage(bool isPlayer, bool shieldBroke, int shieldDamage, int damage)
     {
-        if (isPlayer) 
+        if (isPlayer)
+        {
             StartCoroutine(playerCM.TakeDamage(shieldBroke, shieldDamage, damage));
+            StartCoroutine(enemy.AnimationON("Attacking"));
+        }
         else
+        {
             StartCoroutine(enemyCM.TakeDamage(shieldBroke, shieldDamage, damage));
+            StartCoroutine(player.AnimationON("Attacking"));
+        }
+            
+    }
+
+    public void EndCharacterCM(bool isPlayer)
+    {
+        if (isPlayer) playerCM.coroutineEnd = true;
+        else enemyCM.coroutineEnd = true;
     }
 
     //Canvas ON/OFF
