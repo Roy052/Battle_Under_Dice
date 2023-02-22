@@ -234,12 +234,10 @@ public class BattleSM : MonoBehaviour
         if (isPlayer)
         {
             StartCoroutine(playerCM.Defense_EvadeOn(defenseEvade, value));
-            StartCoroutine(player.AnimationON("Defensing"));
         }
         else
         {
             StartCoroutine(enemyCM.Defense_EvadeOn(defenseEvade, value));
-            StartCoroutine(enemy.AnimationON("Defensing"));
         }
             
     }
@@ -257,12 +255,10 @@ public class BattleSM : MonoBehaviour
         if (isPlayer)
         {
             StartCoroutine(playerCM.TakeDamage(shieldBroke, shieldDamage, damage));
-            StartCoroutine(enemy.AnimationON("Attacking"));
         }
         else
         {
             StartCoroutine(enemyCM.TakeDamage(shieldBroke, shieldDamage, damage));
-            StartCoroutine(player.AnimationON("Attacking"));
         }
             
     }

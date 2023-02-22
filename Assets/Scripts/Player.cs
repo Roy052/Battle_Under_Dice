@@ -32,11 +32,4 @@ public class Player : MonoBehaviour
 
         return retSkill;
     }
-
-    public IEnumerator AnimationON(string kind)
-    {
-        characterAnimator.SetBool(kind, true);
-        yield return new WaitForSeconds(1);
-        characterAnimator.SetBool(kind, false);
-    }
 }

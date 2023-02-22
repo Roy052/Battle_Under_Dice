@@ -9,7 +9,7 @@ public class BattleManager : MonoBehaviour
     [SerializeField] BattleSM battleSM;
     [SerializeField] Player player;
     [SerializeField] Enemy enemy;
-    [SerializeField] DiceManager diceManager;
+    [SerializeField] AnimationManager animationManager;
 
     public int gameStatus = 0; //0 : before start(Clean up), 1 : turn start(Effect), 2 : In turn, 3 : Check, 4 : Battle, 5 : End turn(Effect)
 
@@ -57,6 +57,8 @@ public class BattleManager : MonoBehaviour
         if (enemy == null) Debug.Log("a");
         enemy.SetPlayer(gm.characterNum_enemy, gm.skillSet_enemy);
         isAI = gm.isAI;
+
+        animationManager.AnimationSet(gm.characterNum_player, gm.characterNum_enemy);
 
         Invoke("BeforeStart", 1);
     }
@@ -187,6 +189,10 @@ public class BattleManager : MonoBehaviour
     {
         int beforeHp = enemy.characterManager.character.hp;
 
+        //Use Player Skill Motion
+        StartCoroutine(animationManager.AnimationOn(true, 
+            SkillInfo.skillNameText[gm.characterNum_player, gm.skillSet_player[playerSkillNum]]));
+
         if (playerSkill.type == 0)
         {
             int tempEnemyDefense = enemyDefense;
@@ -253,6 +259,10 @@ public class BattleManager : MonoBehaviour
     public void Battle_EnemyTurn(Skill enemySkill, int playerEndurance)
     {
         int beforeHp = player.characterManager.character.hp;
+
+        //Use Enemy Skill Motion
+        StartCoroutine(animationManager.AnimationOn(false,
+            SkillInfo.skillNameText[gm.characterNum_enemy, gm.skillSet_player[enemySkillNum]]));
 
         if (!enemyStunned)
         {
