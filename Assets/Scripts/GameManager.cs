@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     private static GameManager gameManagerInstance;
-    
+
     void Awake()
     {
         DontDestroyOnLoad(this);
@@ -42,12 +43,42 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+
+    public void SetPlayerSkill(int[] skillSet)
+    {
+        skillSet_player = skillSet;
     }
 
     public void SetEnemyInfo(int characterNum, int[] skillSet)
     {
         characterNum_enemy = characterNum;
         skillSet_enemy = skillSet;
+    }
+
+    public void SceneLoad_Match()
+    {
+        SceneManager.LoadScene("Match");
+    }
+
+    public void SceneLoad_CharacterSetUp()
+    {
+        SceneManager.LoadScene("CharacterSetUp");
+    }
+    
+    public void SceneLoad_Battle()
+    {
+        SceneManager.LoadScene("Battle");
+    }
+
+    public void SceneLoad_Menu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+
+    public void GameQuit()
+    {
+        Application.Quit();
     }
 }

@@ -109,6 +109,8 @@ public class BattleSM : MonoBehaviour
         //Refresh Skill and Dice
         playerCM.SKillDiceOff();
         enemyCM.SKillDiceOff();
+        playerCM.PlayerStunnedOff();
+        enemyCM.PlayerStunnedOff();
 
         StartCoroutine(FadeManager.FadeIn(turnText, 1));
         StartCoroutine(FadeManager.FadeIn(turnImage, 1));
@@ -248,6 +250,14 @@ public class BattleSM : MonoBehaviour
             playerCM.Defense_EvadeOff();
         else
             enemyCM.Defense_EvadeOff();
+    }
+    
+    public void CharacterStunned(bool isPlayer)
+    {
+        if (isPlayer)
+            StartCoroutine(playerCM.PlayerStunned());
+        else
+            StartCoroutine(enemyCM.PlayerStunned());
     }
 
     public void TakeDamage(bool isPlayer, bool shieldBroke, int shieldDamage, int damage)

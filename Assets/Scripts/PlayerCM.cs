@@ -26,6 +26,9 @@ public class PlayerCM : MonoBehaviour
     [SerializeField] Text shieldText;
     [SerializeField] Sprite shieldSprite, shieldBrokeSprite;
 
+    //Stunned
+    [SerializeField] Image stunnedImage;
+
     //defense beside hp
     [SerializeField] Image defenseEvadeBox;
     [SerializeField] Text defenseEvadeText;
@@ -39,6 +42,7 @@ public class PlayerCM : MonoBehaviour
         BoxOff();
         Defense_EvadeOff();
         SKillDiceOff();
+        PlayerStunnedOff();
     }
 
     public void SetNameText(string name)
@@ -119,13 +123,28 @@ public class PlayerCM : MonoBehaviour
 
             StartCoroutine(FadeManager.FadeOut(damageBox, 1));
             StartCoroutine(FadeManager.FadeOut(damageText, 1));
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(1.5f);
 
             damageBox.gameObject.SetActive(false);
         }
 
         //Ended
         otherPlayerCM.coroutineEnd = true;
+    }
+
+    public IEnumerator PlayerStunned()
+    {
+        stunnedImage.gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(3);
+
+        //Ended
+        coroutineEnd = true;
+    }
+
+    public void PlayerStunnedOff()
+    {
+        stunnedImage.gameObject.SetActive(false);
     }
 
     public IEnumerator Defense_EvadeOn(int defenseEvade, int value)

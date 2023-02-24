@@ -371,8 +371,8 @@ public class BattleManager : MonoBehaviour
             }
         }
 
-        if (playerStunned) battleSM.EndCharacterCM(true);
-        if (enemyStunned) battleSM.EndCharacterCM(false);
+        if (playerStunned) battleSM.CharacterStunned(true);
+        if (enemyStunned) battleSM.CharacterStunned(false);
 
         timeFlow = true;
     }
