@@ -192,6 +192,7 @@ public class BattleManager : MonoBehaviour
         //Use Player Skill Motion
         StartCoroutine(animationManager.AnimationOn(true, 
             SkillInfo.skillNameText[gm.characterNum_player, gm.skillSet_player[playerSkillNum]]));
+        StartCoroutine(battleSM.IntenseBattleScreen());
 
         if (playerSkill.type == 0)
         {
@@ -252,6 +253,7 @@ public class BattleManager : MonoBehaviour
         if (beforeHp - afterHp > enemyEndurance)
         {
             enemyStunned = true;
+            battleSM.CharacterStunned(false);
             Debug.Log("Enemy Stunned");
         }
     }
@@ -263,6 +265,7 @@ public class BattleManager : MonoBehaviour
         //Use Enemy Skill Motion
         StartCoroutine(animationManager.AnimationOn(false,
             SkillInfo.skillNameText[gm.characterNum_enemy, gm.skillSet_player[enemySkillNum]]));
+        StartCoroutine(battleSM.IntenseBattleScreen());
 
         if (!enemyStunned)
         {
@@ -307,7 +310,10 @@ public class BattleManager : MonoBehaviour
         int afterHp = player.characterManager.character.hp;
 
         if (beforeHp - afterHp > playerEndurance)
+        {
             playerStunned = true;
+            battleSM.CharacterStunned(true);
+        }
     }
 
     public IEnumerator BattleProgress()
@@ -349,7 +355,7 @@ public class BattleManager : MonoBehaviour
                 Battle_PlayerTurn(playerSkill, enemyEndurance);
             }
 
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(4);
 
             if (!enemyStunned)
             {
@@ -363,7 +369,7 @@ public class BattleManager : MonoBehaviour
                 Battle_EnemyTurn(enemySkill, playerEndurance);
             }
 
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(4);
 
             if (!playerStunned)
             {
@@ -371,8 +377,7 @@ public class BattleManager : MonoBehaviour
             }
         }
 
-        if (playerStunned) battleSM.CharacterStunned(true);
-        if (enemyStunned) battleSM.CharacterStunned(false);
+        
 
         timeFlow = true;
     }

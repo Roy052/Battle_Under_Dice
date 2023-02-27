@@ -14,11 +14,11 @@ public class CharacterSetUpSM : MonoBehaviour
 
     //Skill Select
     [SerializeField] Sprite[] characterSkill;
-
+    [SerializeField] Text[] skilltexts;
     [SerializeField] GameObject[] skillSelectedImage;
     [SerializeField] Image[] skillImages;
     [SerializeField] Sprite selectSprite, unselectSprite;
-    bool[] skillSelected = new bool[8];
+    bool[] skillSelected = new bool[10];
     int selectedNum = 6;
 
     GameManager gm;
@@ -32,11 +32,13 @@ public class CharacterSetUpSM : MonoBehaviour
 
     public void SkillSetUp(int[] skillSet)
     {
+        int playerNum = gm.characterNum_player;
         //Init
         for (int i = 0; i < skillSelectedImage.Length; i++)
         {
             skillSelectedImage[i].SetActive(false);
             skillImages[i].sprite = unselectSprite;
+            skilltexts[i].text = SkillInfo.skillNameText[playerNum, i];
         }
 
         //SetUp

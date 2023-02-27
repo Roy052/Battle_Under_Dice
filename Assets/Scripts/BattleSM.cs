@@ -29,6 +29,12 @@ public class BattleSM : MonoBehaviour
     [SerializeField] Text endText;
     string[] endString = { "Victory", "Draw", "Defeat" };
 
+    //Animation
+    [SerializeField] AnimationManager animationManager;
+
+    //BattleScreen
+    [SerializeField] GameObject battleScreen;
+
     int characterNum_player;
     int[] skillSet_player;
     int[] diceArray = new int[6];
@@ -91,6 +97,7 @@ public class BattleSM : MonoBehaviour
         SkillCanvasOff();
         DiceCanvasOff();
         CheckCanvasOff();
+        battleScreen.SetActive(false);
 
         uiEnd = true;
     }
@@ -260,15 +267,37 @@ public class BattleSM : MonoBehaviour
             StartCoroutine(enemyCM.PlayerStunned());
     }
 
+    public IEnumerator IntenseBattleScreen()
+    {
+        StartCoroutine(playerCM.HpBarDisabled(GameInfo.battleAnimationDelay));
+        StartCoroutine(enemyCM.HpBarDisabled(GameInfo.battleAnimationDelay));
+
+        player.gameObject.transform.localScale = new Vector3(1.2f, 1.2f, 1);
+        enemy.gameObject.transform.localScale = new Vector3(1.2f, 1.2f, 1);
+        player.gameObject.GetComponent<SpriteRenderer>().sortingOrder = 2;
+        enemy.gameObject.GetComponent<SpriteRenderer>().sortingOrder = 2;
+        battleScreen.SetActive(true);
+
+        yield return new WaitForSeconds(GameInfo.battleAnimationDelay);
+
+        battleScreen.SetActive(false);
+        player.gameObject.transform.localScale = new Vector3(0.8f, 0.8f, 1);
+        enemy.gameObject.transform.localScale = new Vector3(0.8f, 0.8f, 1);
+        player.gameObject.GetComponent<SpriteRenderer>().sortingOrder = 0;
+        enemy.gameObject.GetComponent<SpriteRenderer>().sortingOrder = 0;
+    }
+
     public void TakeDamage(bool isPlayer, bool shieldBroke, int shieldDamage, int damage)
     {
         if (isPlayer)
         {
             StartCoroutine(playerCM.TakeDamage(shieldBroke, shieldDamage, damage));
+            StartCoroutine(animationManager.AnimationOn(true, "TakeDamage"));
         }
         else
         {
             StartCoroutine(enemyCM.TakeDamage(shieldBroke, shieldDamage, damage));
+            StartCoroutine(animationManager.AnimationOn(false, "TakeDamage"));
         }
             
     }

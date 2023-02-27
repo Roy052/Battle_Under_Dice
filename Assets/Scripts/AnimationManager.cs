@@ -15,7 +15,7 @@ public class AnimationManager : MonoBehaviour
             enemyAnimator.SetBool(skillName, true);
 
         
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(GameInfo.battleAnimationDelay);
 
         if (isPlayer)
             playerAnimator.SetBool(skillName, false);

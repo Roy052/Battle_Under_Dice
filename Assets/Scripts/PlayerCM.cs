@@ -8,8 +8,9 @@ public class PlayerCM : MonoBehaviour
     [SerializeField] Text nameText;
 
     //Hp
+    [SerializeField] GameObject hpBar;
     [SerializeField] Text hpText;
-    [SerializeField] Image hpBar;
+    [SerializeField] Image hpBar_Red;
 
     //Skill and Dice
     [SerializeField] Image skillImage;
@@ -53,7 +54,7 @@ public class PlayerCM : MonoBehaviour
     public void SetHpBar(int hp, int maxHp)
     {
         hpText.text = hp + "/" + maxHp;
-        hpBar.fillAmount = hp / (float) maxHp;
+        hpBar_Red.fillAmount = hp / (float) maxHp;
     }
     
     //Reveal
@@ -83,50 +84,51 @@ public class PlayerCM : MonoBehaviour
     //Battle
     public IEnumerator TakeDamage(bool shieldBroke, int shieldDamage,int damage)
     {
-        //Shield Damage
+        //Shield And Damage
         if (shieldDamage > 0)
         {
             shieldBox.gameObject.SetActive(true);
             shieldText.text = "- " + shieldDamage.ToString();
-
             StartCoroutine(FadeManager.FadeIn(shieldBox, 0.5f));
             StartCoroutine(FadeManager.FadeIn(shieldText, 0.5f));
-            yield return new WaitForSeconds(0.5f);
-            yield return new WaitForSeconds(1);
-            StartCoroutine(FadeManager.FadeOut(shieldText, 1));
-            if (shieldBroke)
-            {
-                defenseEvadeBox.sprite = shieldBrokeSprite;
-                defenseEvadeText.text = "";
-                StartCoroutine(FadeManager.FadeIn(defenseEvadeBox, 0.5f));
-                yield return new WaitForSeconds(0.5f);
-
-                Defense_EvadeOff();
-            }
-            StartCoroutine(FadeManager.FadeOut(shieldBox, 1));
-            yield return new WaitForSeconds(1);
-
-            shieldBox.sprite = shieldSprite;
-            shieldBox.gameObject.SetActive(false);
         }
-        
-        //Damage
-        if(damage > 0)
+        if (damage > 0)
         {
             damageBox.gameObject.SetActive(true);
             damageText.text = "- " + damage.ToString();
-
             StartCoroutine(FadeManager.FadeIn(damageBox, 0.5f));
             StartCoroutine(FadeManager.FadeIn(damageText, 0.5f));
-            yield return new WaitForSeconds(0.5f);
-            yield return new WaitForSeconds(1);
+        }
+        
+        yield return new WaitForSeconds(0.5f);
 
+        
+        if (shieldBroke)
+        {
+            defenseEvadeBox.sprite = shieldBrokeSprite;
+            defenseEvadeText.text = "";
+            StartCoroutine(FadeManager.FadeIn(defenseEvadeBox, 0.5f));
+            yield return new WaitForSeconds(0.5f);
+            Defense_EvadeOff();
+        }
+
+        if(shieldDamage > 0)
+        {
+            StartCoroutine(FadeManager.FadeOut(shieldBox, 1));
+            StartCoroutine(FadeManager.FadeOut(shieldText, 1));
+        }
+        if(damage > 0)
+        {
             StartCoroutine(FadeManager.FadeOut(damageBox, 1));
             StartCoroutine(FadeManager.FadeOut(damageText, 1));
-            yield return new WaitForSeconds(1.5f);
-
-            damageBox.gameObject.SetActive(false);
         }
+        
+        yield return new WaitForSeconds(1);
+
+        shieldBox.sprite = shieldSprite;
+        shieldBox.gameObject.SetActive(false);
+        damageBox.gameObject.SetActive(false);
+
 
         //Ended
         otherPlayerCM.coroutineEnd = true;
@@ -160,6 +162,18 @@ public class PlayerCM : MonoBehaviour
 
         //Ended
         coroutineEnd = true;
+    }
+
+    public IEnumerator HpBarDisabled(float time)
+    {
+        hpBar.SetActive(false);
+        defenseEvadeBox.gameObject.SetActive(false);
+
+        yield return new WaitForSeconds(time);
+
+        hpBar.SetActive(true);
+        defenseEvadeBox.gameObject.SetActive(true);
+
     }
 
     public void Defense_EvadeOff()
