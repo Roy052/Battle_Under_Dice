@@ -31,6 +31,9 @@ public class GameManager : MonoBehaviour
     public GameInfo gameInfo;
     public CharacterInfo characterInfo;
 
+    //SkillImages
+    Sprite[,] skillSprites;
+
     //EnemyStatus
     public int isAI = 1;
     void Start()
@@ -38,12 +41,28 @@ public class GameManager : MonoBehaviour
         skillInfo = new SkillInfo();
         gameInfo = new GameInfo();
         characterInfo = new CharacterInfo();
+        SkillSpritesSetup();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void SkillSpritesSetup()
     {
+        int characterAmount = GameInfo.characterAmount;
 
+        skillSprites = new Sprite[characterAmount, 10];
+
+        for(int characterNum = 0; characterNum < characterAmount; characterNum++)
+        {
+            Sprite[] tempSprites = Resources.LoadAll<Sprite>("Arts/Skill/" + characterNum);
+            for (int spriteNum = 0; spriteNum < tempSprites.Length; spriteNum++)
+            {
+                skillSprites[characterNum, spriteNum] = tempSprites[spriteNum];
+            }
+        }
+    }
+
+    public Sprite GetSkillSprite(int characterNum, int skillNum)
+    {
+        return skillSprites[characterNum, skillNum];
     }
 
     public void SetPlayerSkill(int[] skillSet)

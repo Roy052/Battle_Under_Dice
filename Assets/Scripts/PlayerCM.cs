@@ -151,12 +151,17 @@ public class PlayerCM : MonoBehaviour
 
     public IEnumerator Defense_EvadeOn(int defenseEvade, int value)
     {
-        if (value == 0) Defense_EvadeOff();
-
-        defenseEvadeBox.gameObject.SetActive(true);
-        defenseEvadeBox.sprite = defenseEvadeSprites[defenseEvade];
-        defenseEvadeText.text = value.ToString();
-        this.defenseEvade = defenseEvade;
+        if (value == 0)
+        {
+            Defense_EvadeOff();
+        }
+        else
+        {
+            defenseEvadeBox.gameObject.SetActive(true);
+            defenseEvadeBox.sprite = defenseEvadeSprites[defenseEvade];
+            defenseEvadeText.text = value.ToString();
+            this.defenseEvade = defenseEvade;
+        }
 
         yield return new WaitForSeconds(1);
 
@@ -167,12 +172,14 @@ public class PlayerCM : MonoBehaviour
     public IEnumerator HpBarDisabled(float time)
     {
         hpBar.SetActive(false);
-        defenseEvadeBox.gameObject.SetActive(false);
+        if(defenseEvade > 0)
+            defenseEvadeBox.gameObject.SetActive(false);
 
         yield return new WaitForSeconds(time);
 
         hpBar.SetActive(true);
-        defenseEvadeBox.gameObject.SetActive(true);
+        if(defenseEvade > 0)
+            defenseEvadeBox.gameObject.SetActive(true);
 
     }
 
@@ -191,5 +198,10 @@ public class PlayerCM : MonoBehaviour
     {
         shieldBox.gameObject.SetActive(true);
         damageBox.gameObject.SetActive(true);
+    }
+
+    public void ResetData()
+    {
+        defenseEvade = 0;
     }
 }

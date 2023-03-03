@@ -18,8 +18,13 @@ public class BattleSM : MonoBehaviour
     [SerializeField] Text turnText, phaseText;
     [SerializeField] Image turnImage;
     [SerializeField] Canvas skillCanvas, diceCanvas, checkCanvas;
+
+    //Canvas Components
     [SerializeField] Text[] skillTexts, diceAmountTexts;
+    [SerializeField] Image[] skillButtonImages;
     [SerializeField] Button[] skillButtons, diceButtons;
+    [SerializeField] GameObject[] skillUnderlines, diceUnderlines;
+
     //PlyaerUI
     [SerializeField] PlayerCM playerCM;
     //EnemyUI
@@ -92,6 +97,10 @@ public class BattleSM : MonoBehaviour
         for (int i = 0; i < 6; i++)
             skillTexts[i].text = SkillInfo.skillNameText[characterNum_player, skillSet_player[i]];
 
+        //SkillButtonImage
+        for (int i = 0; i < 6; i++)
+            skillButtonImages[i].sprite = gm.GetSkillSprite(characterNum_player, skillSet_player[i]);
+
         RefreshUI();
         //Canvases Off
         SkillCanvasOff();
@@ -113,11 +122,24 @@ public class BattleSM : MonoBehaviour
 
         RefreshUI();
 
-        //Refresh Skill and Dice
+        //Reset Skill and Dice
         playerCM.SKillDiceOff();
         enemyCM.SKillDiceOff();
         playerCM.PlayerStunnedOff();
         enemyCM.PlayerStunnedOff();
+
+        //Reset Underlines
+        for(int i = 0; i < skillUnderlines.Length; i++)
+        {
+            skillUnderlines[i].SetActive(false);
+            diceUnderlines[i].SetActive(false);
+        }
+
+        //Reset Data
+        playerSkillNum = -1;
+        playerDiceNum = -1;
+        playerCM.ResetData();
+        enemyCM.ResetData();
 
         StartCoroutine(FadeManager.FadeIn(turnText, 1));
         StartCoroutine(FadeManager.FadeIn(turnImage, 1));
@@ -208,6 +230,13 @@ public class BattleSM : MonoBehaviour
         {
             if (diceArray[i] == 0) diceButtons[i].enabled = false;
             diceAmountTexts[i].text = diceArray[i].ToString();
+        }
+
+        //Underlines
+        for (int i = 0; i < skillUnderlines.Length; i++)
+        {
+            skillUnderlines[i].SetActive(false);
+            diceUnderlines[i].SetActive(false);
         }
 
         //playerCM
@@ -337,5 +366,46 @@ public class BattleSM : MonoBehaviour
     public void CheckCanvasOff()
     {
         checkCanvas.gameObject.SetActive(false);
+    }
+
+    int playerSkillNum = -1, playerDiceNum = -1;
+
+    public void SelectSkillNum(int num)
+    {
+        //Skill Cancel
+        if (playerSkillNum == num)
+        {
+            skillUnderlines[playerSkillNum].SetActive(false);
+
+            playerSkillNum = -1;
+            DiceCanvasOff();
+            CheckCanvasOff();
+            return;
+        }
+
+        playerSkillNum = num;
+        skillUnderlines[playerSkillNum].SetActive(true);
+        DiceCanvasOn();
+
+        bm.SelectSkillNum(num);
+    }
+
+    public void SelectDiceNum(int num)
+    {
+        if (playerDiceNum == num)
+        {
+            diceUnderlines[playerDiceNum].SetActive(false);
+
+            playerDiceNum = -1;
+            CheckCanvasOff();
+            return;
+        }
+
+        playerDiceNum = num;
+
+        diceUnderlines[playerDiceNum].SetActive(true);
+        CheckCanvasOn();
+
+        bm.SelectDiceNum(num);
     }
 }

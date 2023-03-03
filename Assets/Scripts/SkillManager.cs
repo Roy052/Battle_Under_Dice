@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Skill
 {
-    public int type;
+    public int type; //0 : Attack, 1 : Defense, 2 : Evade
     public int value;
     public int speed;
     public int endurance;

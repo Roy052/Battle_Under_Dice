@@ -143,13 +143,10 @@ public class BattleManager : MonoBehaviour
         if(playerSkillNum == num)
         {
             playerSkillNum = -1;
-            battleSM.DiceCanvasOff();
-            battleSM.CheckCanvasOff();
             return;
         }
 
         playerSkillNum = num;
-        battleSM.DiceCanvasOn();
     }
 
     public void SelectDiceNum(int num)
@@ -157,12 +154,10 @@ public class BattleManager : MonoBehaviour
         if(playerDiceNum == num)
         {
             playerDiceNum = -1;
-            battleSM.CheckCanvasOff();
             return;
         }
 
         playerDiceNum = num;
-        battleSM.CheckCanvasOn();
     }
 
     public void CheckSkillAndDice()
@@ -219,7 +214,7 @@ public class BattleManager : MonoBehaviour
                 //Damage > Shield
                 else
                 {
-                    battleSM.TakeDamage(false, true, enemyDefense, damage);
+                    battleSM.TakeDamage(false, true, tempEnemyDefense, damage);
                 }
             }
             else
@@ -288,13 +283,21 @@ public class BattleManager : MonoBehaviour
                         battleSM.TakeDamage(true, false, enemySkill.value, damage);
                     //Damage > Shield
                     else
-                        battleSM.TakeDamage(true, true, playerDefense, damage);
+                        battleSM.TakeDamage(true, true, tempPlayerDefense, damage);
                 }
                 else
                     battleSM.TakeDamage(true, false, 0, damage);
             }
-            if (enemySkill.type == 1) enemyDefense = enemySkill.value;
-            if (enemySkill.type == 2) enemyEvade = enemySkill.value;
+            if (enemySkill.type == 1)
+            {
+                enemyDefense = enemySkill.value;
+                battleSM.DefenseEvadeOn(false, 0, enemyDefense);
+            }
+            if (enemySkill.type == 2)
+            {
+                enemyEvade = enemySkill.value;
+                battleSM.DefenseEvadeOn(false, 1, enemyEvade);
+            }
 
             //Damage UI
             battleSM.RefreshUI();

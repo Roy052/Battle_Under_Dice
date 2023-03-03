@@ -54,4 +54,21 @@ public class CharacterManager : MonoBehaviour
         if (character.hp < 0) character.hp = 0;
         if (character.hp > character.maxHp) character.hp = character.maxHp;
     }
+
+    public void ChangeStatus(string kind, int num)
+    {
+        switch (kind)
+        {
+            case "damage":
+                break;
+            case "speed":
+                break;
+            case "defense":
+                break;
+            case "evade":
+                break;
+            case "endurance":
+                break;
+        }
+    }
 }

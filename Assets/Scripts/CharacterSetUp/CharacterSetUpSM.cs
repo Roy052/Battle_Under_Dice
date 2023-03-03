@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class CharacterSetUpSM : MonoBehaviour
 {
     int characterNum = 0;
-    [SerializeField] int maxCharacterNum;
+    int maxCharacterNum;
     [SerializeField] GameObject[] characterBtn;
     [SerializeField] Image beforeChar, currentChar, nextChar;
     [SerializeField] Sprite[] characterSprites;
@@ -26,6 +26,9 @@ public class CharacterSetUpSM : MonoBehaviour
     private void Start()
     {
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+
+        maxCharacterNum = GameInfo.characterAmount;
+
         ChangeCharacter(gm.characterNum_player);
         SkillSetUp(gm.skillSet_player);
     }
@@ -37,7 +40,7 @@ public class CharacterSetUpSM : MonoBehaviour
         for (int i = 0; i < skillSelectedImage.Length; i++)
         {
             skillSelectedImage[i].SetActive(false);
-            skillImages[i].sprite = unselectSprite;
+            skillImages[i].sprite = gm.GetSkillSprite(playerNum, i);
             skilltexts[i].text = SkillInfo.skillNameText[playerNum, i];
         }
 
@@ -46,7 +49,6 @@ public class CharacterSetUpSM : MonoBehaviour
         {
             skillSelected[skillSet[i]] = true;
             skillSelectedImage[skillSet[i]].SetActive(true);
-            skillImages[skillSet[i]].sprite = selectSprite;
         }
         selectedNum = 6;
     }
@@ -57,14 +59,12 @@ public class CharacterSetUpSM : MonoBehaviour
         {
             skillSelected[num] = false;
             skillSelectedImage[num].SetActive(false);
-            skillImages[num].sprite = unselectSprite;
             selectedNum--;
         }
         else
         {
             skillSelected[num] = true;
             skillSelectedImage[num].SetActive(true);
-            skillImages[num].sprite = selectSprite;
             selectedNum++;
         }
 

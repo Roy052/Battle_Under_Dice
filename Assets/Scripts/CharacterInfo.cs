@@ -11,7 +11,7 @@ public class CharacterInfo
 
     public static int[] damages =
     {
-        5
+        0
     };
 
     public static int[] speeds =
@@ -21,12 +21,12 @@ public class CharacterInfo
 
     public static int[] defenses =
     {
-        5
+        0
     };
 
     public static int[] evades =
     {
-        5
+        0
     };
 
     public static int[] endurances =

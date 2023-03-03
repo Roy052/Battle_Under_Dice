@@ -30,6 +30,14 @@ public class Player : MonoBehaviour
         Skill retSkill = skillManager.UseSkill(characterNum, skillSet[skillNum], diceNum);
         diceManager.UseDice(diceNum);
 
+        //0 : Attack, 1 : Defense, 2 : Evade
+        if (retSkill.type == 0)
+            retSkill.value += characterManager.character.damage;
+        if (retSkill.type == 1)
+            retSkill.value += characterManager.character.defense;
+        if (retSkill.type == 2)
+            retSkill.value += characterManager.character.evade;
+
         return retSkill;
     }
 }
