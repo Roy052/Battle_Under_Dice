@@ -383,6 +383,7 @@ public class BattleSM : MonoBehaviour
             return;
         }
 
+        if(playerSkillNum != -1) skillUnderlines[playerSkillNum].SetActive(false);
         playerSkillNum = num;
         skillUnderlines[playerSkillNum].SetActive(true);
         DiceCanvasOn();
@@ -401,8 +402,8 @@ public class BattleSM : MonoBehaviour
             return;
         }
 
+        if (playerDiceNum != -1) diceUnderlines[playerDiceNum].SetActive(false);
         playerDiceNum = num;
-
         diceUnderlines[playerDiceNum].SetActive(true);
         CheckCanvasOn();
 
