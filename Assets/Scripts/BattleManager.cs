@@ -10,8 +10,21 @@ public class BattleManager : MonoBehaviour
     [SerializeField] Player player;
     [SerializeField] Enemy enemy;
     [SerializeField] AnimationManager animationManager;
+    
+    public enum GameStatus
+    {
+        NotStarted  = -1,
+        BeforeStart = 0,
+        TurnStart   = 1,
+        InTurn      = 2,
+        Check       = 3,
+        Battle      = 4,
+        EndTurn     = 5
+    }
 
-    public int gameStatus = 0; //0 : before start(Clean up), 1 : turn start(Effect), 2 : In turn, 3 : Check, 4 : Battle, 5 : End turn(Effect)
+    //-1 : NotStarted, 0 : before start(Clean up), 1 : turn start(Effect), 2 : In turn, 3 : Check, 4 : Battle, 5 : End turn(Effect)
+    public GameStatus gameStatus = GameStatus.NotStarted; 
+
 
     //Turn
     public int turnNum = 0;
@@ -65,7 +78,7 @@ public class BattleManager : MonoBehaviour
 
     public void BeforeStart()
     {
-        gameStatus = 0;
+        gameStatus = GameStatus.BeforeStart;
         turnNum++;
         RefreshData();
         StartCoroutine(battleSM.BeforeStart());
@@ -78,7 +91,7 @@ public class BattleManager : MonoBehaviour
 
     public void TurnStart()
     {
-        gameStatus = 1;
+        gameStatus = GameStatus.TurnStart;
         StartCoroutine(battleSM.TurnStart());
 
         //Game End Check
@@ -93,14 +106,14 @@ public class BattleManager : MonoBehaviour
     //InTurn -> battleSM.InTurn -> Waiting -> CheckSkillAndDice -> BattleSM.InTurnEnd
     public void InTurn()
     {
-        gameStatus = 2;
+        gameStatus = GameStatus.InTurn;
         StartCoroutine( battleSM.InTurn());
         timeFlow = false;
     }
 
     public void Check()
     {
-        gameStatus = 3;
+        gameStatus = GameStatus.Check;
         StartCoroutine(battleSM.Check());
 
         //Reveal
@@ -109,7 +122,7 @@ public class BattleManager : MonoBehaviour
 
     public void Battle()
     {
-        gameStatus = 4;
+        gameStatus = GameStatus.Battle;
         StartCoroutine(battleSM.Battle());
         timeFlow = false;
 
@@ -120,7 +133,7 @@ public class BattleManager : MonoBehaviour
 
     public void EndTurn()
     {
-        gameStatus = 5;
+        gameStatus = GameStatus.EndTurn;
         StartCoroutine(battleSM.EndTurn());
 
         //Check Game End
@@ -133,7 +146,7 @@ public class BattleManager : MonoBehaviour
 
     public void RunNextStep()
     {
-        Invoke(stepMethod[gameStatus], 0);
+        Invoke(stepMethod[(int)gameStatus], 0);
     }
 
     
