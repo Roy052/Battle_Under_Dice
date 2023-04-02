@@ -33,4 +33,9 @@ public class CharacterInfo
     {
         2
     };
+
+    public static Buff[] buffs =
+    {
+
+    };
 }

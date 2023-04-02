@@ -51,17 +51,30 @@ public class BattleManager : MonoBehaviour
     //EnemyStatus
     int isAI = 1;
 
-    //GameEnd Message
+    public bool setupEnd = false;
+    private void Awake()
+    {
+        Access.battleManager = this;
+    }
+
+    private void OnDestroy()
+    {
+        Access.battleManager = null;
+    }
+
     private void FixedUpdate()
     {
-        if (time > 1f && battleSM.uiEnd)
+        if (setupEnd)
         {
-            time = 0;
-            RunNextStep();
-            Debug.Log(battleSM.uiEnd);
+            if (time > 1f && battleSM.uiEnd)
+            {
+                time = 0;
+                RunNextStep();
+                Debug.Log(battleSM.uiEnd);
+            }
+            if (timeFlow)
+                time += Time.fixedDeltaTime;
         }
-        if (timeFlow)
-            time += Time.fixedDeltaTime;
     }
     public void SetBattle()
     {
@@ -73,6 +86,11 @@ public class BattleManager : MonoBehaviour
 
         animationManager.AnimationSet(gm.characterNum_player, gm.characterNum_enemy);
 
+        setupEnd = true;
+    }
+
+    public void GameStart()
+    {
         Invoke("BeforeStart", 1);
     }
 

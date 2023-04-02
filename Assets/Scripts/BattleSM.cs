@@ -50,9 +50,22 @@ public class BattleSM : MonoBehaviour
     public bool uiEnd = false;
     bool coroutineStart = false;
 
+    //SetupEnd
+    public bool setupEnd = false;
+
+    private void Awake()
+    {
+        Access.battleSM = this;
+    }
+
+    private void OnDestroy()
+    {
+        Access.battleSM = null;
+    }
+
     private void Start()
     {
-        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+        gm = Access.gm;
 
         //Preset -> Network
         gm.SetEnemyInfo(0, new int[6] { 0, 1, 2, 3, 4, 5 });
@@ -62,26 +75,23 @@ public class BattleSM : MonoBehaviour
         characterNum_enemy = gm.characterNum_enemy;
         skillSet_enemy = gm.skillSet_enemy;
 
-        SetUp();
+        
     }
 
     private void Update()
     {
-        if (coroutineStart)
+        if (setupEnd && coroutineStart)
         {
-            if(playerCM.coroutineEnd && enemyCM.coroutineEnd)
+            if (playerCM.coroutineEnd && enemyCM.coroutineEnd)
             {
                 coroutineStart = false;
                 uiEnd = true;
-            }  
-                
+            }
         }
     }
 
     public void SetUp()
     {
-        bm.SetBattle();
-
         uiEnd = false;
         phaseText.text = "SetUp";
 

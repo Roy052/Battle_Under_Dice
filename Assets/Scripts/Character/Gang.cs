@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Gang : Player
 {
-    Buff[] buffs;
+    List<Buff> buffList;
     int[] debuffs;
+
+    public override void SetPlayer(int characterNum, int[] skillSet)
+    {
+        base.SetPlayer(characterNum, skillSet);
+        buffList.Add(new Buff());
+    }
 }
