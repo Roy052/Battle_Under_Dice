@@ -7,6 +7,18 @@
     public int effect;
 }*/
 
+public enum SkillNeedType
+{
+    PlayerHp = 0,
+    EnemyHp = 1,
+    HaveDice = 2,
+    MyBuff = 3,
+    MyDebuff = 4,
+    EnemyBuff = 5,
+    EnemyDebuff = 6,
+    PassiveValue = 7
+}
+
 public class SkillInfo
 {
     public static string[,] skillNameText = new string[1, 10]
@@ -36,6 +48,20 @@ public class SkillInfo
 
     //(character, skillnum)
     public static int[,] types = new int[1, 10]
+    {
+        {
+            0, 0, 1, 1, 2, 2, 3, 3, 4, 4
+        }
+    };
+
+    public static int[,] needTypes = new int[1, 10]
+    {
+        {
+            0, 0, 1, 1, 2, 2, 3, 3, 4, 4
+        }
+    };
+
+    public static int[,] needValues = new int[1, 10]
     {
         {
             0, 0, 1, 1, 2, 2, 3, 3, 4, 4

@@ -55,27 +55,7 @@ public class BattleSM : MonoBehaviour
 
     private void Awake()
     {
-        Access.battleSM = this;
-    }
-
-    private void OnDestroy()
-    {
-        Access.battleSM = null;
-    }
-
-    private void Start()
-    {
-        gm = Access.gm;
-
-        //Preset -> Network
-        gm.SetEnemyInfo(0, new int[6] { 0, 1, 2, 3, 4, 5 });
-
-        characterNum_player = gm.characterNum_player;
-        skillSet_player = gm.skillSet_player;
-        characterNum_enemy = gm.characterNum_enemy;
-        skillSet_enemy = gm.skillSet_enemy;
-
-        
+        Approach.battleSM = this;
     }
 
     private void Update()
@@ -92,6 +72,16 @@ public class BattleSM : MonoBehaviour
 
     public void SetUp()
     {
+        gm = Approach.gm;
+
+        //Preset -> Network
+        gm.SetEnemyInfo(0, new int[6] { 0, 1, 2, 3, 4, 5 });
+
+        characterNum_player = gm.characterNum_player;
+        skillSet_player = gm.skillSet_player;
+        characterNum_enemy = gm.characterNum_enemy;
+        skillSet_enemy = gm.skillSet_enemy;
+
         uiEnd = false;
         phaseText.text = "SetUp";
 

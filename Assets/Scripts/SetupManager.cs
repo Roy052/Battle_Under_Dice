@@ -7,20 +7,20 @@ public class SetupManager : MonoBehaviour
     IEnumerator Start()
     {
         //Setup BattleManager
-        while(Access.battleManager == null)
+        while(Approach.battleManager == null)
             yield return null;
 
-        Access.battleManager.SetBattle();
+        Approach.battleManager.SetBattle();
 
         //Setup BattleSM
-        while (Access.battleSM == null)
+        while (Approach.battleSM == null)
             yield return null;
 
-        Access.battleSM.SetUp();
+        Approach.battleSM.SetUp();
 
-        while(!(Access.battleManager.setupEnd == true && Access.battleSM.setupEnd == true))
+        while(!(Approach.battleManager.setupEnd == true && Approach.battleSM.setupEnd == true))
         {
-            Access.battleManager.GameStart();
+            Approach.battleManager.GameStart();
         }
     }
 }

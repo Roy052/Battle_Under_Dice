@@ -11,6 +11,10 @@ public class Enemy : Player
     List<int> diceList;
     Queue<int> diceQueue;
 
+    private void Awake()
+    {
+        Approach.enmey = this;
+    }
     private void Start()
     {
         diceList = new List<int>();

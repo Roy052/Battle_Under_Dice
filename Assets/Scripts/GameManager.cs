@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
         if (gameManagerInstance == null)
         {
             gameManagerInstance = this;
+            Approach.gm = this;
         }
         else
         {
@@ -36,6 +37,8 @@ public class GameManager : MonoBehaviour
 
     //EnemyStatus
     public int isAI = 1;
+
+
     void Start()
     {
         skillInfo = new SkillInfo();

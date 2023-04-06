@@ -2,6 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum GameStatus
+{
+    NotStarted = -1,
+    BeforeStart = 0,
+    TurnStart = 1,
+    InTurn = 2,
+    Check = 3,
+    Battle = 4,
+    EndTurn = 5
+}
+
 public class BattleManager : MonoBehaviour
 {
     GameManager gm;
@@ -10,17 +21,6 @@ public class BattleManager : MonoBehaviour
     [SerializeField] Player player;
     [SerializeField] Enemy enemy;
     [SerializeField] AnimationManager animationManager;
-    
-    public enum GameStatus
-    {
-        NotStarted  = -1,
-        BeforeStart = 0,
-        TurnStart   = 1,
-        InTurn      = 2,
-        Check       = 3,
-        Battle      = 4,
-        EndTurn     = 5
-    }
 
     //-1 : NotStarted, 0 : before start(Clean up), 1 : turn start(Effect), 2 : In turn, 3 : Check, 4 : Battle, 5 : End turn(Effect)
     public GameStatus gameStatus = GameStatus.NotStarted; 
@@ -54,12 +54,7 @@ public class BattleManager : MonoBehaviour
     public bool setupEnd = false;
     private void Awake()
     {
-        Access.battleManager = this;
-    }
-
-    private void OnDestroy()
-    {
-        Access.battleManager = null;
+        Approach.battleManager = this;
     }
 
     private void FixedUpdate()

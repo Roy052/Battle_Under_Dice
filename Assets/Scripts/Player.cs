@@ -12,8 +12,16 @@ public class Player : MonoBehaviour
     int characterNum;
     int[] skillSet;
 
+    protected List<Buff> buffList;
+    protected List<Debuff> debuffList;
+
     //Animation
     [SerializeField] Animator characterAnimator;
+
+    private void Awake()
+    {
+        Approach.player = this;
+    }
     public virtual void SetPlayer(int characterNum, int[] skillSet)
     {
         characterManager.SetCharacter(characterNum);

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Access 
+public class Approach
 {
     //GameObjects
     public static BattleManager battleManager;
