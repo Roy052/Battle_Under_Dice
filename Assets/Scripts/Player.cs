@@ -46,6 +46,90 @@ public class Player : MonoBehaviour
         if (retSkill.type == 2)
             retSkill.value += characterManager.character.evade;
 
+        retSkill = ActivateSkillBuffDeBuff(retSkill, Approach.battleManager.gameStatus);
+
+        return retSkill;
+    }
+
+    public void ReduceBuffDeBuffCount(GameStatus currentStatus)
+    {
+        foreach(Buff buff in buffList)
+        {
+            if (buff.reduceCountStatus == currentStatus)
+                buff.lastCount--;
+
+            if (buff.lastCount <= 0)
+                buffList.Remove(buff);
+        }
+
+        foreach (Debuff debuff in debuffList)
+        {
+            if (debuff.reduceCountStatus == currentStatus)
+                debuff.lastCount--;
+
+            if (debuff.lastCount <= 0)
+                debuffList.Remove(debuff);
+        }
+    }
+
+    public Skill ActivateSkillBuffDeBuff(Skill retSkill, GameStatus currentStatus)
+    {
+        foreach (Buff buff in buffList)
+        {
+            switch(buff.type)
+            {
+                case BuffType.AddDamage:
+                    if (retSkill.type == 0)
+                        retSkill.value += buff.value;
+                    break;
+                case BuffType.AddSpeed:
+                    retSkill.speed += buff.value;
+                    break;
+                case BuffType.AddDefense:
+                    if (retSkill.type == 1)
+                        retSkill.value += buff.value;
+                    break;
+                case BuffType.AddEvades:
+                    if (retSkill.type == 2)
+                        retSkill.value += buff.value;
+                    break;
+                case BuffType.AddEndurance:
+                    retSkill.endurance += buff.value;
+                    break;
+
+            }
+
+            ReduceBuffDeBuffCount(currentStatus);
+        }
+
+        foreach (Debuff debuff in debuffList)
+        {
+            switch (debuff.type)
+            {
+                case BuffType.AddDamage:
+                    if (retSkill.type == 0)
+                        retSkill.value += debuff.value;
+                    break;
+                case BuffType.AddSpeed:
+                    retSkill.speed += debuff.value;
+                    break;
+                case BuffType.AddDefense:
+                    if (retSkill.type == 1)
+                        retSkill.value += debuff.value;
+                    break;
+                case BuffType.AddEvades:
+                    if (retSkill.type == 2)
+                        retSkill.value += debuff.value;
+                    break;
+                case BuffType.AddEndurance:
+                    retSkill.endurance += debuff.value;
+                    break;
+
+            }
+
+            ReduceBuffDeBuffCount(currentStatus);
+        }
+
         return retSkill;
     }
 }

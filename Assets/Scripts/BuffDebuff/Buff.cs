@@ -5,25 +5,24 @@ using UnityEngine;
 public enum BuffType
 {
     None = -1,
-    AddHp = 0,
-    AddDamage = 1,
-    AddSpeed = 2,
-    AddDefense = 3,
-    AddEvades = 4,
-    AddEndurance = 5,
-    BuffToSkill = 6,
-    EnhancePassive = 7,
-    ReduceEnemyHp = 8,
-    ReduceDealtDamage = 9,
+    AddDamage = 0,
+    AddSpeed = 1,
+    AddDefense = 2,
+    AddEvades = 3,
+    AddEndurance = 4,
+    BuffToSkill = 5,
+    EnhancePassive = 6,
+    ReduceDealtDamage = 7,
 
     Others = 10,
 }
 
 public class Buff
 {
-    public string buffName;
-    public BuffType buffType;
+    public string name;
+    public BuffType type;
     public GameStatus activateStatus;
-    public short buffValue;
-    public short buffTurnCount;
+    public short value;
+    public short lastCount;
+    public GameStatus reduceCountStatus;
 }

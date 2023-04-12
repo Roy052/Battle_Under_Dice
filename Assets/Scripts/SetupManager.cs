@@ -19,8 +19,8 @@ public class SetupManager : MonoBehaviour
         Approach.battleSM.SetUp();
 
         while(!(Approach.battleManager.setupEnd == true && Approach.battleSM.setupEnd == true))
-        {
-            Approach.battleManager.GameStart();
-        }
+            yield return null;
+
+        Approach.battleManager.GameStart();
     }
 }

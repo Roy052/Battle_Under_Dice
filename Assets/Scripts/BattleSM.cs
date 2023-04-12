@@ -109,6 +109,7 @@ public class BattleSM : MonoBehaviour
         battleScreen.SetActive(false);
 
         uiEnd = true;
+        setupEnd = true;
     }
 
     public IEnumerator BeforeStart()
