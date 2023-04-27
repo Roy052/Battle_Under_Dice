@@ -17,7 +17,7 @@ public enum DebuffType
     Others = 10,
 }
 
-public class Debuff : Buff
+public class Debuff : SkillDelivery
 {
     public DebuffType debuffType;
 }

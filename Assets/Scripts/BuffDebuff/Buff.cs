@@ -17,12 +17,7 @@ public enum BuffType
     Others = 10,
 }
 
-public class Buff
+public class Buff : SkillDelivery
 {
-    public string name;
-    public BuffType type;
-    public GameStatus activateStatus;
-    public short value;
-    public short lastCount;
-    public GameStatus reduceCountStatus;
+    public BuffType buffType;
 }

@@ -56,18 +56,18 @@ public class Player : MonoBehaviour
         foreach(Buff buff in buffList)
         {
             if (buff.reduceCountStatus == currentStatus)
-                buff.lastCount--;
+                buff.turn--;
 
-            if (buff.lastCount <= 0)
+            if (buff.turn <= 0)
                 buffList.Remove(buff);
         }
 
         foreach (Debuff debuff in debuffList)
         {
             if (debuff.reduceCountStatus == currentStatus)
-                debuff.lastCount--;
+                debuff.turn--;
 
-            if (debuff.lastCount <= 0)
+            if (debuff.turn <= 0)
                 debuffList.Remove(debuff);
         }
     }
@@ -76,7 +76,7 @@ public class Player : MonoBehaviour
     {
         foreach (Buff buff in buffList)
         {
-            switch(buff.type)
+            switch(buff.buffType)
             {
                 case BuffType.AddDamage:
                     if (retSkill.type == 0)
@@ -104,25 +104,25 @@ public class Player : MonoBehaviour
 
         foreach (Debuff debuff in debuffList)
         {
-            switch (debuff.type)
+            switch (debuff.debuffType)
             {
-                case BuffType.AddDamage:
+                case DebuffType.ReduceDamage:
                     if (retSkill.type == 0)
-                        retSkill.value += debuff.value;
+                        retSkill.value -= debuff.value;
                     break;
-                case BuffType.AddSpeed:
-                    retSkill.speed += debuff.value;
+                case DebuffType.ReduceSpeed:
+                    retSkill.speed -= debuff.value;
                     break;
-                case BuffType.AddDefense:
+                case DebuffType.ReduceDefense:
                     if (retSkill.type == 1)
-                        retSkill.value += debuff.value;
+                        retSkill.value -= debuff.value;
                     break;
-                case BuffType.AddEvades:
+                case DebuffType.ReduceEvades:
                     if (retSkill.type == 2)
-                        retSkill.value += debuff.value;
+                        retSkill.value -= debuff.value;
                     break;
-                case BuffType.AddEndurance:
-                    retSkill.endurance += debuff.value;
+                case DebuffType.ReduceEndurance:
+                    retSkill.endurance -= debuff.value;
                     break;
 
             }
