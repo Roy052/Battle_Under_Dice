@@ -56,18 +56,18 @@ public class Player : MonoBehaviour
         foreach(Buff buff in buffList)
         {
             if (buff.reduceCountStatus == currentStatus)
-                buff.turn--;
+                buff.count--;
 
-            if (buff.turn <= 0)
+            if (buff.count <= 0)
                 buffList.Remove(buff);
         }
 
         foreach (Debuff debuff in debuffList)
         {
             if (debuff.reduceCountStatus == currentStatus)
-                debuff.turn--;
+                debuff.count--;
 
-            if (debuff.turn <= 0)
+            if (debuff.count <= 0)
                 debuffList.Remove(debuff);
         }
     }

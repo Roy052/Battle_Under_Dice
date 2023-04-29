@@ -2,14 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ConditionType
+{
+    Always = 0,
+    FlameCount = 1,
+}
+
+public enum TargetType
+{
+    Player = 0,
+    Enemy = 1
+}
+
+public class Condition
+{
+    public ConditionType type;
+    public int value;
+}
+
 public class Skill
 {
     public int type; //0 : Attack, 1 : Defense, 2 : Evade
     public int value;
     public int speed;
     public int endurance;
-    public int effect;
+    public List<Buff> skillBuffs = new List<Buff>();
+    public List<Debuff> skillDebuffs = new List<Debuff>();
+
+    public List<Condition> conditions;
 }
+
 public class SkillManager : MonoBehaviour
 {
     Skill[,] upgrade;
@@ -25,14 +47,27 @@ public class SkillManager : MonoBehaviour
         temp.value = SkillInfo.values[characterNum, skillNum, diceNum];
         temp.speed = SkillInfo.speeds[characterNum, skillNum, diceNum];
         temp.endurance = SkillInfo.endurances[characterNum, skillNum, diceNum];
-        temp.effect = SkillInfo.effects[characterNum, skillNum, diceNum];
 
-        if(upgrade != null)
+        //Add Buff and Debuff
+        List<Buff> buffs = SkillDeliveryInfo.GetBuff(SkillInfo.skillDelivery[characterNum, skillNum, diceNum]);
+        foreach(Buff buff in buffs)
+        {
+            temp.skillBuffs.Add(buff);
+        }
+
+        List<Debuff> debuffs = SkillDeliveryInfo.GetDebuff(SkillInfo.skillDelivery[characterNum, skillNum, diceNum]);
+        foreach (Debuff debuff in debuffs)
+        {
+            temp.skillDebuffs.Add(debuff);
+        }
+
+        if (upgrade != null)
         {
             temp.value += upgrade[characterNum, skillNum].value;
             temp.speed += upgrade[characterNum, skillNum].speed;
             temp.endurance += upgrade[characterNum, skillNum].endurance;
-            temp.effect += upgrade[characterNum, skillNum].effect;
+            temp.skillBuffs.AddRange(upgrade[characterNum, skillNum].skillBuffs);
+            temp.skillDebuffs.AddRange(upgrade[characterNum, skillNum].skillDebuffs);
         }
 
         return temp;

@@ -113,7 +113,7 @@ public class SkillInfo
         }
     };
 
-    public static int[,,] effects = new int[1, 10, 6]{
+    public static int[,,] skillDelivery = new int[1, 10, 6]{
         {
             { -1, -1, -1, -1, -1, -1 },
             { 0, 0, 0, 0, 0, 0 },

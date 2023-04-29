@@ -53,6 +53,9 @@ public class BattleSM : MonoBehaviour
     //SetupEnd
     public bool setupEnd = false;
 
+    //CMs
+    [SerializeField] CheckCM checkCM;
+
     private void Awake()
     {
         Approach.battleSM = this;
@@ -390,6 +393,8 @@ public class BattleSM : MonoBehaviour
         DiceCanvasOn();
 
         bm.SelectSkillNum(num);
+
+        checkCM.OnClickSkill(playerSkillNum);
     }
 
     public void SelectDiceNum(int num)
@@ -409,5 +414,7 @@ public class BattleSM : MonoBehaviour
         CheckCanvasOn();
 
         bm.SelectDiceNum(num);
+
+        checkCM.OnClickSkill(playerSkillNum, playerDiceNum);
     }
 }

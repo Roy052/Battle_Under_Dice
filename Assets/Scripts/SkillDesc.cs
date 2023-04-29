@@ -8,31 +8,8 @@ public class SkillDesc : MonoBehaviour
     const string SkillReplace = "[s]";
     const string DeliveryReplace = "[d]";
     const string AddEffectText = "And ";
-    public enum ConditionType
-    {
-        Always = 0,
-        FlameCount = 1,
-    }
 
-    public enum TargetType
-    {
-        Player = 0,
-        Enemy = 1
-    }
-    public class Skill
-    {
-        public List<Condition> conditions;
-        public List<int> values;
-        public List<Buff> buffs;
-    }
-
-    public class Condition
-    {
-        public ConditionType type;
-        public int value;
-    }
-
-    public static string GetSkillTooltipString(string str, Skill skill, int diceNum)
+    public static string GetSkillDescString(string str, Skill skill, int diceNum)
     {
         string result = str;
 
@@ -60,15 +37,15 @@ public class SkillDesc : MonoBehaviour
         }
 
         //Skill Value Setup
-        skillValues = skill.values;
+        skillValues.Add(skill.value);
 
         //Buff Value Setup
-        foreach (var buff in skill.buffs)
+        foreach (var buff in skill.skillBuffs)
         {
 
-            if (buff.turn != 999)
+            if (buff.count != 999)
             {
-                deliveryValues.Add(buff.turn);
+                deliveryValues.Add(buff.count);
             }
 
             deliveryValues.Add(buff.value);
