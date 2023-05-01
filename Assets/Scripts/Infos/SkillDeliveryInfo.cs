@@ -4,18 +4,26 @@ using UnityEngine;
 
 public class SkillDeliveryInfo
 {
-    public static int[] skillDeliveryCount = new int [5]
+    public static int[] skillDeliveryCount = new int [6]
     {
         1,
         1,
         2,
         2,
+        1,
         1
     };
 
-    public static int[,,] skillDeliveryInfos = new int[5, 5, 7]
+    public static int[,,] skillDeliveryInfos = new int[6, 5, 7]
     {
         //IsBuff, Type, Name, ActStatus, Value, ReduceStatus, Count
+        {
+            { 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0 }
+        },
         {
             { 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0 },
@@ -76,8 +84,11 @@ public class SkillDeliveryInfo
     public static List<Buff> GetBuff(int id)
     {
         List<Buff> buffs = new List<Buff>();
+        
+        //No Delivery
+        if (id == -1) return buffs;
 
-        for(int i = 0; i < skillDeliveryCount[id]; i++)
+        for (int i = 0; i < skillDeliveryCount[id]; i++)
         {
             SkillDelivery temp;
             if(skillDeliveryInfos[id,i,0] == 0)
@@ -100,6 +111,8 @@ public class SkillDeliveryInfo
     {
         List<Debuff> debuffs = new List<Debuff>();
 
+        //No Delivery
+        if (id == -1) return debuffs;
         for (int i = 0; i < skillDeliveryCount[id]; i++)
         {
             SkillDelivery temp;

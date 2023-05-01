@@ -13,28 +13,11 @@ public class SkillDesc : MonoBehaviour
     {
         string result = str;
 
-        List<int> conditionValues = new List<int>();
+        
         List<int> skillValues = new List<int>();
         List<int> deliveryValues = new List<int>();
 
-        //Condition Value Setup
-        foreach (var condition in skill.conditions)
-        {
-            if (condition.type == ConditionType.Always)
-                continue;
-
-            if (condition.type != ConditionType.FlameCount)
-            {
-                conditionValues.Add(condition.value);
-            }
-            else
-            {
-                int value = condition.value;
-                if (value < 0) value = Mathf.Abs(value);
-
-                conditionValues.Add(value);
-            }
-        }
+        
 
         //Skill Value Setup
         skillValues.Add(skill.value);
@@ -51,18 +34,7 @@ public class SkillDesc : MonoBehaviour
             deliveryValues.Add(buff.value);
         }
 
-        //Condition Str Setup
-        int conditionCount = conditionValues.Count;
-        for (int i = 0; i < conditionCount; i++)
-        {
-            int valueIndex = result.IndexOf(ConditionReplace);
-            if (valueIndex < 0) continue;
-
-            string strCondition = $"<color=#7AFFFF>{conditionValues[0]}</color>";
-            result = result.Replace(SkillReplace, strCondition);
-
-            conditionValues.RemoveAt(0);
-        }
+        
 
         //Skill Str Setup
         int skillCount = skillValues.Count;
@@ -88,6 +60,22 @@ public class SkillDesc : MonoBehaviour
             result = result.Replace(DeliveryReplace, strTurn);
 
             deliveryValues.RemoveAt(0);
+        }
+
+        return result;
+    }
+
+    public static string GetSkillCondString(int playerNum, int skillNum)
+    {
+        string result = "";
+
+        //Condition
+        for (int i = 0; i < 3; i++)
+        {
+            int conditionNum = SkillInfo.condTypes[playerNum, skillNum, i];
+            if (conditionNum == -1) break;
+            result += SkillInfo.skillCondTypeText[conditionNum] + " " + SkillInfo.condValues[playerNum, skillNum, i];
+            result += ", ";
         }
 
         return result;

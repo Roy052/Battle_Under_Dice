@@ -2,17 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ConditionType
-{
-    Always = 0,
-    FlameCount = 1,
-}
-
-public enum TargetType
-{
-    Player = 0,
-    Enemy = 1
-}
 
 public class Condition
 {
@@ -61,6 +50,10 @@ public class SkillManager : MonoBehaviour
             temp.skillDebuffs.Add(debuff);
         }
 
+        //Add Conditions
+        
+
+        //Upgrade
         if (upgrade != null)
         {
             temp.value += upgrade[characterNum, skillNum].value;

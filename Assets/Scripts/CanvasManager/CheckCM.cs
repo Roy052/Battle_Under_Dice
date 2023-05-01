@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class CheckCM : MonoBehaviour
 {
-    public Text skillDescText;
+    public Image skillImage, diceImage;
+    public Text conditionText, speedValueText, enduranceValueText, skillDescText;
 
     public void OnClickSkill(int skillNum) => OnClickSkill(skillNum, 0);
     public void OnClickSkill(int skillNum, int diceNum)
@@ -16,6 +17,10 @@ public class CheckCM : MonoBehaviour
         int playerNum = Approach.gm.characterNum_player;
         string str = SkillInfo.skillDescriptionText[playerNum, skillNum, diceNum];
         Skill skill = Approach.player.skillManager.UseSkill(playerNum, skillNum, diceNum);
-        SkillDesc.GetSkillDescString(str, skill, diceNum);
+
+        conditionText.text = SkillDesc.GetSkillCondString(playerNum, skillNum);
+        speedValueText.text = skill.speed.ToString();
+        enduranceValueText.text = skill.endurance.ToString();
+        skillDescText.text = SkillDesc.GetSkillDescString(str, skill, diceNum);
     }
 }

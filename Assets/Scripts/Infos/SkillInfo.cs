@@ -7,16 +7,28 @@
     public int effect;
 }*/
 
-public enum SkillNeedType
+public enum ConditionType
 {
-    PlayerHp = 0,
-    EnemyHp = 1,
-    HaveDice = 2,
-    MyBuff = 3,
-    MyDebuff = 4,
-    EnemyBuff = 5,
-    EnemyDebuff = 6,
-    PassiveValue = 7
+    None = -1,
+    PlayerHpUpper = 0,
+    PlayerHpLower = 1,
+    EnemyHpUpper = 2,
+    EnemyHpLower = 3,
+    PassiveValue = 4,
+
+    MyBuff = 10,
+    MyDebuff = 11,
+    EnemyBuff = 12,
+    EnemyDebuff = 13,
+
+    HaveDice = 20,
+    FlameCount = 21,
+}
+
+public enum TargetType
+{
+    Player = 0,
+    Enemy = 1
 }
 
 public class SkillInfo
@@ -46,6 +58,20 @@ public class SkillInfo
         }
     };
 
+    public static string[] skillCondTypeText = new string[10]
+    {
+        "Player Hp is more than [c]", 
+        "Player Hp is less than [c]", 
+        "Enemy Hp is more than [c]",
+        "Enemy Hp is less than [c]",
+        "If I have passive count [c]",
+        "[c]",
+        "[c]",
+        "[c]",
+        "[c]",
+        "[c]"
+    };
+
     //(character, skillnum)
     public static int[,] types = new int[1, 10]
     {
@@ -54,17 +80,36 @@ public class SkillInfo
         }
     };
 
-    public static int[,] needTypes = new int[1, 10]
+    public static int[,,] condTypes = new int[1, 10, 3]
     {
+        
         {
-            0, 0, 1, 1, 2, 2, 3, 3, 4, 4
+            { 0, -1, -1 },
+            { 0, -1, -1 },
+            { 1, -1, -1 },
+            { 1, -1, -1 },
+            { 2, -1, -1 },
+            { 2, -1, -1 },
+            { 3, -1, -1 },
+            { 3, -1, -1 },
+            { 4, -1, -1 },
+            { 4, -1, -1 }
         }
     };
 
-    public static int[,] needValues = new int[1, 10]
+    public static int[,,] condValues = new int[1, 10, 3]
     {
         {
-            0, 0, 1, 1, 2, 2, 3, 3, 4, 4
+            { 1, -1, -1 },
+            { 1, -1, -1 },
+            { 1, -1, -1 },
+            { 1, -1, -1 },
+            { 1, -1, -1 },
+            { 1, -1, -1 },
+            { 1, -1, -1 },
+            { 1, -1, -1 },
+            { 1, -1, -1 },
+            { 1, -1, -1 }
         }
     };
 
