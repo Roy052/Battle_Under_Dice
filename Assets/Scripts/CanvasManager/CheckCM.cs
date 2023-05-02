@@ -5,22 +5,56 @@ using UnityEngine.UI;
 
 public class CheckCM : MonoBehaviour
 {
+    public Image skillDescImage;
     public Image skillImage, diceImage;
-    public Text conditionText, speedValueText, enduranceValueText, skillDescText;
+    public Text nameText ,conditionText, speedValueText, enduranceValueText, skillDescText;
+    public Button checkButton;
 
-    public void OnClickSkill(int skillNum) => OnClickSkill(skillNum, 0);
+    public void OnClickSkill(int skillNum) => OnClickSkill(skillNum, -1);
     public void OnClickSkill(int skillNum, int diceNum)
     {
         //Skill Unchecked
-        if (skillNum == -1) skillDescText.text = "";
+        if (skillNum == -1) return;
 
         int playerNum = Approach.gm.characterNum_player;
-        string str = SkillInfo.skillDescriptionText[playerNum, skillNum, diceNum];
-        Skill skill = Approach.player.skillManager.UseSkill(playerNum, skillNum, diceNum);
 
+        string str = "";
+        Skill skill = null;
+        if (diceNum == -1)
+        {
+            str = SkillInfo.skillDescriptionText[playerNum, skillNum, 5];
+            skill = Approach.player.skillManager.UseSkill(playerNum, skillNum, 5);
+        }
+        else
+        {
+            str = SkillInfo.skillDescriptionText[playerNum, skillNum, diceNum];
+            skill = Approach.player.skillManager.UseSkill(playerNum, skillNum, diceNum);
+        }
+
+        Debug.Log(playerNum + ", " + skillNum);
+        nameText.text = SkillInfo.skillNameText[playerNum, skillNum];
         conditionText.text = SkillDesc.GetSkillCondString(playerNum, skillNum);
         speedValueText.text = skill.speed.ToString();
         enduranceValueText.text = skill.endurance.ToString();
-        skillDescText.text = SkillDesc.GetSkillDescString(str, skill, diceNum);
+        skillDescText.text = SkillDesc.GetSkillDescString(str, skill, diceNum == -1 ? true : false);
+    }
+
+    public void CheckButtonOn()
+    {
+        checkButton.gameObject.SetActive(true);
+    }
+    public void CheckButtonOff()
+    {
+        checkButton.gameObject.SetActive(false);
+    }
+
+    public void SkillDescOn()
+    {
+        skillDescImage.gameObject.SetActive(true);
+    }
+
+    public void SkillDescOff()
+    {
+        skillDescImage.gameObject.SetActive(false);
     }
 }

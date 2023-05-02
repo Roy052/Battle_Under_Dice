@@ -108,7 +108,8 @@ public class BattleSM : MonoBehaviour
         //Canvases Off
         SkillCanvasOff();
         DiceCanvasOff();
-        CheckCanvasOff();
+        checkCM.SkillDescOff();
+        checkCM.CheckButtonOff();
         battleScreen.SetActive(false);
 
         uiEnd = true;
@@ -362,16 +363,6 @@ public class BattleSM : MonoBehaviour
         diceCanvas.gameObject.SetActive(false);
     }
 
-    public void CheckCanvasOn()
-    {
-        checkCanvas.gameObject.SetActive(true);
-    }
-
-    public void CheckCanvasOff()
-    {
-        checkCanvas.gameObject.SetActive(false);
-    }
-
     int playerSkillNum = -1, playerDiceNum = -1;
 
     public void SelectSkillNum(int num)
@@ -383,7 +374,8 @@ public class BattleSM : MonoBehaviour
 
             playerSkillNum = -1;
             DiceCanvasOff();
-            CheckCanvasOff();
+            checkCM.SkillDescOff();
+            checkCM.CheckButtonOff();
             return;
         }
 
@@ -395,6 +387,7 @@ public class BattleSM : MonoBehaviour
         bm.SelectSkillNum(num);
 
         checkCM.OnClickSkill(playerSkillNum);
+        checkCM.SkillDescOn();
     }
 
     public void SelectDiceNum(int num)
@@ -404,14 +397,15 @@ public class BattleSM : MonoBehaviour
             diceUnderlines[playerDiceNum].SetActive(false);
 
             playerDiceNum = -1;
-            CheckCanvasOff();
+            checkCM.CheckButtonOff();
+            checkCM.OnClickSkill(playerSkillNum, playerDiceNum);
             return;
         }
 
         if (playerDiceNum != -1) diceUnderlines[playerDiceNum].SetActive(false);
         playerDiceNum = num;
         diceUnderlines[playerDiceNum].SetActive(true);
-        CheckCanvasOn();
+        checkCM.CheckButtonOn();
 
         bm.SelectDiceNum(num);
 

@@ -9,15 +9,12 @@ public class SkillDesc : MonoBehaviour
     const string DeliveryReplace = "[d]";
     const string AddEffectText = "And ";
 
-    public static string GetSkillDescString(string str, Skill skill, int diceNum)
+    public static string GetSkillDescString(string str, Skill skill, bool noDiceNum = false)
     {
         string result = str;
 
-        
         List<int> skillValues = new List<int>();
         List<int> deliveryValues = new List<int>();
-
-        
 
         //Skill Value Setup
         skillValues.Add(skill.value);
@@ -34,16 +31,16 @@ public class SkillDesc : MonoBehaviour
             deliveryValues.Add(buff.value);
         }
 
-        
-
         //Skill Str Setup
         int skillCount = skillValues.Count;
         for (int i = 0; i < skillCount; i++)
         {
             if (result.Contains(SkillReplace) == false)
                 continue;
-
-            string strTurn = $"<color=#7AFFFF>{skillValues[0]}</color>";
+            
+            string strTurn = $"<color=#690000>{skillValues[0]}</color>";
+            if(noDiceNum)
+                strTurn = $"<color=#690000>{'?'}</color>";
             result = result.Replace(SkillReplace, strTurn);
 
             skillValues.RemoveAt(0);
@@ -56,7 +53,9 @@ public class SkillDesc : MonoBehaviour
             if (result.Contains(DeliveryReplace) == false)
                 continue;
 
-            string strTurn = $"<color=#7AFFFF>{deliveryValues[0]}</color>";
+            string strTurn = $"<color=#690000>{deliveryValues[0]}</color>";
+            if (noDiceNum)
+                strTurn = $"<color=#690000>{'?'}</color>";
             result = result.Replace(DeliveryReplace, strTurn);
 
             deliveryValues.RemoveAt(0);
@@ -74,7 +73,14 @@ public class SkillDesc : MonoBehaviour
         {
             int conditionNum = SkillInfo.condTypes[playerNum, skillNum, i];
             if (conditionNum == -1) break;
-            result += SkillInfo.skillCondTypeText[conditionNum] + " " + SkillInfo.condValues[playerNum, skillNum, i];
+            result += SkillInfo.skillCondTypeText[conditionNum];
+
+            if (result.Contains(ConditionReplace) == false)
+                continue;
+
+            string strTurn = $"<color=#690000>{SkillInfo.condValues[playerNum, skillNum, i]}</color>";
+            result = result.Replace(ConditionReplace, strTurn);
+
             result += ", ";
         }
 

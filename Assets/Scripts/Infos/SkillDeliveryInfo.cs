@@ -90,18 +90,11 @@ public class SkillDeliveryInfo
 
         for (int i = 0; i < skillDeliveryCount[id]; i++)
         {
-            SkillDelivery temp;
             if(skillDeliveryInfos[id,i,0] == 0)
             {
-                temp = new Buff();
+                Buff temp = new Buff();
 
             }
-            else
-            {
-                temp = new Debuff();
-
-            }
-
         }
 
         return buffs;
@@ -115,16 +108,9 @@ public class SkillDeliveryInfo
         if (id == -1) return debuffs;
         for (int i = 0; i < skillDeliveryCount[id]; i++)
         {
-            SkillDelivery temp;
-            if (skillDeliveryInfos[id, i, 0] == 0)
+            if (skillDeliveryInfos[id, i, 0] == 1)
             {
-                temp = new Buff();
-
-            }
-            else
-            {
-                temp = new Debuff();
-
+                Debuff temp = new Debuff();
             }
 
         }

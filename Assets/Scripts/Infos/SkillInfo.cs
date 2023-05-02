@@ -45,9 +45,9 @@ public class SkillInfo
     public static string[,,] skillDescriptionText = new string[1, 10, 6]
     {
         {
-            { "Attack0 Desc", "Attack0 Desc", "Attack0 Desc", "Attack0 Desc", "Attack0 Desc", "Attack0 Desc"},
+            { "Attack Damage is [s]", "Attack Damage is [s]", "Attack Damage is [s]", "Attack Damage is [s]", "Attack Damage is [s]", "Attack Damage is [s]"},
             { "Attack1 Desc", "Attack1 Desc", "Attack1 Desc", "Attack1 Desc", "Attack1 Desc", "Attack1 Desc"},
-            { "Defence0 Desc", "Defence0 Desc", "Defence0 Desc", "Defence0 Desc", "Defence0 Desc", "Defence0 Desc"},
+            { "Defense is [s]", "Defense is [s]", "Defense is [s]", "Defense is [s]", "Defense is [s]", "Defense is [s]"},
             { "Defence1 Desc", "Defence1 Desc", "Defence1 Desc", "Defence1 Desc", "Defence1 Desc", "Defence1 Desc"},
             { "Evade0 Desc", "Evade0 Desc", "Evade0 Desc", "Evade0 Desc", "Evade0 Desc", "Evade0 Desc"},
             { "Evade1 Desc", "Evade1 Desc", "Evade1 Desc", "Evade1 Desc", "Evade1 Desc", "Evade1 Desc"},
