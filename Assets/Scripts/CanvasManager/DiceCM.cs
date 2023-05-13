@@ -3,34 +3,36 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SkillCM : CanvasManager
+public class DiceCM : CanvasManager
 {
     public Button[] buttons;
     public GameObject[] activates;
 
-    public Text[] buttonTexts;
-    public Image[] buttonImages;
+    public Text[] amountTexts;
     int current = -1;
 
-    public void Setup(int characterNum_player, int[] skillSet_player)
+    public void Setup(int[] diceArray)
     {
-        //SkillButtonText
+        //DiceAmount
         for (int i = 0; i < 6; i++)
-            buttonTexts[i].text = SkillInfo.skillNameText[characterNum_player, skillSet_player[i]];
-
-        //SkillButtonImage
-        for (int i = 0; i < 6; i++)
-            buttonImages[i].sprite = Approach.gm.GetSkillSprite(characterNum_player, skillSet_player[i]);
+            amountTexts[i].text = diceArray[i].ToString();
     }
 
-    public void RefreshUI()
+    public void RefreshUI(int[] diceArray)
     {
-        Skill[] skillList = null;
+        //DiceArray
+        for (int i = 0; i < 6; i++)
+        {
+            if (diceArray[i] == 0) buttons[i].enabled = false;
+            amountTexts[i].text = diceArray[i].ToString();
+        }
+
+        //Activate
         foreach (GameObject activate in activates)
             activate.SetActive(false);
     }
 
-    public void SelectSkillNum(int num)
+    public void SelectDiceNum(int num)
     {
         if (current == num)
         {
@@ -45,6 +47,6 @@ public class SkillCM : CanvasManager
             current = num;
         }
 
-        Approach.battleSM.SelectSkillNum(current);
+        Approach.battleSM.SelectDiceNum(current);
     }
 }

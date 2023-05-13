@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CheckCM : MonoBehaviour
+public class CheckCM : CanvasManager
 {
     public Image skillDescImage;
     public Image skillImage, diceImage;
@@ -34,8 +34,16 @@ public class CheckCM : MonoBehaviour
         Debug.Log(playerNum + ", " + skillNum);
         nameText.text = SkillInfo.skillNameText[playerNum, skillNum];
         conditionText.text = SkillDesc.GetSkillCondString(playerNum, skillNum);
-        speedValueText.text = skill.speed.ToString();
-        enduranceValueText.text = skill.endurance.ToString();
+        if (diceNum == -1)
+        {
+            speedValueText.text = "?";
+            enduranceValueText.text = "?";
+        }
+        else
+        {
+            speedValueText.text = skill.speed.ToString();
+            enduranceValueText.text = skill.endurance.ToString();
+        }
         skillDescText.text = SkillDesc.GetSkillDescString(str, skill, diceNum == -1 ? true : false);
     }
 

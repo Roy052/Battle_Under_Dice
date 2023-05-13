@@ -17,13 +17,11 @@ public class BattleSM : MonoBehaviour
     //BattleUI
     [SerializeField] Text turnText, phaseText;
     [SerializeField] Image turnImage;
-    [SerializeField] Canvas skillCanvas, diceCanvas, checkCanvas;
 
-    //Canvas Components
-    [SerializeField] Text[] skillTexts, diceAmountTexts;
-    [SerializeField] Image[] skillButtonImages;
-    [SerializeField] Button[] skillButtons, diceButtons;
-    [SerializeField] GameObject[] skillUnderlines, diceUnderlines;
+    //Canvas Managers
+    [SerializeField] SkillCM skillCM;
+    [SerializeField] DiceCM diceCM;
+    [SerializeField] CheckCM checkCM;
 
     //PlyaerUI
     [SerializeField] PlayerCM playerCM;
@@ -52,9 +50,6 @@ public class BattleSM : MonoBehaviour
 
     //SetupEnd
     public bool setupEnd = false;
-
-    //CMs
-    [SerializeField] CheckCM checkCM;
 
     private void Awake()
     {
@@ -92,24 +87,22 @@ public class BattleSM : MonoBehaviour
         playerCM.SetNameText(CharacterInfo.characterName[characterNum_player]);
         enemyCM.SetNameText(CharacterInfo.characterName[characterNum_enemy]);
 
-        //DiceArray
+        //Canvas Setup
+        skillCM.Setup(characterNum_player, skillSet_player);
+
         for (int i = 0; i < 6; i++)
             diceArray[i] = GameInfo.diceResetArray[i];
-
-        //SkillButtonText
-        for (int i = 0; i < 6; i++)
-            skillTexts[i].text = SkillInfo.skillNameText[characterNum_player, skillSet_player[i]];
-
-        //SkillButtonImage
-        for (int i = 0; i < 6; i++)
-            skillButtonImages[i].sprite = gm.GetSkillSprite(characterNum_player, skillSet_player[i]);
-
+        diceCM.Setup(diceArray);
+        
         RefreshUI();
+
         //Canvases Off
-        SkillCanvasOff();
-        DiceCanvasOff();
+        skillCM.CanvasOff();
+        diceCM.CanvasOff();
         checkCM.SkillDescOff();
         checkCM.CheckButtonOff();
+        checkCM.CanvasOff();
+        
         battleScreen.SetActive(false);
 
         uiEnd = true;
@@ -132,13 +125,6 @@ public class BattleSM : MonoBehaviour
         enemyCM.SKillDiceOff();
         playerCM.PlayerStunnedOff();
         enemyCM.PlayerStunnedOff();
-
-        //Reset Underlines
-        for(int i = 0; i < skillUnderlines.Length; i++)
-        {
-            skillUnderlines[i].SetActive(false);
-            diceUnderlines[i].SetActive(false);
-        }
 
         //Reset Data
         playerSkillNum = -1;
@@ -169,7 +155,10 @@ public class BattleSM : MonoBehaviour
         uiEnd = false;
         phaseText.text = "InTurn";
         RefreshUI();
-        SkillCanvasOn();
+
+        //Skill Canvas ON
+        skillCM.CanvasOn();
+        checkCM.CanvasOn();
         yield return new WaitForSeconds(1);
     }
 
@@ -185,9 +174,11 @@ public class BattleSM : MonoBehaviour
     {
         uiEnd = false;
         phaseText.text = "Check";
-        skillCanvas.gameObject.SetActive(false);
-        diceCanvas.gameObject.SetActive(false);
-        checkCanvas.gameObject.SetActive(false);
+
+        //Canvas Off
+        skillCM.CanvasOff();
+        diceCM.CanvasOff();
+        checkCM.CanvasOff();
         RefreshUI();
 
         playerCM.coroutineEnd = false;
@@ -229,20 +220,10 @@ public class BattleSM : MonoBehaviour
         playerCM.SetHpBar(characterManager_player.character.hp, characterManager_player.character.maxHp);
         enemyCM.SetHpBar(characterManager_enemy.character.hp, characterManager_enemy.character.maxHp);
 
+        skillCM.RefreshUI();
         //diceNum
         diceArray = diceManager_player.GetDiceArray();
-        for (int i = 0; i < 6; i++)
-        {
-            if (diceArray[i] == 0) diceButtons[i].enabled = false;
-            diceAmountTexts[i].text = diceArray[i].ToString();
-        }
-
-        //Underlines
-        for (int i = 0; i < skillUnderlines.Length; i++)
-        {
-            skillUnderlines[i].SetActive(false);
-            diceUnderlines[i].SetActive(false);
-        }
+        diceCM.RefreshUI(diceArray);
 
         //playerCM
         if (bm.playerDefense > 0)
@@ -336,79 +317,41 @@ public class BattleSM : MonoBehaviour
             
     }
 
-    public void EndCharacterCM(bool isPlayer)
-    {
-        if (isPlayer) playerCM.coroutineEnd = true;
-        else enemyCM.coroutineEnd = true;
-    }
-
-    //Canvas ON/OFF
-    public void SkillCanvasOn()
-    {
-        skillCanvas.gameObject.SetActive(true);
-    }
-
-    public void SkillCanvasOff()
-    {
-        skillCanvas.gameObject.SetActive(false);
-    }
-
-    public void DiceCanvasOn()
-    {
-        diceCanvas.gameObject.SetActive(true);
-    }
-
-    public void DiceCanvasOff()
-    {
-        diceCanvas.gameObject.SetActive(false);
-    }
-
     int playerSkillNum = -1, playerDiceNum = -1;
 
     public void SelectSkillNum(int num)
     {
-        //Skill Cancel
-        if (playerSkillNum == num)
-        {
-            skillUnderlines[playerSkillNum].SetActive(false);
+        playerSkillNum = num;
 
-            playerSkillNum = -1;
-            DiceCanvasOff();
+        //Skill Cancel
+        if (num == -1)
+        {
+            diceCM.CanvasOff();
             checkCM.SkillDescOff();
             checkCM.CheckButtonOff();
             return;
         }
 
-        if(playerSkillNum != -1) skillUnderlines[playerSkillNum].SetActive(false);
-        playerSkillNum = num;
-        skillUnderlines[playerSkillNum].SetActive(true);
-        DiceCanvasOn();
-
+        diceCM.CanvasOn();
         bm.SelectSkillNum(num);
-
         checkCM.OnClickSkill(playerSkillNum);
         checkCM.SkillDescOn();
     }
 
     public void SelectDiceNum(int num)
     {
-        if (playerDiceNum == num)
-        {
-            diceUnderlines[playerDiceNum].SetActive(false);
+        playerDiceNum = num;
 
-            playerDiceNum = -1;
+        //Dice Cancel
+        if (num == -1)
+        {
             checkCM.CheckButtonOff();
             checkCM.OnClickSkill(playerSkillNum, playerDiceNum);
             return;
         }
 
-        if (playerDiceNum != -1) diceUnderlines[playerDiceNum].SetActive(false);
-        playerDiceNum = num;
-        diceUnderlines[playerDiceNum].SetActive(true);
         checkCM.CheckButtonOn();
-
         bm.SelectDiceNum(num);
-
         checkCM.OnClickSkill(playerSkillNum, playerDiceNum);
     }
 }
