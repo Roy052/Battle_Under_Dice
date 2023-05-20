@@ -326,6 +326,7 @@ public class BattleSM : MonoBehaviour
         //Skill Cancel
         if (num == -1)
         {
+            diceCM.RefreshUI(diceManager_player.GetDiceArray());
             diceCM.CanvasOff();
             checkCM.SkillDescOff();
             checkCM.CheckButtonOff();

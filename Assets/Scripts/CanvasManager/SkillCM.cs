@@ -6,42 +6,41 @@ using UnityEngine.UI;
 public class SkillCM : CanvasManager
 {
     public Button[] buttons;
-    public GameObject[] activates;
 
-    public Text[] buttonTexts;
-    public Image[] buttonImages;
+    public SkillButton[] skillButtons;
     int current = -1;
 
     public void Setup(int characterNum_player, int[] skillSet_player)
     {
         //SkillButtonText
         for (int i = 0; i < 6; i++)
-            buttonTexts[i].text = SkillInfo.skillNameText[characterNum_player, skillSet_player[i]];
-
-        //SkillButtonImage
-        for (int i = 0; i < 6; i++)
-            buttonImages[i].sprite = Approach.gm.GetSkillSprite(characterNum_player, skillSet_player[i]);
+        {
+            skillButtons[i].Set(characterNum_player, skillSet_player[i]);
+            skillButtons[i].Deactivate();
+        }
     }
 
     public void RefreshUI()
     {
         Skill[] skillList = null;
-        foreach (GameObject activate in activates)
-            activate.SetActive(false);
+        for(int i = 0; i < skillButtons.Length; i++)
+        {
+            skillButtons[i].Deactivate();
+        }
     }
 
     public void SelectSkillNum(int num)
     {
         if (current == num)
         {
-            activates[num].gameObject.SetActive(false);
+            skillButtons[num].Deactivate();
             current = -1;
         }
         else
         {
             if (current != -1)
-                activates[current].gameObject.SetActive(false);
-            activates[num].gameObject.SetActive(true);
+                skillButtons[current].Deactivate();
+            skillButtons[num].Activate();
             current = num;
         }
 
