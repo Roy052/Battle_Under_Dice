@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
 
     //SkillImages
     Sprite[,] skillSprites;
+    Sprite[] diceSprite;
 
     //EnemyStatus
     public int isAI = 1;
@@ -61,6 +62,9 @@ public class GameManager : MonoBehaviour
                 skillSprites[characterNum, spriteNum] = tempSprites[spriteNum];
             }
         }
+
+        diceSprite = new Sprite[6];
+        diceSprite = Resources.LoadAll<Sprite>("Arts/Dice/");
     }
 
     public Sprite GetSkillSprite(int characterNum, int skillNum)
@@ -68,6 +72,10 @@ public class GameManager : MonoBehaviour
         return skillSprites[characterNum, skillNum];
     }
 
+    public Sprite GetDiceSprite(int diceNum)
+    {
+        return diceSprite[diceNum];
+    }
     public void SetPlayerSkill(int[] skillSet)
     {
         skillSet_player = skillSet;
