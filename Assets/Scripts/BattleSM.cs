@@ -284,8 +284,8 @@ public class BattleSM : MonoBehaviour
 
     public IEnumerator IntenseBattleScreen()
     {
-        StartCoroutine(playerCM.HpBarDisabled(GameInfo.battleAnimationDelay));
-        StartCoroutine(enemyCM.HpBarDisabled(GameInfo.battleAnimationDelay));
+        StartCoroutine(playerCM.HpBarDisabledForAWhile(GameInfo.battleAnimationDelay));
+        StartCoroutine(enemyCM.HpBarDisabledForAWhile(GameInfo.battleAnimationDelay));
 
         player.gameObject.transform.localScale = new Vector3(1.2f, 1.2f, 1);
         enemy.gameObject.transform.localScale = new Vector3(1.2f, 1.2f, 1);

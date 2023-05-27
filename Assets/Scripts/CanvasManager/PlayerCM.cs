@@ -11,6 +11,8 @@ public class PlayerCM : MonoBehaviour
     [SerializeField] GameObject hpBar;
     [SerializeField] Text hpText;
     [SerializeField] Image hpBar_Red;
+    [SerializeField] HPBar hpBarBig;
+    [SerializeField] HPBar hpBarSmall;
 
     //Skill and Dice
     [SerializeField] Image skillImage;
@@ -53,8 +55,8 @@ public class PlayerCM : MonoBehaviour
 
     public void SetHpBar(int hp, int maxHp)
     {
-        hpText.text = hp + "/" + maxHp;
-        hpBar_Red.fillAmount = hp / (float) maxHp;
+        hpBarBig.Set(hp, maxHp);
+        hpBarSmall.Set(hp, maxHp);
     }
     
     //Reveal
@@ -169,15 +171,15 @@ public class PlayerCM : MonoBehaviour
         coroutineEnd = true;
     }
 
-    public IEnumerator HpBarDisabled(float time)
+    public IEnumerator HpBarDisabledForAWhile(float time)
     {
-        hpBar.SetActive(false);
+        hpBarBig.DisableBar();
         if(defenseEvade > 0)
             defenseEvadeBox.gameObject.SetActive(false);
 
         yield return new WaitForSeconds(time);
 
-        hpBar.SetActive(true);
+        hpBarSmall.EnableBar();
         if(defenseEvade > 0)
             defenseEvadeBox.gameObject.SetActive(true);
 
