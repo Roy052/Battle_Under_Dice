@@ -22,13 +22,23 @@ public class SkillDesc : MonoBehaviour
         //Buff Value Setup
         foreach (var buff in skill.skillBuffs)
         {
-
             if (buff.count != 999)
             {
                 deliveryValues.Add(buff.count);
             }
 
             deliveryValues.Add(buff.value);
+        }
+
+        //DeBuff Value Setup
+        foreach (var debuff in skill.skillDebuffs)
+        {
+            if (debuff.count != 999)
+            {
+                deliveryValues.Add(debuff.count);
+            }
+
+            deliveryValues.Add(debuff.value);
         }
 
         //Skill Str Setup

@@ -11,7 +11,7 @@ public class Condition
 
 public class Skill
 {
-    public int type; //0 : Attack, 1 : Defense, 2 : Evade
+    public int type; //0 : Attack, 1 : Defense, 2 : Evade, 3 : Buff, 4 : Debuff
     public int value;
     public int speed;
     public int endurance;

@@ -253,7 +253,7 @@ public class BattleSM : MonoBehaviour
     }
 
     //Battle
-    public void DefenseEvadeOn(bool isPlayer ,int defenseEvade, int value)
+    public void DefenseEvadeOn(bool isPlayer, int defenseEvade, int value)
     {
         if (isPlayer)
         {
@@ -264,6 +264,31 @@ public class BattleSM : MonoBehaviour
             StartCoroutine(enemyCM.Defense_EvadeOn(defenseEvade, value));
         }
             
+    }
+
+    public void AddSkillDelivery(bool isPlayer, Buff buff)
+    {
+        if (isPlayer)
+        {
+            StartCoroutine(playerCM.SkillDeliveryOn(buff));
+        }
+        else
+        {
+            StartCoroutine(enemyCM.SkillDeliveryOn(buff));
+        }
+
+    }
+
+    public void AddSkillDelivery(bool isPlayer, Debuff debuff)
+    {
+        if (isPlayer)
+        {
+            StartCoroutine(playerCM.SkillDeliveryOn(debuff));
+        }
+        else
+        {
+            StartCoroutine(enemyCM.SkillDeliveryOn(debuff));
+        }
     }
 
     public void DefenseEvadeOff(bool isPlayer)
@@ -335,7 +360,7 @@ public class BattleSM : MonoBehaviour
 
         diceCM.CanvasOn();
         bm.SelectSkillNum(num);
-        checkCM.OnClickSkill(playerSkillNum);
+        checkCM.OnClickSkill(skillSet_player[playerSkillNum]);
         checkCM.SkillDescOn();
     }
 
@@ -347,12 +372,12 @@ public class BattleSM : MonoBehaviour
         if (num == -1)
         {
             checkCM.CheckButtonOff();
-            checkCM.OnClickSkill(playerSkillNum, playerDiceNum);
+            checkCM.OnClickSkill(skillSet_player[playerSkillNum], playerDiceNum);
             return;
         }
 
         checkCM.CheckButtonOn();
         bm.SelectDiceNum(num);
-        checkCM.OnClickSkill(playerSkillNum, playerDiceNum);
+        checkCM.OnClickSkill(skillSet_player[playerSkillNum], playerDiceNum);
     }
 }

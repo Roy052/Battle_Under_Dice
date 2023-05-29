@@ -36,7 +36,7 @@ public class SkillInfo
     public static string[,] skillNameText = new string[1, 10]
     {
         {
-            "Attack0", "Attack1", "Defence0", "Defence1", "Evade0", "Evade1", "Buff0", "Buff1","Debuff0", "Debuff1"
+            "Attack0", "Attack1", "Defence0", "Defence1", "Evade0", "Evade1", "Add Damage", "Buff1","Debuff0", "Debuff1"
         }
     };
 
@@ -46,15 +46,15 @@ public class SkillInfo
     {
         {
             { "Attack Damage is [s]", "Attack Damage is [s]", "Attack Damage is [s]", "Attack Damage is [s]", "Attack Damage is [s]", "Attack Damage is [s]"},
-            { "Attack1 Desc", "Attack1 Desc", "Attack1 Desc", "Attack1 Desc", "Attack1 Desc", "Attack1 Desc"},
+            { "Attack Damage is [s]", "Attack Damage is [s]", "Attack Damage is [s]", "Attack Damage is [s]", "Attack Damage is [s]", "Attack Damage is [s]"},
             { "Defense is [s]", "Defense is [s]", "Defense is [s]", "Defense is [s]", "Defense is [s]", "Defense is [s]"},
-            { "Defence1 Desc", "Defence1 Desc", "Defence1 Desc", "Defence1 Desc", "Defence1 Desc", "Defence1 Desc"},
-            { "Evade0 Desc", "Evade0 Desc", "Evade0 Desc", "Evade0 Desc", "Evade0 Desc", "Evade0 Desc"},
-            { "Evade1 Desc", "Evade1 Desc", "Evade1 Desc", "Evade1 Desc", "Evade1 Desc", "Evade1 Desc"},
-            { "Buff0 Desc", "Buff0 Desc", "Buff0 Desc", "Buff0 Desc", "Buff0 Desc", "Buff0 Desc"},
-            { "Buff1 Desc", "Buff1 Desc", "Buff1 Desc", "Buff1 Desc", "Buff1 Desc", "Buff1 Desc"},
-            { "Debuff0 Desc", "Debuff0 Desc", "Debuff0 Desc", "Debuff0 Desc", "Debuff0 Desc", "Debuff0 Desc"},
-            { "Debuff1 Desc", "Debuff1 Desc", "Debuff1 Desc", "Debuff1 Desc", "Debuff1 Desc", "Debuff1 Desc"}
+            { "Defense is [s]", "Defense is [s]", "Defense is [s]", "Defense is [s]", "Defense is [s]", "Defense is [s]"},
+            { "Evade is [s]", "Evade is [s]", "Evade is [s]", "Evade is [s]", "Evade is [s]", "Evade is [s]"},
+            { "Evade is [s]", "Evade is [s]", "Evade is [s]", "Evade is [s]", "Evade is [s]", "Evade is [s]"},
+            { "Buff is [d]", "Buff is [d]", "Buff is [d]", "Buff is [d]", "Buff is [d]", "Buff is [d]"},
+            { "Buff is [d]", "Buff is [d]", "Buff is [d]", "Buff is [d]", "Buff is [d]", "Buff is [d]"},
+            { "DeBuff is [d]", "DeBuff is [d]", "DeBuff is [d]", "DeBuff is [d]", "Buff is [d]", "Buff is [d]"},
+            { "DeBuff is [d]", "DeBuff is [d]", "DeBuff is [d]", "DeBuff is [d]", "Buff is [d]", "Buff is [d]"},
         }
     };
 
@@ -121,10 +121,10 @@ public class SkillInfo
             { 2, 2, 2, 2, 2, 2 },
             { 1, 1, 1, 1, 1, 1 },
             { 2, 2, 2, 2, 2, 2 },
-            { 1, 1, 1, 1, 1, 1 },
-            { 2, 2, 2, 2, 2, 2 },
-            { 1, 1, 1, 1, 1, 1 },
-            { 2, 2, 2, 2, 2, 2 }
+            { 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0 },
         }
     };
 
@@ -161,15 +161,15 @@ public class SkillInfo
     public static int[,,] skillDelivery = new int[1, 10, 6]{
         {
             { -1, -1, -1, -1, -1, -1 },
+            { -1, -1, -1, -1, -1, -1 },
+            { -1, -1, -1, -1, -1, -1 },
+            { -1, -1, -1, -1, -1, -1 },
+            { -1, -1, -1, -1, -1, -1 },
+            { -1, -1, -1, -1, -1, -1 },
             { 0, 0, 0, 0, 0, 0 },
-            { -1, -1, -1, -1, -1, -1 },
-            { -1, -1, -1, -1, -1, -1 },
-            { -1, -1, -1, -1, -1, -1 },
-            { -1, -1, -1, -1, -1, -1 },
-            { -1, -1, -1, -1, -1, -1 },
-            { -1, -1, -1, -1, -1, -1 },
-            { -1, -1, -1, -1, -1, -1 },
-            { -1, -1, -1, -1, -1, -1 }
+            { 1, 1, 1, 1, 1, 1 },
+            { 1, 1, 1, 1, 1, 1 },
+            { 1, 1, 1, 1, 1, 1 },
         }
     };
 }

@@ -1,9 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class SkillDeliveryInfo
 {
+    //The Count of Each Skill Delivery Num Have
     public static int[] skillDeliveryCount = new int [6]
     {
         1,
@@ -18,50 +17,50 @@ public class SkillDeliveryInfo
     {
         //IsBuff, Type, Name, ActStatus, Value, ReduceStatus, Count
         {
+            { 0, 0, 0, 0, 1, 0, 1 },
             { 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0 }
         },
         {
             { 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0 }
+            { 0, 0, 0, 0, 0, 0, 0 },
         },
         {
             { 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0 }
+            { 0, 0, 0, 0, 0, 0, 0 },
         },
         {
             { 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0 }
+            { 0, 0, 0, 0, 0, 0, 0 },
         },
         {
             { 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0 }
+            { 0, 0, 0, 0, 0, 0, 0 },
         },
         {
             { 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0 }
-        }
+            { 0, 0, 0, 0, 0, 0, 0 },
+        },
     };
 
-    public string[] skillDeliveryName = new string[16]
+    public static string[] skillDeliveryName = new string[16]
     {
         "AddDamage",
         "AddSpeed",
@@ -93,7 +92,14 @@ public class SkillDeliveryInfo
             if(skillDeliveryInfos[id,i,0] == 0)
             {
                 Buff temp = new Buff();
+                temp.buffType = (BuffType)skillDeliveryInfos[id, i, 1];
+                temp.deliveryName = skillDeliveryName[skillDeliveryInfos[id, i, 2]];
+                temp.activateStatus = (GameStatus)skillDeliveryInfos[id, i, 3];
+                temp.value = (short)skillDeliveryInfos[id, i, 4];
+                temp.reduceCountStatus = (GameStatus)skillDeliveryInfos[id, i, 5];
+                temp.count = (short)skillDeliveryInfos[id, i, 6];
 
+                buffs.Add(temp);
             }
         }
 

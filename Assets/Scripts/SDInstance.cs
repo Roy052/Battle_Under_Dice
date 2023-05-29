@@ -15,6 +15,8 @@ public class SDInstance : MonoBehaviour
         this.buff = buff;
         sdValue.text = buff.value.ToString();
         sdCount.text = buff.count.ToString();
+        sdImage.sprite = Approach.gm.GetSkillDeliverySprite(true, (int)buff.buffType);
+
         isBuff = true;
     }
 

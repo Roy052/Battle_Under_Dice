@@ -12,8 +12,8 @@ public class Player : MonoBehaviour
     int characterNum;
     int[] skillSet;
 
-    protected List<Buff> buffList;
-    protected List<Debuff> debuffList;
+    protected List<Buff> buffList = new List<Buff>();
+    protected List<Debuff> debuffList = new List<Debuff>();
 
     //Animation
     [SerializeField] Animator characterAnimator;

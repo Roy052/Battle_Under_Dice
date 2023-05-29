@@ -215,6 +215,7 @@ public class BattleManager : MonoBehaviour
             SkillInfo.skillNameText[gm.characterNum_player, gm.skillSet_player[playerSkillNum]]));
         StartCoroutine(battleSM.IntenseBattleScreen());
 
+        //Attack
         if (playerSkill.type == 0)
         {
             int tempEnemyDefense = enemyDefense;
@@ -246,16 +247,24 @@ public class BattleManager : MonoBehaviour
             else
                 battleSM.TakeDamage(false, false, 0, damage);
         }
-        if (playerSkill.type == 1)
+        //Defense
+        else if (playerSkill.type == 1)
         {
             playerDefense = playerSkill.value;
             battleSM.DefenseEvadeOn(true, 0, playerDefense);
         }
-        if (playerSkill.type == 2)
+        //Evade
+        else if (playerSkill.type == 2)
         {
             playerEvade = playerSkill.value;
             battleSM.DefenseEvadeOn(true, 1, playerEvade);
         }
+
+        //Add SkillDeliveries (Need Target)
+        for (int i = 0; i < playerSkill.skillBuffs.Count; i++)
+            battleSM.AddSkillDelivery(true, playerSkill.skillBuffs[i]);
+        for (int i = 0; i < playerSkill.skillDebuffs.Count; i++)
+            battleSM.AddSkillDelivery(false, playerSkill.skillDebuffs[i]);
 
         //Refresh UI
         battleSM.RefreshUI();

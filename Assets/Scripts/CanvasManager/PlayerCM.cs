@@ -38,6 +38,11 @@ public class PlayerCM : MonoBehaviour
     [SerializeField] Sprite[] defenseEvadeSprites;
     int defenseEvade = -1;
 
+    //BuffDebuff
+    [SerializeField] Transform skillDeliveryParent;
+    [SerializeField] GameObject skillDeliveryPrefab;
+    [SerializeField] List<SDInstance> skillDeliveries;
+
     [SerializeField] PlayerCM otherPlayerCM;
     public bool coroutineEnd = false;
     private void Start()
@@ -164,6 +169,32 @@ public class PlayerCM : MonoBehaviour
             defenseEvadeText.text = value.ToString();
             this.defenseEvade = defenseEvade;
         }
+
+        yield return new WaitForSeconds(1);
+
+        //Ended
+        coroutineEnd = true;
+    }
+
+    public IEnumerator SkillDeliveryOn(Buff buff)
+    {
+        GameObject tempObject = Instantiate(skillDeliveryPrefab);
+        tempObject.transform.SetParent(skillDeliveryParent, skillDeliveryPrefab.transform);
+        tempObject.transform.localScale = new Vector3(1, 1, 1);
+        SDInstance tempInstance = tempObject.GetComponent<SDInstance>();
+        tempInstance.Set(buff);
+
+        yield return new WaitForSeconds(1);
+
+        //Ended
+        coroutineEnd = true;
+    }
+
+    public IEnumerator SkillDeliveryOn(Debuff debuff)
+    {
+        GameObject tempObject = Instantiate(skillDeliveryPrefab);
+        SDInstance tempInstance = tempObject.GetComponent<SDInstance>();
+        tempInstance.Set(debuff);
 
         yield return new WaitForSeconds(1);
 

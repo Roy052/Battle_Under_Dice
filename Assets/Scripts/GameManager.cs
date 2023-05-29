@@ -35,6 +35,9 @@ public class GameManager : MonoBehaviour
     //SkillImages
     Sprite[,] skillSprites;
     Sprite[] diceSprite;
+    List<Sprite> buffSprite;
+    List<Sprite> debuffSprite;
+
 
     //EnemyStatus
     public int isAI = 1;
@@ -45,7 +48,10 @@ public class GameManager : MonoBehaviour
         skillInfo = new SkillInfo();
         gameInfo = new GameInfo();
         characterInfo = new CharacterInfo();
+
         SkillSpritesSetup();
+        DiceSpritesSetup();
+        SkillDeliverySpritesSetup();
     }
 
     private void SkillSpritesSetup()
@@ -62,9 +68,18 @@ public class GameManager : MonoBehaviour
                 skillSprites[characterNum, spriteNum] = tempSprites[spriteNum];
             }
         }
+    }
 
+    private void DiceSpritesSetup()
+    {
         diceSprite = new Sprite[6];
         diceSprite = Resources.LoadAll<Sprite>("Arts/Dice/");
+    }
+
+    private void SkillDeliverySpritesSetup()
+    {
+        buffSprite = new List<Sprite>(Resources.LoadAll<Sprite>("Arts/SkillDelivery/Buff"));
+        debuffSprite = new List<Sprite>(Resources.LoadAll<Sprite>("Arts/SkillDelivery/Debuff"));
     }
 
     public Sprite GetSkillSprite(int characterNum, int skillNum)
@@ -74,8 +89,19 @@ public class GameManager : MonoBehaviour
 
     public Sprite GetDiceSprite(int diceNum)
     {
+        if (diceNum == -1)
+            return diceSprite[6];
         return diceSprite[diceNum];
     }
+
+    public Sprite GetSkillDeliverySprite(bool isBuff, int id)
+    {
+        if (isBuff)
+            return buffSprite[id];
+        else
+            return debuffSprite[id];
+    }
+
     public void SetPlayerSkill(int[] skillSet)
     {
         skillSet_player = skillSet;
