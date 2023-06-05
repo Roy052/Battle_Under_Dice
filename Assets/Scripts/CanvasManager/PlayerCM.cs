@@ -24,22 +24,24 @@ public class PlayerCM : MonoBehaviour
     [SerializeField] Image damageBox;
     [SerializeField] Text damageText;
 
-    //Shield
-    [SerializeField] Image shieldBox;
-    [SerializeField] Text shieldText;
+    //DefenseEavde Sprite
+    [SerializeField] Sprite[] defenseEvadeSprites;
     [SerializeField] Sprite shieldSprite, shieldBrokeSprite;
+
+    //Shield
+    [SerializeField] Image defenseEvadeCharacterBox;
+    [SerializeField] Text defenseEvadeCharacterText;
 
     //Stunned
     [SerializeField] Image stunnedImage;
 
     //defense beside hp
-    [SerializeField] Image defenseEvadeBox;
-    [SerializeField] Text defenseEvadeText;
-    [SerializeField] Sprite[] defenseEvadeSprites;
+    [SerializeField] Image defenseEvadeHpBarBox;
+    [SerializeField] Text defenseEvadeHpBarText;
+    
     int defenseEvade = -1;
 
     //BuffDebuff
-    [SerializeField] Transform skillDeliveryParent;
     [SerializeField] GameObject skillDeliveryPrefab;
     [SerializeField] List<SDInstance> skillDeliveries;
 
@@ -94,10 +96,10 @@ public class PlayerCM : MonoBehaviour
         //Shield And Damage
         if (shieldDamage > 0)
         {
-            shieldBox.gameObject.SetActive(true);
-            shieldText.text = "- " + shieldDamage.ToString();
-            StartCoroutine(FadeManager.FadeIn(shieldBox, 0.5f));
-            StartCoroutine(FadeManager.FadeIn(shieldText, 0.5f));
+            defenseEvadeCharacterBox.gameObject.SetActive(true);
+            defenseEvadeCharacterText.text = "- " + shieldDamage.ToString();
+            StartCoroutine(FadeManager.FadeIn(defenseEvadeCharacterBox, 0.5f));
+            StartCoroutine(FadeManager.FadeIn(defenseEvadeCharacterText, 0.5f));
         }
         if (damage > 0)
         {
@@ -112,17 +114,17 @@ public class PlayerCM : MonoBehaviour
         
         if (shieldBroke)
         {
-            defenseEvadeBox.sprite = shieldBrokeSprite;
-            defenseEvadeText.text = "";
-            StartCoroutine(FadeManager.FadeIn(defenseEvadeBox, 0.5f));
+            defenseEvadeHpBarBox.sprite = shieldBrokeSprite;
+            defenseEvadeHpBarText.text = "";
+            StartCoroutine(FadeManager.FadeIn(defenseEvadeHpBarBox, 0.5f));
             yield return new WaitForSeconds(0.5f);
             Defense_EvadeOff();
         }
 
         if(shieldDamage > 0)
         {
-            StartCoroutine(FadeManager.FadeOut(shieldBox, 1));
-            StartCoroutine(FadeManager.FadeOut(shieldText, 1));
+            StartCoroutine(FadeManager.FadeOut(defenseEvadeCharacterBox, 1));
+            StartCoroutine(FadeManager.FadeOut(defenseEvadeCharacterText, 1));
         }
         if(damage > 0)
         {
@@ -132,8 +134,8 @@ public class PlayerCM : MonoBehaviour
         
         yield return new WaitForSeconds(1);
 
-        shieldBox.sprite = shieldSprite;
-        shieldBox.gameObject.SetActive(false);
+        defenseEvadeCharacterBox.sprite = shieldSprite;
+        defenseEvadeCharacterBox.gameObject.SetActive(false);
         damageBox.gameObject.SetActive(false);
 
 
@@ -164,9 +166,15 @@ public class PlayerCM : MonoBehaviour
         }
         else
         {
-            defenseEvadeBox.gameObject.SetActive(true);
-            defenseEvadeBox.sprite = defenseEvadeSprites[defenseEvade];
-            defenseEvadeText.text = value.ToString();
+            //Character
+            defenseEvadeCharacterBox.gameObject.SetActive(true);
+            defenseEvadeCharacterBox.sprite = defenseEvadeSprites[defenseEvade];
+            defenseEvadeCharacterText.text = value.ToString();
+            
+            //Hp Bar
+            defenseEvadeHpBarBox.sprite = defenseEvadeSprites[defenseEvade];
+            defenseEvadeHpBarText.text = value.ToString();
+
             this.defenseEvade = defenseEvade;
         }
 
@@ -178,11 +186,13 @@ public class PlayerCM : MonoBehaviour
 
     public IEnumerator SkillDeliveryOn(Buff buff)
     {
-        GameObject tempObject = Instantiate(skillDeliveryPrefab);
-        tempObject.transform.SetParent(skillDeliveryParent, skillDeliveryPrefab.transform);
+        GameObject tempObject = Instantiate(skillDeliveryPrefab, skillDeliveryPrefab.transform.parent);
         tempObject.transform.localScale = new Vector3(1, 1, 1);
         SDInstance tempInstance = tempObject.GetComponent<SDInstance>();
         tempInstance.Set(buff);
+        tempInstance.gameObject.SetActive(true);
+
+        skillDeliveries.Add(tempInstance);
 
         yield return new WaitForSeconds(1);
 
@@ -192,9 +202,13 @@ public class PlayerCM : MonoBehaviour
 
     public IEnumerator SkillDeliveryOn(Debuff debuff)
     {
-        GameObject tempObject = Instantiate(skillDeliveryPrefab);
+        GameObject tempObject = Instantiate(skillDeliveryPrefab, skillDeliveryPrefab.transform.parent);
+        tempObject.transform.localScale = new Vector3(1, 1, 1);
         SDInstance tempInstance = tempObject.GetComponent<SDInstance>();
         tempInstance.Set(debuff);
+        tempInstance.gameObject.SetActive(true);
+
+        skillDeliveries.Add(tempInstance);
 
         yield return new WaitForSeconds(1);
 
@@ -206,35 +220,79 @@ public class PlayerCM : MonoBehaviour
     {
         hpBarBig.DisableBar();
         if(defenseEvade > 0)
-            defenseEvadeBox.gameObject.SetActive(false);
+            defenseEvadeHpBarBox.gameObject.SetActive(false);
 
         yield return new WaitForSeconds(time);
 
         hpBarSmall.EnableBar();
         if(defenseEvade > 0)
-            defenseEvadeBox.gameObject.SetActive(true);
+            defenseEvadeHpBarBox.gameObject.SetActive(true);
 
     }
 
     public void Defense_EvadeOff()
     {
-        defenseEvadeBox.gameObject.SetActive(false);
+        defenseEvadeHpBarBox.gameObject.SetActive(false);
     }
 
     public void BoxOff()
     {
-        shieldBox.gameObject.SetActive(false);
+        defenseEvadeCharacterBox.gameObject.SetActive(false);
         damageBox.gameObject.SetActive(false);
     }
 
     public void BoxOn()
     {
-        shieldBox.gameObject.SetActive(true);
+        defenseEvadeCharacterBox.gameObject.SetActive(true);
         damageBox.gameObject.SetActive(true);
     }
 
     public void ResetData()
     {
         defenseEvade = 0;
+    }
+
+    public void RefreshSDInstance(bool isRemove, Buff buff)
+    {
+        bool find = false;
+        for(int i = 0; i < skillDeliveries.Count; i++)
+        {
+            if (skillDeliveries[i].isBuff && skillDeliveries[i].GetBuffType() == buff.buffType)
+            {
+                if (isRemove)
+                {
+                    Destroy(skillDeliveries[i].gameObject);
+                    skillDeliveries.RemoveAt(i);
+                    i--;
+                }
+                else
+                    skillDeliveries[i].Set(buff);
+                find = true;
+                break;
+            }
+        }
+        if (find == false) Debug.LogError("SD Buff Not Found : " + buff.buffType);
+    }
+
+    public void RefreshSDInstance(bool isRemove, Debuff debuff)
+    {
+        bool find = false;
+        for (int i = 0; i < skillDeliveries.Count; i++)
+        {
+            if (skillDeliveries[i].isBuff == false && skillDeliveries[i].GetDebuffType() == debuff.debuffType)
+            {
+                if (isRemove)
+                {
+                    Destroy(skillDeliveries[i].gameObject);
+                    skillDeliveries.RemoveAt(i);
+                    i--;
+                }
+                else
+                    skillDeliveries[i].Set(debuff);
+                find = true;
+                break;
+            }
+        }
+        if (find == false) Debug.LogError("SD Debuff Not Found : " + debuff.debuffType);
     }
 }

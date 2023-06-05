@@ -96,6 +96,8 @@ public class BattleManager : MonoBehaviour
         RefreshData();
         StartCoroutine(battleSM.BeforeStart());
 
+        ReduceSD();
+
         //Defense Evade Off
         battleSM.DefenseEvadeOff(false);
         battleSM.DefenseEvadeOff(true);
@@ -106,6 +108,8 @@ public class BattleManager : MonoBehaviour
     {
         gameStatus = GameStatus.TurnStart;
         StartCoroutine(battleSM.TurnStart());
+
+        ReduceSD();
 
         //Game End Check
         //Check Game End
@@ -148,6 +152,8 @@ public class BattleManager : MonoBehaviour
     {
         gameStatus = GameStatus.EndTurn;
         StartCoroutine(battleSM.EndTurn());
+
+        ReduceSD();
 
         //Check Game End
         if (CheckGameEnd())
@@ -262,9 +268,15 @@ public class BattleManager : MonoBehaviour
 
         //Add SkillDeliveries (Need Target)
         for (int i = 0; i < playerSkill.skillBuffs.Count; i++)
+        {
+            player.AddBuffs(playerSkill.skillBuffs);
             battleSM.AddSkillDelivery(true, playerSkill.skillBuffs[i]);
+        }
         for (int i = 0; i < playerSkill.skillDebuffs.Count; i++)
+        {
+            enemy.AddDebuffs(playerSkill.skillDebuffs);
             battleSM.AddSkillDelivery(false, playerSkill.skillDebuffs[i]);
+        }
 
         //Refresh UI
         battleSM.RefreshUI();
@@ -332,6 +344,18 @@ public class BattleManager : MonoBehaviour
             {
                 enemyEvade = enemySkill.value;
                 battleSM.DefenseEvadeOn(false, 1, enemyEvade);
+            }
+
+            //Add SkillDeliveries (Need Target)
+            for (int i = 0; i < enemySkill.skillBuffs.Count; i++)
+            {
+                enemy.AddBuffs(enemySkill.skillBuffs);
+                battleSM.AddSkillDelivery(false, enemySkill.skillBuffs[i]);
+            }
+            for (int i = 0; i < enemySkill.skillDebuffs.Count; i++)
+            {
+                enemy.AddDebuffs(enemySkill.skillDebuffs);
+                battleSM.AddSkillDelivery(true, enemySkill.skillDebuffs[i]);
             }
 
             //Damage UI
@@ -525,5 +549,11 @@ public class BattleManager : MonoBehaviour
         //Refresh Stunned
         playerStunned = false;
         enemyStunned = false;
+    }
+
+    void ReduceSD()
+    {
+        player.ReduceBuffDeBuffCount(gameStatus);
+        enemy.ReduceBuffDeBuffCount(gameStatus);
     }
 }

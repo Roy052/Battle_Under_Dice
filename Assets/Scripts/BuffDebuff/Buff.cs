@@ -1,14 +1,15 @@
 public enum BuffType
 {
     None = -1,
-    AddDamage = 0,
-    AddSpeed = 1,
-    AddDefense = 2,
-    AddEvades = 3,
-    AddEndurance = 4,
-    BuffToSkill = 5,
-    EnhancePassive = 6,
-    ReduceDealtDamage = 7,
+    AddHp               = 0,
+    AddDamage           = 1,
+    AddSpeed            = 2,
+    AddDefense          = 3,
+    AddEvades           = 4,
+    AddEndurance        = 5,
+    BuffToSkill         = 6,
+    EnhancePassive      = 7,
+    ReduceDealtDamage   = 8,
 
     Others = 10,
 }

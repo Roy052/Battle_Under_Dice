@@ -1140,6 +1140,7 @@ MonoBehaviour:
   characterManager: {fileID: 193982335}
   skillManager: {fileID: 193982334}
   diceManager: {fileID: 193982333}
+  playerCM: {fileID: 2058867279}
   characterAnimator: {fileID: 193982340}
   skillNum: 0
   diceNum: 0
@@ -2653,7 +2654,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 690152294}
+  - {fileID: 412019345}
   m_Father: {fileID: 1803916323}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2688,6 +2689,102 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &412019341
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 412019345}
+  - component: {fileID: 412019344}
+  - component: {fileID: 412019343}
+  - component: {fileID: 412019342}
+  m_Layer: 5
+  m_Name: SkillDeliveryImage (Sample)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &412019342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 412019341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32e5e1aa7b4db784f87bcb7dda13ee2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isBuff: 1
+  sdImage: {fileID: 412019343}
+  sdValue: {fileID: 1768384871}
+  sdCount: {fileID: 1134270574}
+  rect: {fileID: 0}
+--- !u!114 &412019343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 412019341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 502acfe0e778e174e8e8b64b8a23168b, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &412019344
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 412019341}
+  m_CullTransparentMesh: 1
+--- !u!224 &412019345
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 412019341}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1768384873}
+  - {fileID: 1134270576}
+  m_Father: {fileID: 388153058}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 12.5, y: -12.5}
+  m_SizeDelta: {x: 25, y: 25}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &445685637
 GameObject:
   m_ObjectHideFlags: 0
@@ -2925,7 +3022,7 @@ GameObject:
   - component: {fileID: 504760671}
   - component: {fileID: 504760672}
   m_Layer: 5
-  m_Name: Defense/Evade
+  m_Name: Defense/Evade(HpBar)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3581,88 +3678,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 572641216}
   m_CullTransparentMesh: 1
---- !u!1 &575699098
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 575699099}
-  - component: {fileID: 575699101}
-  - component: {fileID: 575699100}
-  m_Layer: 5
-  m_Name: SkillDeliveryValue
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &575699099
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 575699098}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 690152294}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 11, y: -6.995}
-  m_SizeDelta: {x: 20.3, y: 19.95}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &575699100
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 575699098}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 12
-    m_FontStyle: 1
-    m_BestFit: 0
-    m_MinSize: 1
-    m_MaxSize: 40
-    m_Alignment: 6
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: '0
-
-'
---- !u!222 &575699101
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 575699098}
-  m_CullTransparentMesh: 1
 --- !u!1 &581711533
 GameObject:
   m_ObjectHideFlags: 0
@@ -3912,7 +3927,7 @@ GameObject:
   - component: {fileID: 652497502}
   - component: {fileID: 652497501}
   m_Layer: 5
-  m_Name: ShieldText
+  m_Name: Defense/EvadeText(Player)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4136,100 +4151,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 680892128}
   m_CullTransparentMesh: 1
---- !u!1 &690152293
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 690152294}
-  - component: {fileID: 690152297}
-  - component: {fileID: 690152296}
-  - component: {fileID: 690152295}
-  m_Layer: 5
-  m_Name: SkillDeliveryImage
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &690152294
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 690152293}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 575699099}
-  - {fileID: 1388692421}
-  m_Father: {fileID: 388153058}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 25, y: 25}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &690152295
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 690152293}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32e5e1aa7b4db784f87bcb7dda13ee2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sdImage: {fileID: 690152296}
-  sdValue: {fileID: 575699100}
-  sdCount: {fileID: 1388692422}
---- !u!114 &690152296
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 690152293}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &690152297
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 690152293}
-  m_CullTransparentMesh: 1
 --- !u!1 &721878851
 GameObject:
   m_ObjectHideFlags: 0
@@ -4242,7 +4163,7 @@ GameObject:
   - component: {fileID: 721878853}
   - component: {fileID: 721878852}
   m_Layer: 5
-  m_Name: ShieldText
+  m_Name: Defense/EvadeText(HpBar)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6184,6 +6105,88 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1095796794}
   m_CullTransparentMesh: 1
+--- !u!1 &1134270573
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1134270576}
+  - component: {fileID: 1134270575}
+  - component: {fileID: 1134270574}
+  m_Layer: 5
+  m_Name: SkillDeliveryCount
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1134270574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1134270573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 12
+    m_FontStyle: 1
+    m_BestFit: 0
+    m_MinSize: 1
+    m_MaxSize: 40
+    m_Alignment: 8
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: '
+
+'
+--- !u!222 &1134270575
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1134270573}
+  m_CullTransparentMesh: 1
+--- !u!224 &1134270576
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1134270573}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 412019345}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -11, y: -6.995}
+  m_SizeDelta: {x: 20.3, y: 19.95}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1139537999
 GameObject:
   m_ObjectHideFlags: 0
@@ -6325,17 +6328,16 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 271a96805571d8247a9fc19f8dbd0b98, type: 3}
   damageBox: {fileID: 1445345602}
   damageText: {fileID: 220516176}
-  shieldBox: {fileID: 1438188354}
-  shieldText: {fileID: 652497501}
-  shieldSprite: {fileID: 21300000, guid: 3773f72027f009f499f1c1e58b60f3d4, type: 3}
-  shieldBrokeSprite: {fileID: 21300000, guid: 160cc9d24600a17459bcfb99163a746a, type: 3}
-  stunnedImage: {fileID: 95847237}
-  defenseEvadeBox: {fileID: 504760672}
-  defenseEvadeText: {fileID: 721878852}
   defenseEvadeSprites:
   - {fileID: 21300000, guid: 3773f72027f009f499f1c1e58b60f3d4, type: 3}
   - {fileID: 21300000, guid: c9e26c76babc49a4e812a50582623187, type: 3}
-  skillDeliveryParent: {fileID: 1623741800}
+  shieldSprite: {fileID: 21300000, guid: 3773f72027f009f499f1c1e58b60f3d4, type: 3}
+  shieldBrokeSprite: {fileID: 21300000, guid: 160cc9d24600a17459bcfb99163a746a, type: 3}
+  defenseEvadeCharacterBox: {fileID: 1438188354}
+  defenseEvadeCharacterText: {fileID: 652497501}
+  stunnedImage: {fileID: 95847237}
+  defenseEvadeHpBarBox: {fileID: 504760672}
+  defenseEvadeHpBarText: {fileID: 721878852}
   skillDeliveryPrefab: {fileID: 1652422879}
   skillDeliveries: []
   otherPlayerCM: {fileID: 2058867279}
@@ -7431,88 +7433,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1382046158}
   m_CullTransparentMesh: 1
---- !u!1 &1388692420
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1388692421}
-  - component: {fileID: 1388692423}
-  - component: {fileID: 1388692422}
-  m_Layer: 5
-  m_Name: SkillDeliveryCount
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1388692421
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1388692420}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 690152294}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -11, y: -6.995}
-  m_SizeDelta: {x: 20.3, y: 19.95}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1388692422
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1388692420}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 12
-    m_FontStyle: 1
-    m_BestFit: 0
-    m_MinSize: 1
-    m_MaxSize: 40
-    m_Alignment: 8
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: '0
-
-'
---- !u!222 &1388692423
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1388692420}
-  m_CullTransparentMesh: 1
 --- !u!1 &1438188351
 GameObject:
   m_ObjectHideFlags: 0
@@ -7525,7 +7445,7 @@ GameObject:
   - component: {fileID: 1438188353}
   - component: {fileID: 1438188354}
   m_Layer: 5
-  m_Name: ShieldBox
+  m_Name: Defense/Evade(Player)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8758,7 +8678,7 @@ GameObject:
   - component: {fileID: 1537904285}
   - component: {fileID: 1537904286}
   m_Layer: 5
-  m_Name: Defense/Evade
+  m_Name: Defense/Evade(HpBar)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9056,7 +8976,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1652422880
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9074,9 +8994,9 @@ RectTransform:
   m_Father: {fileID: 1623741800}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 12.5, y: -12.5}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1652422881
@@ -9091,9 +9011,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32e5e1aa7b4db784f87bcb7dda13ee2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBuff: 1
   sdImage: {fileID: 1652422882}
   sdValue: {fileID: 362139770}
   sdCount: {fileID: 1307111383}
+  rect: {fileID: 0}
 --- !u!114 &1652422882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9677,6 +9599,88 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &1768384870
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1768384873}
+  - component: {fileID: 1768384872}
+  - component: {fileID: 1768384871}
+  m_Layer: 5
+  m_Name: SkillDeliveryValue
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1768384871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1768384870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 12
+    m_FontStyle: 1
+    m_BestFit: 0
+    m_MinSize: 1
+    m_MaxSize: 40
+    m_Alignment: 6
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: '
+
+'
+--- !u!222 &1768384872
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1768384870}
+  m_CullTransparentMesh: 1
+--- !u!224 &1768384873
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1768384870}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 412019345}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 11, y: -6.995}
+  m_SizeDelta: {x: 20.3, y: 19.95}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1782793426
 GameObject:
   m_ObjectHideFlags: 0
@@ -10178,7 +10182,7 @@ GameObject:
   - component: {fileID: 1858687705}
   - component: {fileID: 1858687704}
   m_Layer: 5
-  m_Name: ShieldText
+  m_Name: Defense/EvadeText(HpBar)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10636,7 +10640,7 @@ GameObject:
   - component: {fileID: 1911577542}
   - component: {fileID: 1911577543}
   m_Layer: 5
-  m_Name: ShieldBox
+  m_Name: Defense/Evade(Player)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10713,7 +10717,7 @@ GameObject:
   - component: {fileID: 1938537856}
   - component: {fileID: 1938537855}
   m_Layer: 5
-  m_Name: ShieldText
+  m_Name: Defense/EvadeText(Player)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11279,18 +11283,17 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 271a96805571d8247a9fc19f8dbd0b98, type: 3}
   damageBox: {fileID: 145391229}
   damageText: {fileID: 31138757}
-  shieldBox: {fileID: 1911577543}
-  shieldText: {fileID: 1938537855}
-  shieldSprite: {fileID: 21300000, guid: 3773f72027f009f499f1c1e58b60f3d4, type: 3}
-  shieldBrokeSprite: {fileID: 21300000, guid: 160cc9d24600a17459bcfb99163a746a, type: 3}
-  stunnedImage: {fileID: 1736315073}
-  defenseEvadeBox: {fileID: 1537904286}
-  defenseEvadeText: {fileID: 1858687704}
   defenseEvadeSprites:
   - {fileID: 21300000, guid: 3773f72027f009f499f1c1e58b60f3d4, type: 3}
   - {fileID: 21300000, guid: c9e26c76babc49a4e812a50582623187, type: 3}
-  skillDeliveryParent: {fileID: 0}
-  skillDeliveryPrefab: {fileID: 0}
+  shieldSprite: {fileID: 21300000, guid: 3773f72027f009f499f1c1e58b60f3d4, type: 3}
+  shieldBrokeSprite: {fileID: 21300000, guid: 160cc9d24600a17459bcfb99163a746a, type: 3}
+  defenseEvadeCharacterBox: {fileID: 1911577543}
+  defenseEvadeCharacterText: {fileID: 1938537855}
+  stunnedImage: {fileID: 1736315073}
+  defenseEvadeHpBarBox: {fileID: 1537904286}
+  defenseEvadeHpBarText: {fileID: 1858687704}
+  skillDeliveryPrefab: {fileID: 412019341}
   skillDeliveries: []
   otherPlayerCM: {fileID: 1139538004}
   coroutineEnd: 0
@@ -11369,6 +11372,7 @@ MonoBehaviour:
   characterManager: {fileID: 2071528497}
   skillManager: {fileID: 2071528496}
   diceManager: {fileID: 2071528495}
+  playerCM: {fileID: 1139538004}
   characterAnimator: {fileID: 2071528501}
 --- !u!212 &2071528499
 SpriteRenderer:

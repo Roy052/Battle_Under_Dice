@@ -27,6 +27,7 @@ public class SkillCM : CanvasManager
         {
             skillButtons[i].Deactivate();
         }
+        current = -1;
     }
 
     public void SelectSkillNum(int num)

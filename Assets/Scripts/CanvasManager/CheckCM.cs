@@ -10,6 +10,8 @@ public class CheckCM : CanvasManager
     public Text nameText ,conditionText, speedValueText, enduranceValueText, skillDescText;
     public Button checkButton;
 
+    public Sprite notSetSprite;
+
     public void OnClickSkill(int skillNum) => OnClickSkill(skillNum, -1);
     public void OnClickSkill(int skillNum, int diceNum)
     {
@@ -47,6 +49,14 @@ public class CheckCM : CanvasManager
         skillDescText.text = SkillDesc.GetSkillDescString(str, skill, diceNum == -1 ? true : false);
         skillImage.sprite = Approach.gm.GetSkillSprite(playerNum, skillNum);
         diceImage.sprite = Approach.gm.GetDiceSprite(diceNum);
+    }
+
+    public void ResetCanvas()
+    {
+        //skillImage.sprite = notSetSprite;
+        //diceImage.sprite = notSetSprite;
+        SkillDescOff();
+        CheckButtonOff();
     }
 
     public void CheckButtonOn()

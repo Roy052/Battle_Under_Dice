@@ -28,7 +28,8 @@ public enum ConditionType
 public enum TargetType
 {
     Player = 0,
-    Enemy = 1
+    Enemy = 1,
+    Both = 2
 }
 
 public class SkillInfo

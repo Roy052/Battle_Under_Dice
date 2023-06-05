@@ -240,6 +240,10 @@ public class BattleSM : MonoBehaviour
             DefenseEvadeOn(false, 1, bm.enemyEvade);
         else
             DefenseEvadeOff(false);
+
+        //CheckCM
+        checkCM.CanvasOff();
+        checkCM.ResetCanvas();
     }
 
     //Reveal

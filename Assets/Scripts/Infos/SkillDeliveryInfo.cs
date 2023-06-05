@@ -13,50 +13,50 @@ public class SkillDeliveryInfo
         1
     };
 
-    public static int[,,] skillDeliveryInfos = new int[6, 5, 7]
+    public static int[,,] skillDeliveryInfos = new int[6, 5, 8]
     {
-        //IsBuff, Type, Name, ActStatus, Value, ReduceStatus, Count
+        //IsBuff, Type, Name, Target, ActStatus, Value, ReduceStatus, Count
         {
-            { 0, 0, 0, 0, 1, 0, 1 },
-            { 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 1, 0, 1 },
+            { 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0 },
         },
         {
-            { 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 2, 0, 2 },
+            { 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0 },
         },
         {
-            { 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0 },
+            { 1, 0, 0, 1, 0, 2, 0, 2 },
+            { 1, 0, 0, 1, 0, 1, 0, 1 },
+            { 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0 },
         },
         {
-            { 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0 },
+            { 1, 0, 0, 1, 0, 2, 0, 2 },
+            { 1, 0, 0, 1, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0 },
         },
         {
-            { 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 1, 0, 1 },
+            { 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0 },
         },
         {
-            { 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 2, 0, 2 },
+            { 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0 },
         },
     };
 
@@ -94,10 +94,11 @@ public class SkillDeliveryInfo
                 Buff temp = new Buff();
                 temp.buffType = (BuffType)skillDeliveryInfos[id, i, 1];
                 temp.deliveryName = skillDeliveryName[skillDeliveryInfos[id, i, 2]];
-                temp.activateStatus = (GameStatus)skillDeliveryInfos[id, i, 3];
-                temp.value = (short)skillDeliveryInfos[id, i, 4];
-                temp.reduceCountStatus = (GameStatus)skillDeliveryInfos[id, i, 5];
-                temp.count = (short)skillDeliveryInfos[id, i, 6];
+                temp.target = (TargetType)skillDeliveryInfos[id, i, 3];
+                temp.activateStatus = (GameStatus)skillDeliveryInfos[id, i, 4];
+                temp.value = (short)skillDeliveryInfos[id, i, 5];
+                temp.reduceCountStatus = (GameStatus)skillDeliveryInfos[id, i, 6];
+                temp.count = (short)skillDeliveryInfos[id, i, 7];
 
                 buffs.Add(temp);
             }
@@ -117,8 +118,17 @@ public class SkillDeliveryInfo
             if (skillDeliveryInfos[id, i, 0] == 1)
             {
                 Debuff temp = new Debuff();
-            }
 
+                temp.debuffType = (DebuffType)skillDeliveryInfos[id, i, 1];
+                temp.deliveryName = skillDeliveryName[skillDeliveryInfos[id, i, 2]];
+                temp.target = (TargetType)skillDeliveryInfos[id, i, 3];
+                temp.activateStatus = (GameStatus)skillDeliveryInfos[id, i, 4];
+                temp.value = (short)skillDeliveryInfos[id, i, 5];
+                temp.reduceCountStatus = (GameStatus)skillDeliveryInfos[id, i, 6];
+                temp.count = (short)skillDeliveryInfos[id, i, 7];
+
+                debuffs.Add(temp);
+            }
         }
 
         return debuffs;

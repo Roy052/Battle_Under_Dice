@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     [SerializeField] public CharacterManager characterManager;
     [SerializeField] public SkillManager skillManager;
     [SerializeField] public DiceManager diceManager;
+    [SerializeField] PlayerCM playerCM;
 
     int characterNum;
     int[] skillSet;
@@ -29,8 +30,6 @@ public class Player : MonoBehaviour
 
         this.characterNum = characterNum;
         this.skillSet = skillSet;
-
-
     }
 
     public virtual Skill UseSkill(int skillNum, int diceNum)
@@ -51,24 +50,52 @@ public class Player : MonoBehaviour
         return retSkill;
     }
 
+    public void AddBuffs(List<Buff> buffs)
+    {
+        buffList.AddRange(buffs);
+    }
+
+    public void AddDebuffs(List<Debuff> debuffs)
+    {
+        debuffList.AddRange(debuffs);
+    }
+
     public void ReduceBuffDeBuffCount(GameStatus currentStatus)
     {
-        foreach(Buff buff in buffList)
+        for(int i = 0; i < buffList.Count; i++)
         {
-            if (buff.reduceCountStatus == currentStatus)
-                buff.count--;
+            if (buffList[i].reduceCountStatus == currentStatus)
+                buffList[i].count--;
 
-            if (buff.count <= 0)
-                buffList.Remove(buff);
+            Buff temp = buffList[i];
+            bool isRemove = false;
+
+            if (buffList[i].count <= 0)
+            {
+                isRemove = true;
+                buffList.Remove(buffList[i]);
+                i--;
+            }
+
+            playerCM.RefreshSDInstance(isRemove, temp);
         }
 
-        foreach (Debuff debuff in debuffList)
+        for (int i = 0; i < debuffList.Count; i++)
         {
-            if (debuff.reduceCountStatus == currentStatus)
-                debuff.count--;
+            if (debuffList[i].reduceCountStatus == currentStatus)
+                debuffList[i].count--;
 
-            if (debuff.count <= 0)
-                debuffList.Remove(debuff);
+            Debuff temp = debuffList[i];
+            bool isRemove = false;
+
+            if (debuffList[i].count <= 0)
+            {
+                isRemove = true;
+                debuffList.Remove(debuffList[i]);
+                i--;
+            }
+
+            playerCM.RefreshSDInstance(isRemove, temp);
         }
     }
 
@@ -98,8 +125,6 @@ public class Player : MonoBehaviour
                     break;
 
             }
-
-            ReduceBuffDeBuffCount(currentStatus);
         }
 
         foreach (Debuff debuff in debuffList)
@@ -125,11 +150,31 @@ public class Player : MonoBehaviour
                     retSkill.endurance -= debuff.value;
                     break;
 
-            }
+            } 
+        }
+        return retSkill;
+    }
 
-            ReduceBuffDeBuffCount(currentStatus);
+    public void ActivateNotSkillBuffAndDebuff(GameStatus currentStatus)
+    {
+        foreach (Buff buff in buffList)
+        {
+            switch (buff.buffType)
+            {
+                case BuffType.AddHp:
+                    characterManager.ChangeHp(buff.value);
+                    break;
+            }
         }
 
-        return retSkill;
+        foreach (Debuff debuff in debuffList)
+        {
+            switch (debuff.debuffType)
+            {
+                case DebuffType.ReduceHp:
+                    characterManager.ChangeHp(-debuff.value);
+                    break;
+            }
+        }
     }
 }

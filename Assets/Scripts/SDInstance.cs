@@ -3,12 +3,14 @@ using UnityEngine.UI;
 
 public class SDInstance : MonoBehaviour
 {
+    public bool isBuff = true;
+
     Buff buff;
     Debuff debuff;
-    bool isBuff = true;
 
     [SerializeField] Image sdImage;
     [SerializeField] Text sdValue, sdCount;
+    [SerializeField] RectTransform rect;
 
     public void Set(Buff buff)
     {
@@ -27,4 +29,7 @@ public class SDInstance : MonoBehaviour
         sdCount.text = debuff.count.ToString();
         isBuff = false;
     }
+
+    public BuffType GetBuffType() { return buff.buffType; }
+    public DebuffType GetDebuffType() { return debuff.debuffType; }
 }
