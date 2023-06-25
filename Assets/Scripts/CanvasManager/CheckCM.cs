@@ -49,6 +49,9 @@ public class CheckCM : CanvasManager
         skillDescText.text = SkillDesc.GetSkillDescString(str, skill, diceNum == -1 ? true : false);
         skillImage.sprite = Approach.gm.GetSkillSprite(playerNum, skillNum);
         diceImage.sprite = Approach.gm.GetDiceSprite(diceNum);
+
+        if (diceNum == -1)
+            CheckButtonOff();
     }
 
     public void ResetCanvas()

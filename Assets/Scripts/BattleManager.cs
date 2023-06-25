@@ -96,8 +96,6 @@ public class BattleManager : MonoBehaviour
         RefreshData();
         StartCoroutine(battleSM.BeforeStart());
 
-        ReduceSD();
-
         //Defense Evade Off
         battleSM.DefenseEvadeOff(false);
         battleSM.DefenseEvadeOff(true);
@@ -108,8 +106,6 @@ public class BattleManager : MonoBehaviour
     {
         gameStatus = GameStatus.TurnStart;
         StartCoroutine(battleSM.TurnStart());
-
-        ReduceSD();
 
         //Game End Check
         //Check Game End
@@ -152,8 +148,6 @@ public class BattleManager : MonoBehaviour
     {
         gameStatus = GameStatus.EndTurn;
         StartCoroutine(battleSM.EndTurn());
-
-        ReduceSD();
 
         //Check Game End
         if (CheckGameEnd())
@@ -549,11 +543,5 @@ public class BattleManager : MonoBehaviour
         //Refresh Stunned
         playerStunned = false;
         enemyStunned = false;
-    }
-
-    void ReduceSD()
-    {
-        player.ReduceBuffDeBuffCount(gameStatus);
-        enemy.ReduceBuffDeBuffCount(gameStatus);
     }
 }

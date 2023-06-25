@@ -8,11 +8,9 @@ public class PlayerCM : MonoBehaviour
     [SerializeField] Text nameText;
 
     //Hp
-    [SerializeField] GameObject hpBar;
     [SerializeField] Text hpText;
     [SerializeField] Image hpBar_Red;
-    [SerializeField] HPBar hpBarBig;
-    [SerializeField] HPBar hpBarSmall;
+    [SerializeField] HPBar hpBar;
 
     //Skill and Dice
     [SerializeField] Image skillImage;
@@ -42,6 +40,7 @@ public class PlayerCM : MonoBehaviour
     int defenseEvade = -1;
 
     //BuffDebuff
+    [SerializeField] GameObject sdScrollView;
     [SerializeField] GameObject skillDeliveryPrefab;
     [SerializeField] List<SDInstance> skillDeliveries;
 
@@ -62,8 +61,7 @@ public class PlayerCM : MonoBehaviour
 
     public void SetHpBar(int hp, int maxHp)
     {
-        hpBarBig.Set(hp, maxHp);
-        hpBarSmall.Set(hp, maxHp);
+        hpBar.Set(hp, maxHp);
     }
     
     //Reveal
@@ -216,18 +214,21 @@ public class PlayerCM : MonoBehaviour
         coroutineEnd = true;
     }
 
-    public IEnumerator HpBarDisabledForAWhile(float time)
+    public void TopUIEnable()
     {
-        hpBarBig.DisableBar();
-        if(defenseEvade > 0)
-            defenseEvadeHpBarBox.gameObject.SetActive(false);
+        hpBar.EnableBar();
+        sdScrollView.SetActive(true);
+    }
 
-        yield return new WaitForSeconds(time);
+    public void TopUIDisable()
+    {
+        hpBar.DisableBar();
+        sdScrollView.SetActive(false);
+    }
 
-        hpBarSmall.EnableBar();
-        if(defenseEvade > 0)
-            defenseEvadeHpBarBox.gameObject.SetActive(true);
-
+    public void Defense_EvadeOn()
+    {
+        defenseEvadeHpBarBox.gameObject.SetActive(true);
     }
 
     public void Defense_EvadeOff()

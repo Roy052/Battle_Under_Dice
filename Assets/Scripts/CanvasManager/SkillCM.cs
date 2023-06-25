@@ -23,6 +23,9 @@ public class SkillCM : CanvasManager
     public void RefreshUI()
     {
         Skill[] skillList = null;
+        //Condition Check
+
+
         for(int i = 0; i < skillButtons.Length; i++)
         {
             skillButtons[i].Deactivate();

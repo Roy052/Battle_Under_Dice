@@ -9,14 +9,12 @@ public class SDInstance : MonoBehaviour
     Debuff debuff;
 
     [SerializeField] Image sdImage;
-    [SerializeField] Text sdValue, sdCount;
-    [SerializeField] RectTransform rect;
+    [SerializeField] Text sdValue;
 
     public void Set(Buff buff)
     {
         this.buff = buff;
         sdValue.text = buff.value.ToString();
-        sdCount.text = buff.count.ToString();
         sdImage.sprite = Approach.gm.GetSkillDeliverySprite(true, (int)buff.buffType);
 
         isBuff = true;
@@ -26,7 +24,6 @@ public class SDInstance : MonoBehaviour
     {
         this.debuff = debuff;
         sdValue.text = debuff.value.ToString();
-        sdCount.text = debuff.count.ToString();
         isBuff = false;
     }
 

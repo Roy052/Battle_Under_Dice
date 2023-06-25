@@ -313,16 +313,19 @@ public class BattleSM : MonoBehaviour
 
     public IEnumerator IntenseBattleScreen()
     {
-        StartCoroutine(playerCM.HpBarDisabledForAWhile(GameInfo.battleAnimationDelay));
-        StartCoroutine(enemyCM.HpBarDisabledForAWhile(GameInfo.battleAnimationDelay));
+        playerCM.TopUIDisable();
+        enemyCM.TopUIDisable();
 
+        battleScreen.SetActive(true);
         player.gameObject.transform.localScale = new Vector3(1.2f, 1.2f, 1);
         enemy.gameObject.transform.localScale = new Vector3(1.2f, 1.2f, 1);
         player.gameObject.GetComponent<SpriteRenderer>().sortingOrder = 2;
         enemy.gameObject.GetComponent<SpriteRenderer>().sortingOrder = 2;
-        battleScreen.SetActive(true);
 
         yield return new WaitForSeconds(GameInfo.battleAnimationDelay);
+
+        playerCM.TopUIEnable();
+        enemyCM.TopUIEnable();
 
         battleScreen.SetActive(false);
         player.gameObject.transform.localScale = new Vector3(0.8f, 0.8f, 1);
@@ -352,10 +355,11 @@ public class BattleSM : MonoBehaviour
     {
         playerSkillNum = num;
 
+        diceCM.RefreshUI(diceManager_player.GetDiceArray());
+
         //Skill Cancel
         if (num == -1)
         {
-            diceCM.RefreshUI(diceManager_player.GetDiceArray());
             diceCM.CanvasOff();
             checkCM.SkillDescOff();
             checkCM.CheckButtonOff();

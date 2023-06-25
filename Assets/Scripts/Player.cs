@@ -60,45 +60,6 @@ public class Player : MonoBehaviour
         debuffList.AddRange(debuffs);
     }
 
-    public void ReduceBuffDeBuffCount(GameStatus currentStatus)
-    {
-        for(int i = 0; i < buffList.Count; i++)
-        {
-            if (buffList[i].reduceCountStatus == currentStatus)
-                buffList[i].count--;
-
-            Buff temp = buffList[i];
-            bool isRemove = false;
-
-            if (buffList[i].count <= 0)
-            {
-                isRemove = true;
-                buffList.Remove(buffList[i]);
-                i--;
-            }
-
-            playerCM.RefreshSDInstance(isRemove, temp);
-        }
-
-        for (int i = 0; i < debuffList.Count; i++)
-        {
-            if (debuffList[i].reduceCountStatus == currentStatus)
-                debuffList[i].count--;
-
-            Debuff temp = debuffList[i];
-            bool isRemove = false;
-
-            if (debuffList[i].count <= 0)
-            {
-                isRemove = true;
-                debuffList.Remove(debuffList[i]);
-                i--;
-            }
-
-            playerCM.RefreshSDInstance(isRemove, temp);
-        }
-    }
-
     public Skill ActivateSkillBuffDeBuff(Skill retSkill, GameStatus currentStatus)
     {
         foreach (Buff buff in buffList)
