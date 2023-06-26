@@ -82,4 +82,20 @@ public class SkillDesc : MonoBehaviour
 
         return result;
     }
+
+    public static string GetSkillDeliveryDescString(string str, int[] value)
+    {
+        string result = str;
+
+        for (int i = 0; i < value.Length; i++)
+        {
+            if (result.Contains(DeliveryReplace) == false)
+                continue;
+
+            string strValue = $"<color=#690000>{value[i]}</color>";
+            result = result.Replace(DeliveryReplace, strValue);
+        }
+
+        return result;
+    }
 }

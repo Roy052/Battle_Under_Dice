@@ -60,15 +60,19 @@ public class SkillDeliveryInfo
         },
     };
 
-    public static string[] skillDeliveryName = new string[16]
+    public static string[] buffName = new string[]
     {
         "AddDamage",
-        "AddSpeed",
         "AddDefense",
         "AddEvades",
+        "AddSpeed",
         "AddEndurance",
         "BuffToSkill",
         "EnhancePassive",
+    };
+
+    public static string[] debuffName = new string[]
+    {
         "ReduceDealtDamage",
         "ReduceHp",
         "ReduceDamage",
@@ -77,8 +81,27 @@ public class SkillDeliveryInfo
         "ReduceEvades",
         "ReduceEndurance",
         "DebuffToSkill",
-        "AddDealtDamage"
+        "AddDealtDamage",
     };
+
+    public static string[] buffDesc = new string[]
+    {
+        "공격 시, 데미지가 [d]만큼 증가한다",
+        "방어 시, 방어 수치가 [d]만큼 증가한다",
+        "회피 시, 회피 수치가 [d]만큼 증가한다",
+        "스킬 사용 시, 속도가 [d]만큼 증가한다",
+        "스킬 사용 시, 인내가 [d]만큼 증가한다",
+    };
+
+    public static string[] debuffDesc = new string[]
+    {
+        "공격 시, 데미지가 [d]만큼 증가한다",
+        "방어 시, 방어 수치가 [d]만큼 증가한다",
+        "회피 시, 회피 수치가 [d]만큼 증가한다",
+        "스킬 사용 시, 속도가 [d]만큼 증가한다",
+        "스킬 사용 시, 인내가 [d]만큼 증가한다",
+    };
+
 
     public static List<Buff> GetBuff(int id)
     {
