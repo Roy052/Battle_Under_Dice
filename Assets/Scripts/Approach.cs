@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class Approach
 {
@@ -15,4 +16,7 @@ public class Approach
     public static CharacterInfo characterInfo = new CharacterInfo();
     public static GameInfo gameInfo = new GameInfo();
     public static SkillInfo skillInfo = new SkillInfo();
+
+    //Static Value
+    public static Vector3 posRevise = new Vector3(1.5f, -1.3f, 0);
 }

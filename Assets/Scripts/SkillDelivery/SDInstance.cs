@@ -30,7 +30,7 @@ public class SDInstance : MonoBehaviour
     public BuffType GetBuffType() { return buff == null ? BuffType.None : buff.buffType; }
     public DebuffType GetDebuffType() { return debuff == null ? DebuffType.None : debuff.debuffType; }
 
-    Vector3 posRevise = new Vector3(1.5f, -1.3f, 0);
+    
     private void OnMouseEnter()
     {
         if (debuff == null)
@@ -38,7 +38,7 @@ public class SDInstance : MonoBehaviour
         else
             Approach.tooltip.SetText(GetDebuffType(), new int[] { debuff.value });
 
-        Approach.tooltip.GetComponent<RectTransform>().position = posRevise + this.GetComponent<RectTransform>().position;
+        Approach.tooltip.GetComponent<RectTransform>().position = Approach.posRevise + this.GetComponent<RectTransform>().position;
     }
 
     private void OnMouseExit()

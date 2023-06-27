@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 public class CharacterInfo
 {
     public static string[] characterName = { "Dagon" };

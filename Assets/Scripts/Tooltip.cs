@@ -20,14 +20,21 @@ public class Tooltip : MonoBehaviour
     public void SetText(BuffType type, int[] value)
     {
         textName.text = SkillDeliveryInfo.buffName[(int)type];
-        textDesc.text = SkillDesc.GetSkillDeliveryDescString(SkillDeliveryInfo.buffDesc[(int)type], value);
+        textDesc.text = Desc.GetSkillDeliveryDescString(SkillDeliveryInfo.buffDesc[(int)type], value);
         this.gameObject.SetActive(true);
     }
 
     public void SetText(DebuffType type, int[] value)
     {
         textName.text = SkillDeliveryInfo.debuffName[(int)type];
-        textDesc.text = SkillDesc.GetSkillDeliveryDescString(SkillDeliveryInfo.debuffDesc[(int)type], value);
+        textDesc.text = Desc.GetSkillDeliveryDescString(SkillDeliveryInfo.debuffDesc[(int)type], value);
+        this.gameObject.SetActive(true);
+    }
+
+    public void SetText(int accessoryNum)
+    {
+        textName.text = AccessoryInfo.accessoryName[accessoryNum];
+        textDesc.text = Desc.GetAccessoryDescString(AccessoryInfo.desc[accessoryNum], new int[]{ AccessoryInfo.value[accessoryNum]});
         this.gameObject.SetActive(true);
     }
 }

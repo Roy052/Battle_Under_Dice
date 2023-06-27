@@ -35,7 +35,7 @@ public class CheckCM : CanvasManager
 
         Debug.Log(playerNum + ", " + skillNum);
         nameText.text = SkillInfo.skillNameText[playerNum, skillNum];
-        conditionText.text = SkillDesc.GetSkillCondString(playerNum, skillNum);
+        conditionText.text = Desc.GetSkillCondString(playerNum, skillNum);
         if (diceNum == -1)
         {
             speedValueText.text = "?";
@@ -46,7 +46,7 @@ public class CheckCM : CanvasManager
             speedValueText.text = skill.speed.ToString();
             enduranceValueText.text = skill.endurance.ToString();
         }
-        skillDescText.text = SkillDesc.GetSkillDescString(str, skill, diceNum == -1 ? true : false);
+        skillDescText.text = Desc.GetSkillDescString(str, skill, diceNum == -1 ? true : false);
         skillImage.sprite = Approach.gm.GetSkillSprite(playerNum, skillNum);
         diceImage.sprite = Approach.gm.GetDiceSprite(diceNum);
 

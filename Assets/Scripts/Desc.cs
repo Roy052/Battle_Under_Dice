@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkillDesc : MonoBehaviour
+public class Desc : MonoBehaviour
 {
     const string ConditionReplace = "[c]";
     const string SkillReplace = "[s]";
     const string DeliveryReplace = "[d]";
-    const string AddEffectText = "And ";
+    const string AccessoryReplace = "[a]";
 
     public static string GetSkillDescString(string str, Skill skill, bool noDiceNum = false)
     {
@@ -94,6 +94,21 @@ public class SkillDesc : MonoBehaviour
 
             string strValue = $"<color=#690000>{value[i]}</color>";
             result = result.Replace(DeliveryReplace, strValue);
+        }
+
+        return result;
+    }
+
+    public static string GetAccessoryDescString(string str, int[] value)
+    {
+        string result = str;
+        for (int i = 0; i < value.Length; i++)
+        {
+            if (result.Contains(AccessoryReplace) == false)
+                continue;
+
+            string strValue = $"<color=#690000>{value[i]}</color>";
+            result = result.Replace(AccessoryReplace, strValue);
         }
 
         return result;
