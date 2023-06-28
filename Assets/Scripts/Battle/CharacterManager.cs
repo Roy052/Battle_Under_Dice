@@ -55,6 +55,23 @@ public class CharacterManager : MonoBehaviour
         if (character.hp > character.maxHp) character.hp = character.maxHp;
     }
 
+    public bool IsConditionFulfilled(int conditionNum, int value)
+    {
+        bool result = false;
+        switch ((ConditionType)conditionNum)
+        {
+            case ConditionType.PlayerHpUpper:
+                return character.hp >= value;
+            case ConditionType.PlayerHpLower:
+                return character.hp <= value;
+            case ConditionType.EnemyHpUpper:
+                return character.hp >= value;
+            case ConditionType.EnemyHpLower:
+                return character.hp >= value;
+        }
+        return result;
+    }
+
     public void ChangeStatus(string kind, int num)
     {
         switch (kind)

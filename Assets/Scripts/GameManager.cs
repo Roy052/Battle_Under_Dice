@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using System.Linq;
 public class GameManager : MonoBehaviour
 {
     private static GameManager gameManagerInstance;
@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     //SkillImages
     Sprite[,] skillSprites;
     Sprite[] diceSprite;
-    List<Sprite> buffSprite;
+    Dictionary<int, Sprite> buffSprite;
     List<Sprite> debuffSprite;
 
 
@@ -78,7 +78,8 @@ public class GameManager : MonoBehaviour
 
     private void SkillDeliverySpritesSetup()
     {
-        buffSprite = new List<Sprite>(Resources.LoadAll<Sprite>("Arts/SkillDelivery/Buff"));
+        buffSprite =  new List<Sprite>(Resources.LoadAll<Sprite>("Arts/SkillDelivery/Buff"))
+            .ToDictionary(x => int.Parse(x.name.Substring("buff".Length)), x => x);
         debuffSprite = new List<Sprite>(Resources.LoadAll<Sprite>("Arts/SkillDelivery/Debuff"));
     }
 

@@ -11,7 +11,8 @@ public enum BuffType
     EnhancePassive      = 7,
     ReduceDealtDamage   = 8,
 
-    Others = 10,
+    Anger = 100,
+
 }
 
 public class Buff : SkillDelivery

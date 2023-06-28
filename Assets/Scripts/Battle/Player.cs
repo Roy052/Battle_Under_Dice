@@ -84,7 +84,13 @@ public class Player : MonoBehaviour
                 case BuffType.AddEndurance:
                     retSkill.endurance += buff.value;
                     break;
-
+                case BuffType.Anger:
+                    if (retSkill.type == 0)
+                    {
+                        retSkill.value += buff.value;
+                        retSkill.speed += buff.value;
+                    }
+                    break;
             }
         }
 
@@ -138,4 +144,34 @@ public class Player : MonoBehaviour
             }
         }
     }
+
+    public bool IsConditionFulfilled(int conditionNum, int value)
+    {
+        if(conditionNum < 100)
+        {
+            return characterManager.IsConditionFulfilled(conditionNum, value);
+        }
+        else
+        {
+            switch((ConditionType)conditionNum)
+            {
+                case ConditionType.PlayerBuffAnger:
+                    return BuffAmount(BuffType.Anger) >= value;
+            }
+
+            return false;
+        }
+    }
+
+    int BuffAmount(BuffType buffType)
+    {
+        foreach (Buff buff in buffList)
+        {
+            if (buff.buffType == buffType) return buff.value;
+        }
+
+        return 0;
+    }
+
+    public int GetCharacterNum() { return characterNum; }
 }

@@ -16,10 +16,18 @@ public enum ConditionType
     EnemyHpLower = 3,
     PassiveValue = 4,
 
-    MyBuff = 10,
+    //Player Buffs
+    PlayerBuffAnger = 100,
+
     MyDebuff = 11,
-    EnemyBuff = 12,
-    EnemyDebuff = 13,
+    //Player Debuffs
+    PlayerDebuff = 200,
+    
+    //Enemy Buffs
+    EnemyBuff = 300,
+
+    //Enemy Debuffs
+    EnemyDebuff = 400,
 
     HaveDice = 20,
     FlameCount = 21,
@@ -86,7 +94,7 @@ public class SkillInfo
         
         {
             { -1, -1, -1 },
-            { -1, -1, -1 },
+            { 0, -1, -1 },
             { -1, -1, -1 },
             { -1, -1, -1 },
             { -1, -1, -1 },
@@ -102,7 +110,7 @@ public class SkillInfo
     {
         {
             { -1, -1, -1 },
-            { -1, -1, -1 },
+            { 50, -1, -1 },
             { -1, -1, -1 },
             { -1, -1, -1 },
             { -1, -1, -1 },

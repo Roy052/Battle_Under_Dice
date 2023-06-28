@@ -24,7 +24,7 @@ public class SkillDeliveryInfo
             { 0, 0, 0, 0},
         },
         {
-            { 0, 0, 0, 2},
+            { 0, 100, 0, 1},
             { 0, 0, 0, 0},
             { 0, 0, 0, 0},
             { 0, 0, 0, 0},
@@ -60,15 +60,16 @@ public class SkillDeliveryInfo
         },
     };
 
-    public static string[] buffName = new string[]
+    public static Dictionary<int, string> buffName = new Dictionary<int, string>()
     {
-        "AddDamage",
-        "AddDefense",
-        "AddEvades",
-        "AddSpeed",
-        "AddEndurance",
-        "BuffToSkill",
-        "EnhancePassive",
+        {0, "AddDamage" },
+        {1, "AddDefense" },
+        {2, "AddEvades" },
+        {3, "AddSpeed" },
+        {4, "AddEndurance" },
+        {5, "BuffToSkill" },
+        {6, "EnhancePassive" },
+        {100, "Anger" },
     };
 
     public static string[] debuffName = new string[]
@@ -84,13 +85,15 @@ public class SkillDeliveryInfo
         "AddDealtDamage",
     };
 
-    public static string[] buffDesc = new string[]
+    public static Dictionary<int, string> buffDesc = new Dictionary<int, string>()
     {
-        "공격 시, 데미지가 [d]만큼 증가한다",
-        "방어 시, 방어 수치가 [d]만큼 증가한다",
-        "회피 시, 회피 수치가 [d]만큼 증가한다",
-        "스킬 사용 시, 속도가 [d]만큼 증가한다",
-        "스킬 사용 시, 인내가 [d]만큼 증가한다",
+        {0,  "공격 시, 데미지가 [d]만큼 증가한다" },
+        {1, "방어 시, 방어 수치가 [d]만큼 증가한다" },
+        {2, "회피 시, 회피 수치가 [d]만큼 증가한다" },
+        {3, "스킬 사용 시, 속도가 [d]만큼 증가한다" },
+        {4, "스킬 사용 시, 인내가 [d]만큼 증가한다" },
+
+        {100, "공격 시, 데미지가 [d]만큼 속도가 [d]만큼 증가한다." },
     };
 
     public static string[] debuffDesc = new string[]

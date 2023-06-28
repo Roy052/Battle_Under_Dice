@@ -34,7 +34,17 @@ public class SDInstance : MonoBehaviour
     private void OnMouseEnter()
     {
         if (debuff == null)
-            Approach.tooltip.SetText(GetBuffType(), new int[] { buff.value });
+        {
+            switch (GetBuffType())
+            {
+                case BuffType.Anger:
+                    Approach.tooltip.SetText(GetBuffType(), new int[] { buff.value, buff.value });
+                    break;
+                default:
+                    Approach.tooltip.SetText(GetBuffType(), new int[] { buff.value });
+                    break;
+            }
+        }
         else
             Approach.tooltip.SetText(GetDebuffType(), new int[] { debuff.value });
 
