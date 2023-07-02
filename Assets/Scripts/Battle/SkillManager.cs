@@ -31,19 +31,19 @@ public class SkillManager : MonoBehaviour
     public Skill UseSkill(int characterNum, int skillNum, int diceNum)
     {
         Skill temp = new Skill();
-        temp.type = SkillInfo.types[characterNum, skillNum];
-        temp.value = SkillInfo.values[characterNum, skillNum, diceNum];
-        temp.speed = SkillInfo.speeds[characterNum, skillNum, diceNum];
-        temp.endurance = SkillInfo.endurances[characterNum, skillNum, diceNum];
+        temp.type = SkillInfo.types[characterNum][skillNum];
+        temp.value = SkillInfo.values[characterNum][skillNum, diceNum];
+        temp.speed = SkillInfo.speeds[characterNum][skillNum, diceNum];
+        temp.endurance = SkillInfo.endurances[characterNum][skillNum, diceNum];
 
         //Add Buff and Debuff
-        List<Buff> buffs = SkillDeliveryInfo.GetBuff(SkillInfo.skillDelivery[characterNum, skillNum, diceNum]);
+        List<Buff> buffs = SkillDeliveryInfo.GetBuff(SkillInfo.skillDelivery[characterNum][skillNum, diceNum]);
         foreach(Buff buff in buffs)
         {
             temp.skillBuffs.Add(buff);
         }
 
-        List<Debuff> debuffs = SkillDeliveryInfo.GetDebuff(SkillInfo.skillDelivery[characterNum, skillNum, diceNum]);
+        List<Debuff> debuffs = SkillDeliveryInfo.GetDebuff(SkillInfo.skillDelivery[characterNum][skillNum, diceNum]);
         foreach (Debuff debuff in debuffs)
         {
             temp.skillDebuffs.Add(debuff);

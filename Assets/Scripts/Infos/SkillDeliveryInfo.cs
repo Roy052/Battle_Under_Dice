@@ -62,27 +62,30 @@ public class SkillDeliveryInfo
 
     public static Dictionary<int, string> buffName = new Dictionary<int, string>()
     {
-        {0, "AddDamage" },
-        {1, "AddDefense" },
-        {2, "AddEvades" },
-        {3, "AddSpeed" },
-        {4, "AddEndurance" },
-        {5, "BuffToSkill" },
-        {6, "EnhancePassive" },
-        {100, "Anger" },
+        {0, "힘 증가" },
+        {1, "방어 증가" },
+        {2, "회피 증가" },
+        {3, "속도 증가" },
+        {4, "인내 증가" },
+        {5, "보호" },
+        {100, "분노" },
+        {1000, "불 붙이기" },
+        {1001, "단검"},
     };
 
-    public static string[] debuffName = new string[]
+    public static Dictionary<int, string> debuffName = new Dictionary<int, string>()
     {
-        "ReduceDealtDamage",
-        "ReduceHp",
-        "ReduceDamage",
-        "ReduceSpeed",
-        "ReduceDefense",
-        "ReduceEvades",
-        "ReduceEndurance",
-        "DebuffToSkill",
-        "AddDealtDamage",
+        {0, "힘 감소" },
+        {1, "방어 감소" },
+        {2, "회피 감소" },
+        {3, "속도 감소" },
+        {4, "인내 감소" },
+        {5, "취약" },
+        {6, "화상" },
+        {7, "출혈" },
+        {8, "독" },
+        {1000, "폭발" },
+        {1001, "독 중첩" }
     };
 
     public static Dictionary<int, string> buffDesc = new Dictionary<int, string>()

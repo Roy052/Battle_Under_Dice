@@ -24,17 +24,17 @@ public class CheckCM : CanvasManager
         Skill skill = null;
         if (diceNum == -1)
         {
-            str = SkillInfo.skillDescriptionText[playerNum, skillNum, 5];
+            str = SkillInfo.skillDescriptionText[playerNum][skillNum, 5];
             skill = Approach.player.skillManager.UseSkill(playerNum, skillNum, 5);
         }
         else
         {
-            str = SkillInfo.skillDescriptionText[playerNum, skillNum, diceNum];
+            str = SkillInfo.skillDescriptionText[playerNum][skillNum, diceNum];
             skill = Approach.player.skillManager.UseSkill(playerNum, skillNum, diceNum);
         }
 
         Debug.Log(playerNum + ", " + skillNum);
-        nameText.text = SkillInfo.skillNameText[playerNum, skillNum];
+        nameText.text = SkillInfo.skillNameText[playerNum][skillNum];
         conditionText.text = Desc.GetSkillCondString(playerNum, skillNum);
         if (diceNum == -1)
         {

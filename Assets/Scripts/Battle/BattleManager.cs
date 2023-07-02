@@ -212,7 +212,7 @@ public class BattleManager : MonoBehaviour
 
         //Use Player Skill Motion
         StartCoroutine(animationManager.AnimationOn(true, 
-            SkillInfo.skillNameText[gm.characterNum_player, gm.skillSet_player[playerSkillNum]]));
+            SkillInfo.skillNameText[gm.characterNum_player][gm.skillSet_player[playerSkillNum]]));
         StartCoroutine(battleSM.IntenseBattleScreen());
 
         //Attack
@@ -300,7 +300,7 @@ public class BattleManager : MonoBehaviour
 
         //Use Enemy Skill Motion
         StartCoroutine(animationManager.AnimationOn(false,
-            SkillInfo.skillNameText[gm.characterNum_enemy, gm.skillSet_player[enemySkillNum]]));
+            SkillInfo.skillNameText[gm.characterNum_enemy][gm.skillSet_player[enemySkillNum]]));
         StartCoroutine(battleSM.IntenseBattleScreen());
 
         if (!enemyStunned)

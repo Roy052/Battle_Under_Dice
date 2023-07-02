@@ -41,7 +41,7 @@ public class CharacterSetUpSM : MonoBehaviour
         {
             skillSelectedImage[i].SetActive(false);
             skillImages[i].sprite = gm.GetSkillSprite(playerNum, i);
-            skilltexts[i].text = SkillInfo.skillNameText[playerNum, i];
+            skilltexts[i].text = SkillInfo.skillNameText[playerNum][i];
         }
 
         //SetUp

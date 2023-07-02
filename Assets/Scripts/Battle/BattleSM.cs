@@ -250,10 +250,10 @@ public class BattleSM : MonoBehaviour
     public void RevealSkillAndDice(int playerSkillNum, int playerDiceNum, int enemySkillNum, int enemyDiceNum)
     {
         StartCoroutine(playerCM.RevealSkillAndDice
-            (SkillInfo.skillNameText[characterNum_player, skillSet_player[playerSkillNum]], playerDiceNum));
+            (SkillInfo.skillNameText[characterNum_player][skillSet_player[playerSkillNum]], playerDiceNum));
 
         StartCoroutine(enemyCM.RevealSkillAndDice
-            (SkillInfo.skillNameText[characterNum_enemy, skillSet_enemy[enemySkillNum]], enemyDiceNum));
+            (SkillInfo.skillNameText[characterNum_enemy][skillSet_enemy[enemySkillNum]], enemyDiceNum));
     }
 
     //Battle

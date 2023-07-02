@@ -22,9 +22,16 @@ public class SkillCM : CanvasManager
 
     public void RefreshUI()
     {
-        Skill[] skillList = null;
+        int[] skillList = Approach.gm.skillSet_player;
         //Condition Check
-
+        for(int i = 0; i < skillList.Length; i++)
+        {
+            if (Extended.IsSkillConditionFulfilled(true, skillList[i]))
+                skillButtons[i].Enable();
+            else
+                skillButtons[i].Disable();
+        }
+        
 
         for(int i = 0; i < skillButtons.Length; i++)
         {

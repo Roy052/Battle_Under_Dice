@@ -67,14 +67,14 @@ public class Desc : MonoBehaviour
         //Condition
         for (int i = 0; i < 3; i++)
         {
-            int conditionNum = SkillInfo.condTypes[playerNum, skillNum, i];
+            int conditionNum = SkillInfo.condTypes[playerNum][skillNum, i];
             if (conditionNum == -1) break;
             result += SkillInfo.skillCondTypeText[conditionNum];
 
             if (result.Contains(ConditionReplace) == false)
                 continue;
 
-            string strTurn = $"<color=#690000>{SkillInfo.condValues[playerNum, skillNum, i]}</color>";
+            string strTurn = $"<color=#690000>{SkillInfo.condValues[playerNum][skillNum, i]}</color>";
             result = result.Replace(ConditionReplace, strTurn);
 
             result += ", ";
