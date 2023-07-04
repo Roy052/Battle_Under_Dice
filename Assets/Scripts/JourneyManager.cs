@@ -4,15 +4,53 @@ using UnityEngine;
 
 public class JourneyManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] BattleRecord battleRecord;
+
+    Skill[] upgrade = new Skill[6];
+    List<int> accessoryList = new List<int>();
+    private void Awake()
     {
-        
+        Approach.journeyManager = this;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDestroy()
     {
-        
+        Approach.journeyManager = null;
+    }
+
+    public void SaveJourneyData()
+    {
+
+    }
+
+    public void LoadJourneyData()
+    {
+
+    }
+
+    public IEnumerator JourneyStart()
+    {
+        battleRecord.Set();
+        Approach.gm.SceneLoad_Battle();
+
+        while (Approach.battleSM == null)
+            yield return null;
+
+        Approach.battleManager.SetUpgrade(upgrade);
+    }
+
+    public void AddAccessory(int num)
+    {
+        if (accessoryList.Contains(num))
+        {
+            Debug.LogError("Already Exist Accessory");
+            return;
+        }
+        accessoryList.Add(num);     
+    }
+
+    public List<int> LoadAccessory()
+    {
+        return accessoryList;
     }
 }

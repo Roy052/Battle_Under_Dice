@@ -22,9 +22,9 @@ public class Skill
 
 public class SkillManager : MonoBehaviour
 {
-    Skill[,] upgrade;
+    Skill[] upgrade;
 
-    public void SetUpgrade(Skill[,] upgrade)
+    public void SetUpgrade(Skill[] upgrade)
     {
         this.upgrade = upgrade;
     }
@@ -55,11 +55,11 @@ public class SkillManager : MonoBehaviour
         //Upgrade
         if (upgrade != null)
         {
-            temp.value += upgrade[characterNum, skillNum].value;
-            temp.speed += upgrade[characterNum, skillNum].speed;
-            temp.endurance += upgrade[characterNum, skillNum].endurance;
-            temp.skillBuffs.AddRange(upgrade[characterNum, skillNum].skillBuffs);
-            temp.skillDebuffs.AddRange(upgrade[characterNum, skillNum].skillDebuffs);
+            temp.value += upgrade[skillNum].value;
+            temp.speed += upgrade[skillNum].speed;
+            temp.endurance += upgrade[skillNum].endurance;
+            temp.skillBuffs.AddRange(upgrade[skillNum].skillBuffs);
+            temp.skillDebuffs.AddRange(upgrade[skillNum].skillDebuffs);
         }
 
         return temp;

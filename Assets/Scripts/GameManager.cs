@@ -123,6 +123,11 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene("CharacterSetUp");
     }
+
+    public void SceneLoad_StartingPoint()
+    {
+        SceneManager.LoadScene("StartingPoint");
+    }
     
     public void SceneLoad_Battle()
     {

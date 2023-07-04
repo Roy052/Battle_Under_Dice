@@ -20,7 +20,7 @@ public class Record
     }
 }
 
-public class RecordBattle : MonoBehaviour
+public class BattleRecord : MonoBehaviour
 {
     [SerializeField] GameObject recordBoard;
     public void Set()

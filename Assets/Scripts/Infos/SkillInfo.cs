@@ -79,7 +79,7 @@ public class SkillInfo
     //(character, skillnum)
     public static Dictionary<int, int[]> types = new Dictionary<int, int[]>()
     {
-        {0, new int[]{0, 0, 0, 0, 0, 0, 1, 1, 3, 4} }
+        {0, new int[]{0, 0, 0, 0, 0, 0, 1, 1, 3, 4} },
     };
 
     public static Dictionary<int, int[,]> condTypes = new Dictionary<int, int[,]>()

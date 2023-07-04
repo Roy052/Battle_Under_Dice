@@ -84,6 +84,11 @@ public class BattleManager : MonoBehaviour
         setupEnd = true;
     }
 
+    public void SetUpgrade(Skill[] upgrade)
+    {
+        player.skillManager.SetUpgrade(upgrade);
+    }
+
     public void GameStart()
     {
         Invoke("BeforeStart", 1);

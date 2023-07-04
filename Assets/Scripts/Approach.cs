@@ -11,6 +11,7 @@ public class Approach
     public static Player enmey;
     public static GameManager gm;
     public static Tooltip tooltip;
+    public static JourneyManager journeyManager;
 
     //Infos
     public static CharacterInfo characterInfo = new CharacterInfo();
